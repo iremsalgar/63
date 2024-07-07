@@ -5,11 +5,11 @@ Takım Flutter 63
 # Ürün İle İlgili Bilgiler
 
 ## Takım Elemanları
-Kübra Merk: Product Owner 
-İrem Yalçın: Scrum Master
-İrem Salğar : Developer
-Görkem Enes İnci: Developer
-Furkan Turan: Developer
+- Kübra Merk: Product Owner 
+- İrem Yalçın: Scrum Master
+- İrem Salğar : Developer
+- Görkem Enes İnci: Developer
+- Furkan Turan: Developer
 
 ## Ürün İsmi
 
