@@ -59,7 +59,6 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 - **Daily Scrum**:
-- ![33408372-35f5-4a6f-8bea-45c13e7a5408](https://github.com/iremsalgar/63/assets/74204825/d89d1b53-3825-41c5-881f-377196408f5e)
 
 - ![13a0885e-12d8-43f9-b614-4a503e026d91](https://github.com/iremsalgar/63/assets/74204825/4f755578-5667-4590-9a60-3cfb6e9fc89a)
 ![1cb8d475-646c-4dce-b513-d9b75629efa5](https://github.com/iremsalgar/63/assets/74204825/09757a3a-92c1-422e-b40c-4aa1d52a373f)
@@ -70,7 +69,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 - **Sprint board update**: Sprint board screenshotları: 
-![Backlog 1](https://raw.githubusercontent.com/OyunveUygulamaAkademisi/Bootcamp2022Example/main/ProjectManagement/Sprint1Documents/backlog1.png) 
+- ![33408372-35f5-4a6f-8bea-45c13e7a5408](https://github.com/iremsalgar/63/assets/74204825/d89d1b53-3825-41c5-881f-377196408f5e)
 
 
 - **Ürün Durumu**: Ekran görüntüleri:
