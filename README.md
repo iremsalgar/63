@@ -83,7 +83,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 -
 - **Sprint Review**: 
-Alınan kararlar: Kullanıcı temel sayfaları oluşturulmuş, bazıları kodlanmış, arduino kurulumu ve firebase'e bağlanması sağlanmış, uygulama için veritabanı olarak firebase servisleri aktif edilmiş ve eksiklikler değerlendirilmiştir. Sprint Review katılımcıları: Mustafa Aksoy
+Bu sprint için , Navigation Bar ve ChatBot kodlanmıştır.
 
 - **Sprint Retrospective:**
 Müsaitlik durumlarına göre herkese görev atanmışıtr.
