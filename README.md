@@ -45,8 +45,15 @@ Sosyal etkileşim ve paylaşımda bulunmayı sevenler
 Benzer zevklere sahip kişilerle tanışmak isteyenler
 Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
-## Juriye Not
+## Sprint Not
 
+Proje yönetimi için kanban kullanılmasına karar verildi.
+Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
+Chatbot için Gemini kullanılmasına karar verildi
+Uygulama içinde film araştırma imkanı sağlamasına karar verildi
+Favori filmlerinizi profilinize ekleyebilme özelliği eklendi
+Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme özelliği eklenmesine karar verildi
+Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı
 
 ---
 
