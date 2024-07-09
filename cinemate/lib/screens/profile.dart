@@ -11,7 +11,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final String apiKey = 'YOUR_TMDB_API_KEY';
+  final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
   List _favoriteMovies = [];
   String _profileName = 'irem salgar';
   String _username = '@salgar_irem';
