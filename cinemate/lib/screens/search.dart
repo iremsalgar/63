@@ -14,28 +14,34 @@ class _SearchPageState extends State<SearchPage> {
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
   final TextEditingController _controller = TextEditingController();
   List _searchResults = [];
-  Set<int> _favoriteMovies = {};
+  List<String> _collections = [];
 
   @override
   void initState() {
     super.initState();
-    _loadFavorites();
+    _loadCollections();
   }
 
-  void _loadFavorites() async {
+  void _loadCollections() async {
     final prefs = await SharedPreferences.getInstance();
-    final favoriteMovies = prefs.getStringList('favoriteMovies') ?? [];
     setState(() {
-      _favoriteMovies = favoriteMovies.map((id) => int.parse(id)).toSet();
+      _collections = prefs.getStringList('collections') ?? [];
     });
   }
 
-  void _saveFavorites() async {
+  void _saveCollections() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(
-      'favoriteMovies',
-      _favoriteMovies.map((id) => id.toString()).toList(),
-    );
+    prefs.setStringList('collections', _collections);
+  }
+
+  void _addMovieToCollection(int movieId, String collectionName) async {
+    final prefs = await SharedPreferences.getInstance();
+    final collectionKey = 'collection_$collectionName';
+    final collection = prefs.getStringList(collectionKey) ?? [];
+    if (!collection.contains(movieId.toString())) {
+      collection.add(movieId.toString());
+      prefs.setStringList(collectionKey, collection);
+    }
   }
 
   void _searchMovies(String query) async {
@@ -50,15 +56,81 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  void _toggleFavorite(int movieId) {
-    setState(() {
-      if (_favoriteMovies.contains(movieId)) {
-        _favoriteMovies.remove(movieId);
-      } else {
-        _favoriteMovies.add(movieId);
-      }
-      _saveFavorites();
-    });
+  void _showAddToCollectionDialog(int movieId) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        String selectedCollection =
+            _collections.isNotEmpty ? _collections[0] : '';
+        final TextEditingController collectionController =
+            TextEditingController();
+
+        return AlertDialog(
+          title: const Text('Add to Collection'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (_collections.isNotEmpty)
+                DropdownButton<String>(
+                  value: selectedCollection,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCollection = value!;
+                    });
+                  },
+                  items: _collections
+                      .map((collection) => DropdownMenuItem(
+                            value: collection,
+                            child: Text(collection),
+                          ))
+                      .toList(),
+                ),
+              TextField(
+                controller: collectionController,
+                decoration: const InputDecoration(
+                  labelText: 'New Collection Name',
+                ),
+                onSubmitted: (value) {
+                  if (value.isNotEmpty && !_collections.contains(value)) {
+                    setState(() {
+                      _collections.add(value);
+                      selectedCollection = value;
+                      _saveCollections();
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final newCollection = collectionController.text.trim();
+                if (newCollection.isNotEmpty &&
+                    !_collections.contains(newCollection)) {
+                  setState(() {
+                    _collections.add(newCollection);
+                    selectedCollection = newCollection;
+                    _saveCollections();
+                  });
+                }
+                if (selectedCollection.isNotEmpty) {
+                  _addMovieToCollection(movieId, selectedCollection);
+                  Navigator.pop(context);
+                }
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -87,16 +159,20 @@ class _SearchPageState extends State<SearchPage> {
               itemCount: _searchResults.length,
               itemBuilder: (context, index) {
                 final movie = _searchResults[index];
-                return ListTile(
-                  title: Text(movie['title']),
-                  subtitle: Text(movie['overview'] ?? 'No description'),
-                  trailing: IconButton(
-                    icon: Icon(
-                      _favoriteMovies.contains(movie['id'])
-                          ? Icons.favorite
-                          : Icons.favorite_border,
+                final posterUrl =
+                    'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
+                return Card(
+                  child: ListTile(
+                    leading: movie['poster_path'] != null
+                        ? Image.network(posterUrl)
+                        : const SizedBox(
+                            width: 50, height: 75, child: Icon(Icons.movie)),
+                    title: Text(movie['title']),
+                    subtitle: Text(movie['overview'] ?? 'No description'),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.favorite_border),
+                      onPressed: () => _showAddToCollectionDialog(movie['id']),
                     ),
-                    onPressed: () => _toggleFavorite(movie['id']),
                   ),
                 );
               },

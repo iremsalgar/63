@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http; // HTTP paketini içe aktar
+import 'dart:convert'; // JSON paketini içe aktar
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,7 +12,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
-  List _favoriteMovies = [];
+  List<String> _collections = [];
   String _profileName = 'irem salgar';
   String _username = '@salgar_irem';
   String _profileImageUrl = 'https://via.placeholder.com/150';
@@ -24,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     _loadProfile();
-    _loadFavorites();
+    _loadCollections();
   }
 
   void _loadProfile() async {
@@ -40,21 +40,10 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  void _loadFavorites() async {
+  void _loadCollections() async {
     final prefs = await SharedPreferences.getInstance();
-    final favoriteMovieIds = prefs.getStringList('favoriteMovies') ?? [];
-    final favoriteMovies = [];
-
-    for (final id in favoriteMovieIds) {
-      final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        favoriteMovies.add(json.decode(response.body));
-      }
-    }
-
     setState(() {
-      _favoriteMovies = favoriteMovies;
+      _collections = prefs.getStringList('collections') ?? [];
     });
   }
 
@@ -129,31 +118,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: const Text('Follow'),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: const Icon(Icons.message),
-                ),
-              ],
-            ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -161,22 +125,29 @@ class _ProfilePageState extends State<ProfilePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Favorite Films',
+                    'Collections',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  _favoriteMovies.isEmpty
-                      ? const Text('No favorite films yet.')
+                  _collections.isEmpty
+                      ? const Text('No collections yet.')
                       : ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: _favoriteMovies.length,
+                          itemCount: _collections.length,
                           itemBuilder: (context, index) {
-                            final movie = _favoriteMovies[index];
+                            final collectionName = _collections[index];
                             return ListTile(
-                              title: Text(movie['title']),
-                              subtitle:
-                                  Text(movie['overview'] ?? 'No description'),
+                              title: Text(collectionName),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CollectionPage(
+                                        collectionName: collectionName),
+                                  ),
+                                );
+                              },
                             );
                           },
                         ),
@@ -185,6 +156,72 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CollectionPage extends StatefulWidget {
+  final String collectionName;
+
+  const CollectionPage({required this.collectionName, super.key});
+
+  @override
+  _CollectionPageState createState() => _CollectionPageState();
+}
+
+class _CollectionPageState extends State<CollectionPage> {
+  final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
+  List _movies = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCollectionMovies();
+  }
+
+  void _loadCollectionMovies() async {
+    final prefs = await SharedPreferences.getInstance();
+    final movieIds =
+        prefs.getStringList('collection_${widget.collectionName}') ?? [];
+    final List movies = [];
+
+    for (final id in movieIds) {
+      final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
+      final response = await http.get(Uri.parse(url)); // HTTP isteği yap
+      if (response.statusCode == 200) {
+        movies.add(json.decode(response.body)); // JSON cevabını çözümle
+      }
+    }
+
+    setState(() {
+      _movies = movies;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.collectionName),
+      ),
+      body: ListView.builder(
+        itemCount: _movies.length,
+        itemBuilder: (context, index) {
+          final movie = _movies[index];
+          final posterUrl =
+              'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
+          return Card(
+            child: ListTile(
+              leading: movie['poster_path'] != null
+                  ? Image.network(posterUrl)
+                  : const SizedBox(
+                      width: 50, height: 75, child: Icon(Icons.movie)),
+              title: Text(movie['title']),
+              subtitle: Text(movie['overview'] ?? 'No description'),
+            ),
+          );
+        },
       ),
     );
   }
