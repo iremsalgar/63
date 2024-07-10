@@ -1,40 +1,140 @@
+import 'package:cinemate/widgets/forward_button.dart';
+import 'package:cinemate/widgets/login_background_image.dart';
+import 'package:cinemate/widgets/social_login_button.dart';
+import 'package:cinemate/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool isLoginScreen = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
+      body: Stack(
+        children: [
+          const LoginBackgroundImage(),
+          loginFrontContainer(context),
+          const ForwardButton(),
+          if (isLoginScreen) const SocialLoginButton()
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+    );
+  }
+
+  Positioned loginFrontContainer(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Positioned(
+      top: 230,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        height: screenHeight * 0.42,
+        width: screenWidth - 40,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                blurRadius: 15,
+                spreadRadius: 5)
+          ],
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              decoration: const InputDecoration(labelText: 'Email'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isLoginScreen = true;
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      Text(
+                        "LOGIN",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: isLoginScreen ? Colors.black : Colors.black12,
+                        ),
+                      ),
+                      if (isLoginScreen)
+                        Container(
+                          margin: const EdgeInsets.only(top: 3),
+                          height: 2,
+                          width: 52,
+                          color: Colors.orange,
+                        )
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isLoginScreen = false;
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      Text(
+                        "SIGN UP",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: isLoginScreen ? Colors.black12 : Colors.black,
+                        ),
+                      ),
+                      if (!isLoginScreen)
+                        Container(
+                          margin: const EdgeInsets.only(top: 3),
+                          height: 2,
+                          width: 52,
+                          color: Colors.orange,
+                        ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            TextField(
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
+            const SizedBox(height: 10),
+            if (!isLoginScreen)
+              const CustomTextfield(
+                  hintText: "Name-Surname:", prefixIcon: Icon(Icons.person)),
+            const SizedBox(height: 10),
+            const CustomTextfield(
+              hintText: "E-Mail:",
+              prefixIcon: Icon(Icons.email),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Add login logic here
-                Navigator.pushReplacementNamed(context, '/home');
-              },
-              child: const Text('Login'),
+            const SizedBox(height: 10),
+            const CustomTextfield(
+              hintText: "Password:",
+              prefixIcon: Icon(Icons.password),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/register');
-              },
-              child: const Text('Don\'t have an account? Register here'),
-            ),
+            const SizedBox(height: 10),
+            if (isLoginScreen)
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    isLoginScreen = false;
+                  });
+                },
+                child: Text(
+                  "Don't Have An Account?",
+                  style: TextStyle(color: Colors.amber[700]),
+                ),
+              ),
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:cinemate/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,7 +12,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
   final TextEditingController _controller = TextEditingController();
   List _searchResults = [];
   List<String> _collections = [];
@@ -46,7 +46,7 @@ class _SearchPageState extends State<SearchPage> {
 
   void _searchMovies(String query) async {
     final url =
-        'https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query';
+        'https://api.themoviedb.org/3/search/movie?api_key=$searchApi&query=$query';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);

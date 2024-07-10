@@ -1,3 +1,4 @@
+import 'package:cinemate/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,6 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
   List _favoriteMovies = [];
 
   @override
@@ -37,7 +37,7 @@ class _FavoritePageState extends State<FavoritePage> {
     final favoriteMovies = [];
 
     for (final id in uniqueMovieIds) {
-      final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
+      final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$favoriteApi';
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         favoriteMovies.add(json.decode(response.body));
