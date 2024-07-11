@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cinemate/services/api.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List _popularMovies = [];
+  final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
 
   @override
   void initState() {
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _loadPopularMovies() async {
-    final url = 'https://api.themoviedb.org/3/movie/popular?api_key=$homeApi';
+    final url = 'https://api.themoviedb.org/3/movie/popular?api_key=$apiKey';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -80,8 +81,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _recommendRandomMovie() async {
-    final url = 'https://api.themoviedb.org/3/movie/popular?api_key=$homeApi';
+  Future<void> _recommendRandomMovie() async {
+    final randomPage = Random().nextInt(500) +
+        1; // 500 sayfa aralığında rastgele bir sayfa seç
+    final url =
+        'https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&page=$randomPage';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -91,13 +95,27 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> _recommendRandomTVShow() async {
+    final randomPage = Random().nextInt(500) +
+        1; // 500 sayfa aralığında rastgele bir sayfa seç
+    final url =
+        'https://api.themoviedb.org/3/discover/tv?api_key=$apiKey&page=$randomPage';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final tvShows = data['results'];
+      final randomTVShow = (tvShows..shuffle()).first;
+      _showMovieDetailsDialog(randomTVShow);
+    }
+  }
+
   void _showMovieDetailsDialog(dynamic movie) {
     final posterUrl = 'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(movie['title']),
+          title: Text(movie['title'] ?? movie['name']),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -177,7 +195,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: _recommendRandomMovie,
+                onTap: _recommendRandomTVShow,
                 child: Container(
                   width: 100,
                   height: 50,
@@ -194,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                   width: 100,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 21, 92, 150),
+                    color: const Color.fromARGB(255, 21, 92, 150),
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
