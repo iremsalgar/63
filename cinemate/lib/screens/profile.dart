@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http; // HTTP paketini içe aktar
-import 'dart:convert'; // JSON paketini içe aktar
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'editProfile.dart';
+import 'dart:io';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -14,7 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
   List<String> _collections = [];
   String _profileName = 'irem salgar';
   String _username = '@salgar_irem';
-  String _profileImageUrl = 'https://via.placeholder.com/150';
+  File? _profileImageFile;
   int _followingCount = 29;
   int _followersCount = 5;
   double _likesCount = 7.5;
@@ -31,8 +33,10 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       _profileName = prefs.getString('profileName') ?? 'irem salgar';
       _username = prefs.getString('username') ?? '@salgar_irem';
-      _profileImageUrl = prefs.getString('profileImageUrl') ??
-          'https://via.placeholder.com/150';
+      final profileImagePath = prefs.getString('profileImagePath');
+      if (profileImagePath != null) {
+        _profileImageFile = File(profileImagePath);
+      }
       _followingCount = prefs.getInt('followingCount') ?? 29;
       _followersCount = prefs.getInt('followersCount') ?? 5;
       _likesCount = prefs.getDouble('likesCount') ?? 7.5;
@@ -51,6 +55,20 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EditProfilePage(),
+                ),
+              ).then((_) =>
+                  _loadProfile()); // Profili güncellemek için geri dönünce yeniden yükle
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -58,7 +76,9 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 20),
             CircleAvatar(
               radius: 50,
-              backgroundImage: NetworkImage(_profileImageUrl),
+              backgroundImage: _profileImageFile != null
+                  ? FileImage(_profileImageFile!)
+                  : const NetworkImage('https://via.placeholder.com/150'),
             ),
             const SizedBox(height: 10),
             Text(
@@ -187,9 +207,9 @@ class _CollectionPageState extends State<CollectionPage> {
 
     for (final id in movieIds) {
       final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
-      final response = await http.get(Uri.parse(url)); // HTTP isteği yap
+      final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        movies.add(json.decode(response.body)); // JSON cevabını çözümle
+        movies.add(json.decode(response.body));
       }
     }
 

@@ -179,10 +179,10 @@ class _HomePageState extends State<HomePage> {
               GestureDetector(
                 onTap: _recommendRandomMovie,
                 child: Container(
-                  width: 50,
-                  height: 100,
+                  width: 100,
+                  height: 50,
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: const Color.fromARGB(255, 164, 25, 15),
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
@@ -191,10 +191,10 @@ class _HomePageState extends State<HomePage> {
               GestureDetector(
                 onTap: _recommendRandomMovie,
                 child: Container(
-                  width: 50,
-                  height: 100,
+                  width: 100,
+                  height: 50,
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 21, 92, 150),
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
