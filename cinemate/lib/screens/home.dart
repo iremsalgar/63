@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'messagePage.dart';
+import 'movieDetailPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -92,7 +93,7 @@ class _HomePageState extends State<HomePage> {
       final data = json.decode(response.body);
       final movies = data['results'];
       final randomMovie = (movies..shuffle()).first;
-      _showMovieDetailsDialog(randomMovie);
+      _showMovieDetailsPage(randomMovie);
     }
   }
 
@@ -106,35 +107,16 @@ class _HomePageState extends State<HomePage> {
       final data = json.decode(response.body);
       final tvShows = data['results'];
       final randomTVShow = (tvShows..shuffle()).first;
-      _showMovieDetailsDialog(randomTVShow);
+      _showMovieDetailsPage(randomTVShow);
     }
   }
 
-  void _showMovieDetailsDialog(dynamic movie) {
-    final posterUrl = 'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(movie['title'] ?? movie['name']),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.network(posterUrl),
-              const SizedBox(height: 10),
-              Text(movie['overview'] ?? 'No description available.'),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
+  void _showMovieDetailsPage(Map movie) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MovieDetailPage(movie: movie),
+      ),
     );
   }
 
@@ -170,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                       final posterUrl =
                           'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
                       return GestureDetector(
-                        onTap: () => _showMovieDetailsDialog(movie),
+                        onTap: () => _showMovieDetailsPage(movie),
                         child: Card(
                           child: Column(
                             children: [
