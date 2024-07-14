@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'editProfile.dart';
-import 'dart:io';
+import 'messagePage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -20,12 +21,14 @@ class _ProfilePageState extends State<ProfilePage> {
   int _followingCount = 29;
   int _followersCount = 5;
   double _likesCount = 7.5;
+  bool _isFriend = false;
 
   @override
   void initState() {
     super.initState();
     _loadProfile();
     _loadCollections();
+    _checkFriendStatus();
   }
 
   void _loadProfile() async {
@@ -48,6 +51,30 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       _collections = prefs.getStringList('collections') ?? [];
     });
+  }
+
+  void _checkFriendStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isFriend = prefs.getBool('isFriend') ?? false;
+    });
+  }
+
+  void _toggleFriendStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isFriend = !_isFriend;
+      prefs.setBool('isFriend', _isFriend);
+    });
+  }
+
+  void _sendMessage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MessagePage(),
+      ),
+    );
   }
 
   @override
@@ -78,7 +105,8 @@ class _ProfilePageState extends State<ProfilePage> {
               radius: 50,
               backgroundImage: _profileImageFile != null
                   ? FileImage(_profileImageFile!)
-                  : const NetworkImage('https://via.placeholder.com/150'),
+                  : const NetworkImage('https://via.placeholder.com/150')
+                      as ImageProvider,
             ),
             const SizedBox(height: 10),
             Text(
@@ -137,6 +165,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _toggleFriendStatus,
+              child: Text(_isFriend ? 'Arkadaşlıktan Çıkar' : 'Arkadaş Ekle'),
+            ),
+            ElevatedButton(
+              onPressed: _sendMessage,
+              child: const Text('Mesaj Gönder'),
+            ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(16.0),

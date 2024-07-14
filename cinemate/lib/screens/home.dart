@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'messagePage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -137,11 +138,26 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _navigateToMessages() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MessagePage(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.message),
+            onPressed: _navigateToMessages,
+          ),
+        ],
       ),
       body: Column(
         children: [
