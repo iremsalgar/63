@@ -4,10 +4,18 @@ import 'dart:convert';
 
 class MovieDetailPage extends StatefulWidget {
   final Map movie;
+  final bool isTVShow;
+  final String posterUrl;
 
-  const MovieDetailPage({required this.movie, super.key});
+  const MovieDetailPage({
+    required this.movie,
+    required this.isTVShow,
+    required this.posterUrl,
+    super.key,
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _MovieDetailPageState createState() => _MovieDetailPageState();
 }
 
@@ -23,8 +31,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   void _loadCast() async {
     final int movieId = widget.movie['id'];
     final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
-    final url =
-        'https://api.themoviedb.org/3/movie/$movieId/credits?api_key=$apiKey';
+    final url = widget.isTVShow
+        ? 'https://api.themoviedb.org/3/tv/$movieId/credits?api_key=$apiKey'
+        : 'https://api.themoviedb.org/3/movie/$movieId/credits?api_key=$apiKey';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -36,9 +45,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final posterUrl =
-        'https://image.tmdb.org/t/p/w500${widget.movie['poster_path']}';
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movie Info'),
@@ -50,7 +56,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Image.network(posterUrl, height: 300),
+                child: Image.network(widget.posterUrl, height: 300),
               ),
               const SizedBox(height: 16),
               Text(

@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) {
-        String selectedCollection = '';
         final TextEditingController collectionController =
             TextEditingController();
         return AlertDialog(
@@ -84,8 +83,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _recommendRandomMovie() async {
-    final randomPage = Random().nextInt(500) +
-        1; // 500 sayfa aralığında rastgele bir sayfa seç
+    final randomPage = Random().nextInt(500) + 1;
     final url =
         'https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&page=$randomPage';
     final response = await http.get(Uri.parse(url));
@@ -93,13 +91,12 @@ class _HomePageState extends State<HomePage> {
       final data = json.decode(response.body);
       final movies = data['results'];
       final randomMovie = (movies..shuffle()).first;
-      _showMovieDetailsPage(randomMovie);
+      _showMovieDetailsPage(randomMovie, false);
     }
   }
 
   Future<void> _recommendRandomTVShow() async {
-    final randomPage = Random().nextInt(500) +
-        1; // 500 sayfa aralığında rastgele bir sayfa seç
+    final randomPage = Random().nextInt(500) + 1;
     final url =
         'https://api.themoviedb.org/3/discover/tv?api_key=$apiKey&page=$randomPage';
     final response = await http.get(Uri.parse(url));
@@ -107,15 +104,20 @@ class _HomePageState extends State<HomePage> {
       final data = json.decode(response.body);
       final tvShows = data['results'];
       final randomTVShow = (tvShows..shuffle()).first;
-      _showMovieDetailsPage(randomTVShow);
+      _showMovieDetailsPage(randomTVShow, true);
     }
   }
 
-  void _showMovieDetailsPage(Map movie) {
+  void _showMovieDetailsPage(Map movie, bool isTVShow) {
+    final posterUrl = 'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MovieDetailPage(movie: movie),
+        builder: (context) => MovieDetailPage(
+          movie: movie,
+          isTVShow: isTVShow,
+          posterUrl: posterUrl,
+        ),
       ),
     );
   }
@@ -152,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                       final posterUrl =
                           'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
                       return GestureDetector(
-                        onTap: () => _showMovieDetailsPage(movie),
+                        onTap: () => _showMovieDetailsPage(movie, false),
                         child: Card(
                           child: Column(
                             children: [

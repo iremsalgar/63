@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomTextfield extends StatelessWidget {
-  const CustomTextfield(
+class CustomTextFieldSignUp extends StatelessWidget {
+  const CustomTextFieldSignUp(
       {super.key,
       required this.prefixIcon,
       required this.hintText,

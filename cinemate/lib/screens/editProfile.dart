@@ -97,7 +97,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 labelText: 'Username',
               ),
             ),
-            TextField(
+            TextFormField(
               controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',

@@ -1,10 +1,12 @@
 import 'package:cinemate/screens/login_screen.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:cinemate/services/api.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   Gemini.init(apiKey: geminiApi);
   runApp(const MyApp());
 }

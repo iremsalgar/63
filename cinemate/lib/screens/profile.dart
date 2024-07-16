@@ -1,10 +1,12 @@
+import 'package:cinemate/screens/profile.dart';
+import 'package:cinemate/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'editProfile.dart';
-import 'messagePage.dart';
+import 'dart:io';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,35 +17,37 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   List<String> _collections = [];
-  String _profileName = 'irem salgar';
-  String _username = '@salgar_irem';
+  String _profileName = "";
+  String _username = "";
   File? _profileImageFile;
   int _followingCount = 29;
   int _followersCount = 5;
   double _likesCount = 7.5;
-  bool _isFriend = false;
 
   @override
   void initState() {
     super.initState();
     _loadProfile();
     _loadCollections();
-    _checkFriendStatus();
   }
 
   void _loadProfile() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _profileName = prefs.getString('profileName') ?? 'irem salgar';
-      _username = prefs.getString('username') ?? '@salgar_irem';
-      final profileImagePath = prefs.getString('profileImagePath');
-      if (profileImagePath != null) {
-        _profileImageFile = File(profileImagePath);
-      }
-      _followingCount = prefs.getInt('followingCount') ?? 29;
-      _followersCount = prefs.getInt('followersCount') ?? 5;
-      _likesCount = prefs.getDouble('likesCount') ?? 7.5;
-    });
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      final retrievedUsername = await FirebaseAuthService().getUsername(uid);
+      setState(() {
+        _profileName = retrievedUsername;
+        _username = prefs.getString('username') ?? '@salgar_irem';
+        final profileImagePath = prefs.getString('profileImagePath');
+        if (profileImagePath != null) {
+          _profileImageFile = File(profileImagePath);
+        }
+        _followingCount = prefs.getInt('followingCount') ?? 29;
+        _followersCount = prefs.getInt('followersCount') ?? 5;
+        _likesCount = prefs.getDouble('likesCount') ?? 7.5;
+      });
+    }
   }
 
   void _loadCollections() async {
@@ -51,30 +55,6 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       _collections = prefs.getStringList('collections') ?? [];
     });
-  }
-
-  void _checkFriendStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _isFriend = prefs.getBool('isFriend') ?? false;
-    });
-  }
-
-  void _toggleFriendStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _isFriend = !_isFriend;
-      prefs.setBool('isFriend', _isFriend);
-    });
-  }
-
-  void _sendMessage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const MessagePage(),
-      ),
-    );
   }
 
   @override
@@ -105,8 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
               radius: 50,
               backgroundImage: _profileImageFile != null
                   ? FileImage(_profileImageFile!)
-                  : const NetworkImage('https://via.placeholder.com/150')
-                      as ImageProvider,
+                  : const NetworkImage('https://via.placeholder.com/150'),
             ),
             const SizedBox(height: 10),
             Text(
@@ -165,14 +144,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _toggleFriendStatus,
-              child: Text(_isFriend ? 'Arkadaşlıktan Çıkar' : 'Arkadaş Ekle'),
-            ),
-            ElevatedButton(
-              onPressed: _sendMessage,
-              child: const Text('Mesaj Gönder'),
-            ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(16.0),
