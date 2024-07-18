@@ -38,24 +38,19 @@ class _FavoritePageState extends State<FavoritePage> {
       favoriteMovieIds.addAll(collectionMovieIds);
     }
 
-    setState(() {
-      _favoriteMovies = [];
-      _originalFavoriteMovies = [];
-    });
+    List favoriteMovies = [];
 
     for (final id in favoriteMovieIds) {
-      // Order is maintained here
       final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        setState(() {
-          _favoriteMovies.add(json.decode(response.body));
-          _originalFavoriteMovies.add(json.decode(response.body));
-        });
+        favoriteMovies.add(json.decode(response.body));
       }
     }
 
     setState(() {
+      _favoriteMovies = favoriteMovies;
+      _originalFavoriteMovies = List.from(favoriteMovies);
       _isLoading = false;
     });
   }
