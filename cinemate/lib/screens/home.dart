@@ -191,31 +191,36 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Stack(
+            alignment: Alignment.center,
             children: [
-              GestureDetector(
-                onTap: _recommendRandomTVShow,
-                child: Container(
-                  width: 100,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 164, 25, 15),
-                    borderRadius: BorderRadius.circular(25),
+              Image.asset(
+                'assets/image/RemovePopcorn.png', // Bu görselin asset klasöründe olduğundan emin olun
+                width: 300,
+                height: 300,
+              ),
+              Positioned(
+                left: 16,
+                bottom: 84,
+                child: GestureDetector(
+                  onTap: _recommendRandomTVShow,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    color: Colors.transparent,
                   ),
                 ),
               ),
-              const SizedBox(width: 20),
-              GestureDetector(
-                onTap: _recommendRandomMovie,
-                child: Container(
-                  width: 100,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 21, 92, 150),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                ),
+              Positioned(
+                right: 17,
+                bottom: 84,
+                child: GestureDetector(
+                    onTap: _recommendRandomMovie,
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.transparent,
+                    )),
               ),
             ],
           ),

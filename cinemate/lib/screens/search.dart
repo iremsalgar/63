@@ -1,3 +1,4 @@
+import 'package:cinemate/services/favorite_movie.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -15,11 +16,13 @@ class _SearchPageState extends State<SearchPage> {
   final TextEditingController _controller = TextEditingController();
   List _searchResults = [];
   List<String> _collections = [];
+  List<String> favoriteMovieIds = [];
 
   @override
   void initState() {
     super.initState();
     _loadCollections();
+    _loadFavorites();
   }
 
   Future<void> _loadCollections() async {
@@ -29,8 +32,15 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
+  Future<void> _loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      favoriteMovieIds = prefs.getStringList('favoriteMovies') ?? [];
+    });
+  }
+
   Future<void> _searchMovies(String query) async {
-    final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
+    const String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
     final url =
         'https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query';
     final response = await http.get(Uri.parse(url));
@@ -46,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
     showDialog(
       context: context,
       builder: (context) {
-        String selectedCollection = '';
+        String? selectedCollection;
         final TextEditingController collectionController =
             TextEditingController();
         return AlertDialog(
@@ -96,8 +106,8 @@ class _SearchPageState extends State<SearchPage> {
                     });
                   }
                   _addMovieToCollection(movieId, newCollection);
-                } else if (selectedCollection.isNotEmpty) {
-                  _addMovieToCollection(movieId, selectedCollection);
+                } else if (selectedCollection != null) {
+                  _addMovieToCollection(movieId, selectedCollection!);
                 }
                 Navigator.pop(context);
               },
@@ -138,6 +148,33 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  void _addFavorite(int movieId) async {
+    final prefs = await SharedPreferences.getInstance();
+    FavoriteService().addFavoriteMovie(movieId.toString());
+    final favoriteMovies = prefs.getStringList('favoriteMovies') ?? [];
+    if (!favoriteMovies.contains(movieId.toString())) {
+      favoriteMovies.add(movieId.toString());
+      await prefs.setStringList('favoriteMovies', favoriteMovies);
+      setState(() {
+        favoriteMovieIds = favoriteMovies;
+      });
+    }
+  }
+
+  void _removeFavorite(int movieId) async {
+    final prefs = await SharedPreferences.getInstance();
+    FavoriteService().removeFavoriteMovie(movieId.toString());
+
+    final favoriteMovies = prefs.getStringList('favoriteMovies') ?? [];
+    if (favoriteMovies.contains(movieId.toString())) {
+      favoriteMovies.remove(movieId.toString());
+      await prefs.setStringList('favoriteMovies', favoriteMovies);
+      setState(() {
+        favoriteMovieIds = favoriteMovies;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,6 +206,8 @@ class _SearchPageState extends State<SearchPage> {
               itemCount: _searchResults.length,
               itemBuilder: (context, index) {
                 final movie = _searchResults[index];
+                final isFavorite =
+                    favoriteMovieIds.contains(movie['id'].toString());
                 return ListTile(
                   leading: movie['poster_path'] != null
                       ? Image.network(
@@ -181,12 +220,28 @@ class _SearchPageState extends State<SearchPage> {
                   title: Text(movie['title']),
                   subtitle: Text(movie['release_date'] ?? ''),
                   trailing: IconButton(
-                    icon: const Icon(Icons.favorite_border),
+                    icon: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder: (child, animation) {
+                        return RotationTransition(
+                          turns: Tween(begin: 0.3, end: 1.0).animate(animation),
+                          child: child,
+                        );
+                      },
+                      child: Icon(
+                        isFavorite ? Icons.star : Icons.star_border,
+                        key: ValueKey(isFavorite),
+                      ),
+                    ),
                     onPressed: () {
-                      _showAddToCollectionDialog(movie['id']);
+                      if (isFavorite) {
+                        _removeFavorite(movie['id']);
+                      } else {
+                        _addFavorite(movie['id']);
+                        _showAddToCollectionDialog(movie['id']);
+                      }
                     },
                   ),
-                  onTap: () => _navigateToDetails(movie),
                 );
               },
             ),

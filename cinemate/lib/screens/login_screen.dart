@@ -155,12 +155,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             if (isLoginScreen)
               CustomTextfield(
+                keyboardType: TextInputType.emailAddress,
                 controller: emailControllerIn,
                 hintText: "E-Mail:",
                 prefixIcon: const Icon(Icons.email),
               ),
             if (isLoginScreen)
               CustomTextfield(
+                keyboardType: TextInputType.visiblePassword,
                 controller: passControllerIn,
                 hintText: "Password:",
                 prefixIcon: const Icon(Icons.password),

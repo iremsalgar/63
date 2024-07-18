@@ -1,5 +1,7 @@
+import 'package:cinemate/screens/movieDetailPage.dart';
 import 'package:cinemate/screens/profile.dart';
 import 'package:cinemate/services/auth.dart';
+import 'package:cinemate/services/favorite_movie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -57,6 +59,15 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  Future<void> _removeCollection(String collectionName) async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _collections.remove(collectionName);
+      prefs.setStringList('collections', _collections);
+      prefs.remove('collection_$collectionName');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +96,8 @@ class _ProfilePageState extends State<ProfilePage> {
               radius: 50,
               backgroundImage: _profileImageFile != null
                   ? FileImage(_profileImageFile!)
-                  : const NetworkImage('https://via.placeholder.com/150'),
+                  : const NetworkImage('https://via.placeholder.com/150')
+                      as ImageProvider,
             ),
             const SizedBox(height: 10),
             Text(
@@ -163,17 +175,32 @@ class _ProfilePageState extends State<ProfilePage> {
                           itemCount: _collections.length,
                           itemBuilder: (context, index) {
                             final collectionName = _collections[index];
-                            return ListTile(
-                              title: Text(collectionName),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CollectionPage(
-                                        collectionName: collectionName),
-                                  ),
-                                );
+                            return Dismissible(
+                              key: Key(collectionName),
+                              direction: DismissDirection.endToStart,
+                              onDismissed: (direction) {
+                                _removeCollection(collectionName);
                               },
+                              background: Container(
+                                color: Colors.red,
+                                alignment: Alignment.centerRight,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: const Icon(Icons.delete,
+                                    color: Colors.white),
+                              ),
+                              child: ListTile(
+                                title: Text(collectionName),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CollectionPage(
+                                          collectionName: collectionName),
+                                    ),
+                                  );
+                                },
+                              ),
                             );
                           },
                         ),
@@ -199,6 +226,7 @@ class CollectionPage extends StatefulWidget {
 class _CollectionPageState extends State<CollectionPage> {
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
   List _movies = [];
+  final FavoriteService _favoriteService = FavoriteService();
 
   @override
   void initState() {
@@ -225,30 +253,79 @@ class _CollectionPageState extends State<CollectionPage> {
     });
   }
 
+  void _showMovieDetailsPage(Map movie) {
+    final posterUrl = 'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MovieDetailPage(
+          movie: movie,
+          isTVShow: false,
+          posterUrl: posterUrl,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.collectionName),
       ),
-      body: ListView.builder(
-        itemCount: _movies.length,
-        itemBuilder: (context, index) {
-          final movie = _movies[index];
-          final posterUrl =
-              'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
-          return Card(
-            child: ListTile(
-              leading: movie['poster_path'] != null
-                  ? Image.network(posterUrl)
-                  : const SizedBox(
-                      width: 50, height: 75, child: Icon(Icons.movie)),
-              title: Text(movie['title']),
-              subtitle: Text(movie['overview'] ?? 'No description'),
+      body: _movies.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : GridView.builder(
+              padding: const EdgeInsets.all(8.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.7,
+                mainAxisSpacing: 8.0,
+                crossAxisSpacing: 8.0,
+              ),
+              itemCount: _movies.length,
+              itemBuilder: (context, index) {
+                final movie = _movies[index];
+                final posterUrl =
+                    'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
+                return GestureDetector(
+                  onLongPress: () => _favoriteService.removeFavoriteMovie,
+                  onTap: () => _showMovieDetailsPage(movie),
+                  child: Card(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          movie['poster_path'] != null
+                              ? Image.network(
+                                  posterUrl,
+                                  width: double.infinity,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                )
+                              : const SizedBox(
+                                  height: 200,
+                                  child: Icon(Icons.movie, size: 100),
+                                ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              movie['title'],
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }

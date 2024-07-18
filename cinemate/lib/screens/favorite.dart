@@ -1,3 +1,5 @@
+import 'package:cinemate/services/favorite_movie.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -15,7 +17,9 @@ class _FavoritePageState extends State<FavoritePage> {
   List _favoriteMovies = [];
   List _originalFavoriteMovies = [];
   bool _isAlphabetical = false;
+  bool _isLoading = true;
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
+  final FavoriteService _favoriteService = FavoriteService();
 
   @override
   void initState() {
@@ -34,21 +38,25 @@ class _FavoritePageState extends State<FavoritePage> {
       favoriteMovieIds.addAll(collectionMovieIds);
     }
 
-    final uniqueMovieIds = favoriteMovieIds.toSet().toList();
-    final favoriteMovies = [];
+    setState(() {
+      _favoriteMovies = [];
+      _originalFavoriteMovies = [];
+    });
 
-    for (final id in uniqueMovieIds) {
+    for (final id in favoriteMovieIds) {
+      // Order is maintained here
       final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        favoriteMovies.add(json.decode(response.body));
+        setState(() {
+          _favoriteMovies.add(json.decode(response.body));
+          _originalFavoriteMovies.add(json.decode(response.body));
+        });
       }
     }
 
     setState(() {
-      _favoriteMovies = favoriteMovies;
-      _originalFavoriteMovies =
-          List.from(favoriteMovies); // Keep the original order
+      _isLoading = false;
     });
   }
 
@@ -89,53 +97,80 @@ class _FavoritePageState extends State<FavoritePage> {
           ),
         ],
       ),
-      body: _favoriteMovies.isEmpty
-          ? const Center(child: Text('No favorite films yet.'))
-          : GridView.builder(
-              padding: const EdgeInsets.all(8.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.7,
-                mainAxisSpacing: 8.0,
-                crossAxisSpacing: 8.0,
-              ),
-              itemCount: _favoriteMovies.length,
-              itemBuilder: (context, index) {
-                final movie = _favoriteMovies[index];
-                final posterUrl =
-                    'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
-                return GestureDetector(
-                  onTap: () => _showMovieDetailsPage(movie),
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        movie['poster_path'] != null
-                            ? Image.network(
-                                posterUrl,
-                                width: double.infinity,
-                                height: 200,
-                                fit: BoxFit.cover,
-                              )
-                            : const SizedBox(
-                                height: 200,
-                                child: Icon(Icons.movie, size: 100),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : StreamBuilder<QuerySnapshot>(
+              stream: _favoriteService.getFavoriteMovies(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Center(child: Text('No favorite films yet.'));
+                }
+                final favoriteMovieIds =
+                    snapshot.data!.docs.map((doc) => doc.id).toList();
+
+                // Order `_favoriteMovies` according to `favoriteMovieIds`
+                List orderedMovies = favoriteMovieIds
+                    .map((id) {
+                      return _favoriteMovies.firstWhere(
+                          (movie) => movie['id'].toString() == id,
+                          orElse: () => null);
+                    })
+                    .where((movie) => movie != null)
+                    .toList();
+
+                return GridView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.7,
+                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 8.0,
+                  ),
+                  itemCount: orderedMovies.length,
+                  itemBuilder: (context, index) {
+                    final movie = orderedMovies[index];
+                    final posterUrl =
+                        'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
+                    return GestureDetector(
+                      onLongPress: () => _favoriteService.removeFavoriteMovie,
+                      onTap: () => _showMovieDetailsPage(movie),
+                      child: Card(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              movie['poster_path'] != null
+                                  ? Image.network(
+                                      posterUrl,
+                                      width: double.infinity,
+                                      height: 200,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : const SizedBox(
+                                      height: 200,
+                                      child: Icon(Icons.movie, size: 100),
+                                    ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  movie['title'],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            movie['title'],
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 );
               },
             ),

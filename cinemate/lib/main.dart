@@ -1,4 +1,5 @@
 import 'package:cinemate/screens/login_screen.dart';
+import 'package:cinemate/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
@@ -16,9 +17,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      theme: lightMode,
+      darkTheme: darkMode,
+      home: const LoginScreen(),
     );
   }
 }

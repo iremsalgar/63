@@ -17,9 +17,12 @@ class CustomTextFieldSignUp extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            cursorColor: Colors.amber[700],
             controller: controller,
+            style: TextStyle(color: Colors.amber[700]),
             decoration: InputDecoration(
               hintText: hintText,
+              hintStyle: const TextStyle(color: Colors.black),
               prefixIcon: prefixIcon,
               enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black45),
