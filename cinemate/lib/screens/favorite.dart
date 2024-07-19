@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 import 'movieDetailPage.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -17,7 +18,10 @@ class _FavoritePageState extends State<FavoritePage> {
   List _favoriteMovies = [];
   List _originalFavoriteMovies = [];
   bool _isAlphabetical = false;
+  List favoriteMovies = [];
   bool _isLoading = true;
+  List<String> favoriteMovieIds = [];
+  bool isFavorite = true;
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
   final FavoriteService _favoriteService = FavoriteService();
 
@@ -37,8 +41,6 @@ class _FavoritePageState extends State<FavoritePage> {
       final collectionMovieIds = prefs.getStringList(collectionKey) ?? [];
       favoriteMovieIds.addAll(collectionMovieIds);
     }
-
-    List favoriteMovies = [];
 
     for (final id in favoriteMovieIds) {
       final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
@@ -64,6 +66,19 @@ class _FavoritePageState extends State<FavoritePage> {
         _favoriteMovies = List.from(_originalFavoriteMovies);
       }
     });
+  }
+
+  void _removeFavorite(int movieId) async {
+    final prefs = await SharedPreferences.getInstance();
+    FavoriteService().removeFavoriteMovie(movieId.toString());
+    final favoriteMovies = prefs.getStringList('favoriteMovies') ?? [];
+    if (favoriteMovies.contains(movieId.toString())) {
+      favoriteMovies.remove(movieId.toString());
+      await prefs.setStringList('favoriteMovies', favoriteMovies);
+      setState(() {
+        favoriteMovieIds = favoriteMovies;
+      });
+    }
   }
 
   void _showMovieDetailsPage(Map movie) {
@@ -93,7 +108,10 @@ class _FavoritePageState extends State<FavoritePage> {
         ],
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: Colors.black,
+            ))
           : StreamBuilder<QuerySnapshot>(
               stream: _favoriteService.getFavoriteMovies(),
               builder: (context, snapshot) {
@@ -133,35 +151,57 @@ class _FavoritePageState extends State<FavoritePage> {
                       onLongPress: () => _favoriteService.removeFavoriteMovie,
                       onTap: () => _showMovieDetailsPage(movie),
                       child: Card(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              movie['poster_path'] != null
-                                  ? Image.network(
-                                      posterUrl,
-                                      width: double.infinity,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : const SizedBox(
-                                      height: 200,
-                                      child: Icon(Icons.movie, size: 100),
-                                    ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  movie['title'],
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            movie['poster_path'] != null
+                                ? Image.network(
+                                    posterUrl,
+                                    width: double.infinity,
+                                    height: 180,
+                                    fit: BoxFit.cover,
+                                  )
+                                : const SizedBox(
+                                    height: 180,
+                                    child: Icon(Icons.movie, size: 50),
                                   ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    textAlign: TextAlign.center,
+                                    movie['title'],
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  IconButton(
+                                    onPressed: () =>
+                                        _removeFavorite(movie['id']),
+                                    icon: AnimatedSwitcher(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      transitionBuilder: (child, animation) {
+                                        return RotationTransition(
+                                          turns: Tween(begin: 0.3, end: 1.0)
+                                              .animate(animation),
+                                          child: child,
+                                        );
+                                      },
+                                      child: const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     );

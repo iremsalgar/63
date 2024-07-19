@@ -1,6 +1,7 @@
 import 'package:cinemate/screens/movieDetailPage.dart';
 import 'package:cinemate/screens/profile.dart';
 import 'package:cinemate/services/auth.dart';
+import 'package:cinemate/services/collections.dart';
 import 'package:cinemate/services/favorite_movie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +21,14 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   List<String> _collections = [];
+  List<String> collectionsMoviesId = [];
   String _profileName = "";
   String _username = "";
   File? _profileImageFile;
   int _followingCount = 29;
   int _followersCount = 5;
   double _likesCount = 7.5;
+  CollectionsServices collectionsServices = CollectionsServices();
 
   @override
   void initState() {
@@ -49,6 +52,34 @@ class _ProfilePageState extends State<ProfilePage> {
         _followingCount = prefs.getInt('followingCount') ?? 29;
         _followersCount = prefs.getInt('followersCount') ?? 5;
         _likesCount = prefs.getDouble('likesCount') ?? 7.5;
+      });
+    }
+  }
+
+  void _addCollections(int movieId) async {
+    final prefs = await SharedPreferences.getInstance();
+    collectionsServices.addFavoriteCollections(movieId.toString());
+
+    final collectionsMovies = prefs.getStringList('collectionsMovies') ?? [];
+    if (collectionsMovies.contains(movieId.toString())) {
+      collectionsMovies.add(movieId.toString());
+      await prefs.setStringList('favoriteMovies', collectionsMovies);
+      setState(() {
+        collectionsMoviesId = collectionsMovies;
+      });
+    }
+  }
+
+  void _removeCollections(int movieId) async {
+    final prefs = await SharedPreferences.getInstance();
+    collectionsServices.removeFavoriteCollections(movieId.toString());
+
+    final collectionsMovies = prefs.getStringList('collectionsMovies') ?? [];
+    if (collectionsMovies.contains(movieId.toString())) {
+      collectionsMovies.remove(movieId.toString());
+      await prefs.setStringList('favoriteMovies', collectionsMovies);
+      setState(() {
+        collectionsMoviesId = collectionsMovies;
       });
     }
   }
@@ -81,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SettingsPage(),
+                  builder: (context) => const SettingsPage(),
                 ),
               );
             },
@@ -191,7 +222,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               key: Key(collectionName),
                               direction: DismissDirection.endToStart,
                               onDismissed: (direction) {
-                                _removeCollection(collectionName);
+                                _removeCollections(index);
                               },
                               background: Container(
                                 color: Colors.red,

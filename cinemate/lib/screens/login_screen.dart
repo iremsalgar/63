@@ -138,34 +138,49 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomTextFieldSignUp(
                   controller: usernameControllerUp,
                   hintText: "Name-Surname:",
-                  prefixIcon: const Icon(Icons.person)),
+                  prefixIcon: const Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  )),
             const SizedBox(height: 10),
             if (!isLoginScreen)
               CustomTextFieldSignUp(
                 controller: emailControllerUp,
                 hintText: "E-Mail:",
-                prefixIcon: const Icon(Icons.email),
+                prefixIcon: const Icon(
+                  Icons.email,
+                  color: Colors.black,
+                ),
               ),
             const SizedBox(height: 10),
             if (!isLoginScreen)
               CustomTextFieldSignUp(
                 controller: passControllerUp,
                 hintText: "Password:",
-                prefixIcon: const Icon(Icons.password),
+                prefixIcon: const Icon(
+                  Icons.password,
+                  color: Colors.black,
+                ),
               ),
             if (isLoginScreen)
               CustomTextfield(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailControllerIn,
                 hintText: "E-Mail:",
-                prefixIcon: const Icon(Icons.email),
+                prefixIcon: const Icon(
+                  Icons.email,
+                  color: Colors.black,
+                ),
               ),
             if (isLoginScreen)
               CustomTextfield(
                 keyboardType: TextInputType.visiblePassword,
                 controller: passControllerIn,
                 hintText: "Password:",
-                prefixIcon: const Icon(Icons.password),
+                prefixIcon: const Icon(
+                  Icons.password,
+                  color: Colors.black,
+                ),
               ),
             const SizedBox(height: 10),
             if (isLoginScreen)

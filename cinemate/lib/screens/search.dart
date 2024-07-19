@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'movieDetailPage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -17,6 +18,8 @@ class _SearchPageState extends State<SearchPage> {
   List _searchResults = [];
   List<String> _collections = [];
   List<String> favoriteMovieIds = [];
+  List _userResults = [];
+  String _searchType = 'Movie/TV Show';
 
   @override
   void initState() {
@@ -50,6 +53,18 @@ class _SearchPageState extends State<SearchPage> {
         _searchResults = data['results'];
       });
     }
+  }
+
+  Future<void> _searchUsers(String query) async {
+    final users = await FirebaseFirestore.instance
+        .collection('users')
+        .where('username', isGreaterThanOrEqualTo: query)
+        .where('username', isLessThanOrEqualTo: '$query\uf8ff')
+        .get();
+
+    setState(() {
+      _userResults = users.docs.map((doc) => doc.data()).toList();
+    });
   }
 
   void _showAddToCollectionDialog(int movieId) {
@@ -175,6 +190,15 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
+  void _onSearch() {
+    final query = _controller.text;
+    if (_searchType == 'Movie/TV Show') {
+      _searchMovies(query);
+    } else {
+      _searchUsers(query);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,64 +209,107 @@ class _SearchPageState extends State<SearchPage> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                labelText: 'Search for a movie',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    _searchMovies(_controller.text);
-                  },
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          labelText: 'Search',
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.search),
+                            onPressed: _onSearch,
+                          ),
+                        ),
+                        onSubmitted: (query) => _onSearch(),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    DropdownButton<String>(
+                      value: _searchType,
+                      items: <String>['Movie/TV Show', 'User']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _searchType = newValue!;
+                        });
+                      },
+                    ),
+                  ],
                 ),
-              ),
-              onSubmitted: (query) {
-                _searchMovies(query);
-              },
+              ],
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: _searchResults.length,
+              itemCount: _searchResults.length + _userResults.length,
               itemBuilder: (context, index) {
-                final movie = _searchResults[index];
-                final isFavorite =
-                    favoriteMovieIds.contains(movie['id'].toString());
-                return ListTile(
-                  leading: movie['poster_path'] != null
-                      ? Image.network(
-                          'https://image.tmdb.org/t/p/w500${movie['poster_path']}',
-                          width: 50,
-                          height: 75,
-                          fit: BoxFit.cover,
-                        )
-                      : const Icon(Icons.movie),
-                  title: Text(movie['title']),
-                  subtitle: Text(movie['release_date'] ?? ''),
-                  trailing: IconButton(
-                    icon: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      transitionBuilder: (child, animation) {
-                        return RotationTransition(
-                          turns: Tween(begin: 0.3, end: 1.0).animate(animation),
-                          child: child,
-                        );
-                      },
-                      child: Icon(
-                        isFavorite ? Icons.star : Icons.star_border,
-                        key: ValueKey(isFavorite),
+                if (_searchType == 'Movie/TV Show' &&
+                    index < _searchResults.length) {
+                  final movie = _searchResults[index];
+                  final isFavorite =
+                      favoriteMovieIds.contains(movie['id'].toString());
+                  return ListTile(
+                    leading: movie['poster_path'] != null
+                        ? Image.network(
+                            'https://image.tmdb.org/t/p/w500${movie['poster_path']}',
+                            width: 50,
+                            height: 75,
+                            fit: BoxFit.cover,
+                          )
+                        : const Icon(Icons.movie),
+                    title: Text(movie['title']),
+                    subtitle: Text(movie['release_date'] ?? ''),
+                    trailing: IconButton(
+                      icon: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        transitionBuilder: (child, animation) {
+                          return RotationTransition(
+                            turns:
+                                Tween(begin: 0.3, end: 1.0).animate(animation),
+                            child: child,
+                          );
+                        },
+                        child: Icon(
+                          isFavorite ? Icons.star : Icons.star_border,
+                          key: ValueKey(isFavorite),
+                        ),
                       ),
+                      onPressed: () {
+                        if (isFavorite) {
+                          _removeFavorite(movie['id']);
+                        } else {
+                          _addFavorite(movie['id']);
+                          _showAddToCollectionDialog(movie['id']);
+                        }
+                      },
                     ),
-                    onPressed: () {
-                      if (isFavorite) {
-                        _removeFavorite(movie['id']);
-                      } else {
-                        _addFavorite(movie['id']);
-                        _showAddToCollectionDialog(movie['id']);
-                      }
-                    },
-                  ),
-                );
+                    onTap: () => _navigateToDetails(movie),
+                  );
+                } else if (_searchType == 'User' &&
+                    index < _userResults.length) {
+                  final user = _userResults[index];
+                  return ListTile(
+                    leading: user['profileImageUrl'] != null
+                        ? Image.network(
+                            user['profileImageUrl'],
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          )
+                        : const Icon(Icons.person),
+                    title: Text(user['username']),
+                  );
+                } else {
+                  return const SizedBox.shrink();
+                }
               },
             ),
           ),

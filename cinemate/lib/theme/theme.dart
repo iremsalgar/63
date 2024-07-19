@@ -1,39 +1,37 @@
 import 'package:flutter/material.dart';
 
-const Color primaryLightColor = Color(0xFF071952);
-const Color secondaryLightColor = Color(0xFF088395);
-const Color surfaceLightColor = Color(0xFF37B7C3);
-const Color backgroundLightColor = Color(0xFFEBF4F6);
+const Color primaryLightColor = Colors.white70;
+const Color secondaryLightColor = Colors.white70;
+const Color surfaceLightColor = Colors.amber;
+const Color backgroundLightColor = Colors.white70;
 
-const Color primaryDarkColor = Color(0xFF071952);
-const Color secondaryDarkColor = Color(0xFF088395);
-const Color surfaceDarkColor = Color(0xFF37B7C3);
-const Color backgroundDarkColor = Color(0xFFEBF4F6);
+const Color primaryDarkColor = Colors.black54;
+const Color secondaryDarkColor = Colors.amber;
+const Color surfaceDarkColor = Colors.white38;
+const Color backgroundDarkColor = Colors.white70;
 
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
-  colorScheme: ColorScheme.light(
+  colorScheme: const ColorScheme.light(
     primary: primaryLightColor,
     secondary: secondaryLightColor,
     surface: surfaceLightColor,
-    background: backgroundLightColor,
   ),
   scaffoldBackgroundColor: backgroundLightColor,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     color: primaryLightColor,
   ),
 );
 
 ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
-  colorScheme: ColorScheme.dark(
+  colorScheme: const ColorScheme.dark(
     primary: primaryDarkColor,
     secondary: secondaryDarkColor,
     surface: surfaceDarkColor,
-    background: backgroundDarkColor,
   ),
   scaffoldBackgroundColor: primaryDarkColor,
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     color: primaryDarkColor,
   ),
 );

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'theme_provider.dart';
+import '../theme/theme_provider.dart';
 
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -22,30 +24,30 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
       ),
       body: ListView(
         children: [
           SwitchListTile(
-            title: Text('Dark Mode'),
+            title: const Text('Dark Mode'),
             value: themeProvider.isDarkMode,
             onChanged: (value) {
               themeProvider.toggleTheme(value);
             },
           ),
           SwitchListTile(
-            title: Text('Enable Notifications'),
+            title: const Text('Enable Notifications'),
             value: _notificationsEnabled,
             onChanged: _toggleNotifications,
           ),
           ListTile(
-            title: Text('Change Language'),
+            title: const Text('Change Language'),
             onTap: () {
               // Dil değiştirme işlemi
             },
           ),
           ListTile(
-            title: Text('User Information'),
+            title: const Text('User Information'),
             onTap: () {
               // Kullanıcı bilgileri işlemi
             },
