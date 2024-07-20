@@ -258,7 +258,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   - **Sprint Review**:
 
-        </details>
+  </details>
 
   </details>
 
