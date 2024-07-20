@@ -132,7 +132,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   <details>
 
-    <details>
+<details>
     <summary><h3>Sprint 2 Not</h3></summary>
 
 
