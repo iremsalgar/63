@@ -106,21 +106,22 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 ## Sprint 2 Not
 
--
+
 -Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
 (Toplantı görseli eklenecek) 
 
 **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
+
 - **Profil**:
-- Kullanıcı bilgileri
-- Editleme
-- Profil Resmi Ekleme
-- Uygulama İçi Görsel Paketi Kullanılabilmesi  (tamamlanmamış) 
-- Koleksiyonların Profilde Gözükmesi
-- Arkadaş Ekleme Çıkarma Butonu
-- Mesajlaşma Butonu
-- Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
-- Firebase'e bağlama
+    - Kullanıcı bilgileri
+    - Editleme
+    - Profil Resmi Ekleme
+    - Uygulama İçi Görsel Paketi Kullanılabilmesi  (tamamlanmamış) 
+    - Koleksiyonların Profilde Gözükmesi
+    - Arkadaş Ekleme Çıkarma Butonu
+    - Mesajlaşma Butonu
+    - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
+    - Firebase'e bağlama
 - 
 - 
 ---
