@@ -47,13 +47,13 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 ## Sprint 1 Not
 
-Proje yönetimi için kanban kullanılmasına karar verildi.
-Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
-Chatbot için Gemini kullanılmasına karar verildi
-Uygulama içinde film araştırma imkanı sağlamasına karar verildi
-Favori filmlerinizi profilinize ekleyebilme özelliği eklendi
-Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme özelliği eklenmesine karar verildi
-Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı
+-Proje yönetimi için kanban kullanılmasına karar verildi.
+-Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
+-Chatbot için Gemini kullanılmasına karar verildi
+-Uygulama içinde film araştırma imkanı sağlamasına karar verildi
+-Favori filmlerinizi profilinize ekleyebilme özelliği eklendi
+-Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme özelliği eklenmesine karar verildi
+-Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı
 
 ---
 
@@ -89,13 +89,13 @@ Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı
 ![095142b2-6a80-4654-b777-f8c1ce89a946](https://github.com/iremsalgar/63/assets/74204825/e42b805a-ec3f-4f3d-80ee-651b36a1fa66)
 
 
-- **Sprint Review**: 
-Bu sprint için , Navigation Bar ve ChatBot kodlanmıştır.
+ **Sprint Review**: 
+-Bu sprint için , Navigation Bar ve ChatBot kodlanmıştır.
 
-- **Sprint Retrospective:**
-Müsaitlik durumlarına göre herkese görev atanmışıtr.
-Olası durumlara göre risk planı yapılmıştır.
-Toplantılar için daha uygun saatlere karar verilmiştir
+ **Sprint Retrospective:**
+-Müsaitlik durumlarına göre herkese görev atanmışıtr.
+-Olası durumlara göre risk planı yapılmıştır.
+-Toplantılar için daha uygun saatlere karar verilmiştir.
  
 
 
@@ -105,7 +105,26 @@ Toplantılar için daha uygun saatlere karar verilmiştir
 
 
 ## Sprint 2 Not
+
+-
+-Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
+(Toplantı görseli eklenecek) 
+
+**BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
+- **Profil**:
+- Kullanıcı bilgileri
+- Editleme
+- Profil Resmi Ekleme
+- Uygulama İçi Görsel Paketi Kullanılabilmesi  (tamamlanmamış) 
+- Koleksiyonların Profilde Gözükmesi
+- Arkadaş Ekleme Çıkarma Butonu
+- Mesajlaşma Butonu
+- Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
+- Firebase'e bağlama
+- 
+- 
 ---
+
 
 # Sprint 2
 
