@@ -200,7 +200,11 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
 
-  - **Daily Scrum**:
+  <details>
+    <summary><h1> Sprint 2-Daily Scrum</h1></summary>
+
+
+  <details>
   
     ![1](https://github.com/user-attachments/assets/725b5730-ec0f-4939-b6aa-a6f8d21a8fbd)
     ![2](https://github.com/user-attachments/assets/1a39d59c-488e-4095-9821-3df6adca5ba5)
@@ -217,7 +221,12 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     ![13](https://github.com/user-attachments/assets/4ca24e61-9cc4-45ac-80b7-8435a3ecc47f)
     ![14](https://github.com/user-attachments/assets/7fb2cc11-a923-47bb-b105-be86b5f80dd4)
 
+      </details>
+
+  </details>
+
   - **Sprint board update**: Sprint board screenshotları:
+  ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
 
   - **Ürün Durumu**: Ekran görüntüleri:
 
