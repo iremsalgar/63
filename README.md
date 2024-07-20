@@ -109,7 +109,11 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 ---
 
 
-# Sprint 2
+  <details>
+    <summary><h1>Sprint 2</h1></summary>
+
+
+  <details>
 
 ## Sprint 2 Not
 
