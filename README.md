@@ -132,7 +132,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.
 
 - **Anasayfa**:
-    - Popüler filmlerin gözüktüğü bir alan
+    - Popüler Filmlerin Gözüktüğü Bir Alan
     - Kırmızı Hap Rastgele Dizi Önerisi
     - Mavi Hap Rastgele Film Önerisi
     - Mesajlara Erişme Butonu
