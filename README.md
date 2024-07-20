@@ -131,68 +131,60 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   <summary><h1>Sprint 2</h1></summary>
 
   <details>
-
-<details>
     <summary><h3>Sprint 2 Not</h3></summary>
 
+    - Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
 
-  <details>
+    ![toplantı fotik](https://github.com/user-attachments/assets/2a44ab5a-e8f6-46ba-8df3-b6a5ac3f5996)
 
+    **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
 
--Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
+    - **Profil**:
+      - Kullanıcı bilgileri
+      - Editleme
+      - Profil Resmi Ekleme
+      - Uygulama İçi Görsel Paketi Kullanılabilmesi  (tamamlanmamış) 
+      - Koleksiyonların Profilde Gözükmesi
+      - Arkadaş Ekleme Çıkarma Butonu
+      - Mesajlaşma Butonu
+      - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
+      - Firebase'e bağlama
+      - Ayarlar
+      - Dark Mode
 
-![toplantı fotik](https://github.com/user-attachments/assets/2a44ab5a-e8f6-46ba-8df3-b6a5ac3f5996)
+    - **ChatBot**:
+      - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.
 
-**BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
-
-- **Profil**:
-    - Kullanıcı bilgileri
-    - Editleme
-    - Profil Resmi Ekleme
-    - Uygulama İçi Görsel Paketi Kullanılabilmesi  (tamamlanmamış) 
-    - Koleksiyonların Profilde Gözükmesi
-    - Arkadaş Ekleme Çıkarma Butonu
-    - Mesajlaşma Butonu
-    - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
-    - Firebase'e bağlama
-    - Ayarlar
-    - Dark Mode
-
-- **ChatBot**:
-    - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.
-
-- **Anasayfa**:
-    - Popüler Filmlerin Gözüktüğü Bir Alan
-    - Kırmızı Hap Rastgele Dizi Önerisi
-    - Mavi Hap Rastgele Film Önerisi
-    - Mesajlara Erişme Butonu
-    - Film Zevki Uyan Kullanıcıları Gösteren Tablo(tamamlanmamış)
+    - **Anasayfa**:
+      - Popüler Filmlerin Gözüktüğü Bir Alan
+      - Kırmızı Hap Rastgele Dizi Önerisi
+      - Mavi Hap Rastgele Film Önerisi
+      - Mesajlara Erişme Butonu
+      - Film Zevki Uyan Kullanıcıları Gösteren Tablo(tamamlanmamış)
   
-- **Film Aratma**:
-    - Filmleri Aratma
-    - Kişileri Aratma
-    - Görsel Düzenlilik
-    - Favorilere Ekleme
-    - Koleksiyona Ekleme
+    - **Film Aratma**:
+      - Filmleri Aratma
+      - Kişileri Aratma
+      - Görsel Düzenlilik
+      - Favorilere Ekleme
+      - Koleksiyona Ekleme
      
-- **Giriş Ekranı**:
-    - Firebase
-    - Login Page
-    - Register Page
-    - Google İle Üye Olma
-    - Şifre Politikası(tamamlanmamış)
-    - Kullanıcı Rıza Metni(tamamlanmamış)
-    - UI tasarım
+    - **Giriş Ekranı**:
+      - Firebase
+      - Login Page
+      - Register Page
+      - Google İle Üye Olma
+      - Şifre Politikası(tamamlanmamış)
+      - Kullanıcı Rıza Metni(tamamlanmamış)
+      - UI tasarım
 
-- **Navbar**
+    - **Navbar**
 
-- **Favoriler**:
-    - Poster Görünümü
-    - Alfabetik Sıralama
-    - Tıklandığında Detayları Gösteren Açılır Ekran
-    - 
-  </details>
-
+    - **Favoriler**:
+      - Poster Görünümü
+      - Alfabetik Sıralama
+      - Tıklandığında Detayları Gösteren Açılır Ekran
+  
   </details>
 
   - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
@@ -200,11 +192,8 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
 
   <details>
-    <summary><h3> Sprint 2-Daily Scrum</h3></summary>
+    <summary><h3>Sprint 2-Daily Scrum</h3></summary>
 
-
-  <details>
-  
     ![1](https://github.com/user-attachments/assets/725b5730-ec0f-4939-b6aa-a6f8d21a8fbd)
     ![2](https://github.com/user-attachments/assets/1a39d59c-488e-4095-9821-3df6adca5ba5)
     ![3](https://github.com/user-attachments/assets/6617fe37-5080-404e-a743-1d37f2faf960)
@@ -220,61 +209,28 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     ![13](https://github.com/user-attachments/assets/4ca24e61-9cc4-45ac-80b7-8435a3ecc47f)
     ![14](https://github.com/user-attachments/assets/7fb2cc11-a923-47bb-b105-be86b5f80dd4)
 
-      </details>
-
   </details>
 
   <details>
-    <summary><h3> Sprint 2-Board Screenshot</h3></summary>
-
-
-  <details>
-  Sprint board screenshotları:
+    <summary><h3>Sprint 2-Board Screenshot</h3></summary>
+    Sprint board screenshotları:
     
-  ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
-
-        </details>
-
+    ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
   </details>
-
-    <details>
-    <summary><h3> Sprint 2-Ürün Durumu Screenshot</h3></summary>
-
 
   <details>
-
-  - **Ürün Durumu**: Ekran görüntüleri:
- 
-        </details>
-
+    <summary><h3>Sprint 2-Ürün Durumu Screenshot</h3></summary>
+    - **Ürün Durumu**: Ekran görüntüleri:
   </details>
-
-
-    <details>
-    <summary><h3> Sprint 2-Review</h3></summary>
-
 
   <details>
-
-  - **Sprint Review**:
-
-        </details>
-
+    <summary><h3>Sprint 2-Review</h3></summary>
+    - **Sprint Review**:
   </details>
-
-
-    <details>
-    <summary><h3> Sprint 2-Retrospective</h3></summary>
-
 
   <details>
-
-  - **Sprint 2 Retrospective**:
-
-        </details>
-
-  </details>
-
+    <summary><h3>Sprint 2-Retrospective</h3></summary>
+    - **Sprint 2 Retrospective**:
   </details>
 
 </details>
