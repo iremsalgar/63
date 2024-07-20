@@ -132,64 +132,96 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   <details>
     <summary><h3>Sprint 2 Not</h3></summary>
-
-    - Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
+    <p>
+    Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
+    </p>
 
     ![toplantı fotik](https://github.com/user-attachments/assets/2a44ab5a-e8f6-46ba-8df3-b6a5ac3f5996)
 
-    **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
+    <p>
+    <b>BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ</b>
+    </p>
 
-    - **Profil**:
-      - Kullanıcı bilgileri
-      - Editleme
-      - Profil Resmi Ekleme
-      - Uygulama İçi Görsel Paketi Kullanılabilmesi  (tamamlanmamış) 
-      - Koleksiyonların Profilde Gözükmesi
-      - Arkadaş Ekleme Çıkarma Butonu
-      - Mesajlaşma Butonu
-      - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
-      - Firebase'e bağlama
-      - Ayarlar
-      - Dark Mode
+    <p>
+    <b>Profil:</b>
+    </p>
+    <ul>
+      <li>Kullanıcı bilgileri</li>
+      <li>Editleme</li>
+      <li>Profil Resmi Ekleme</li>
+      <li>Uygulama İçi Görsel Paketi Kullanılabilmesi (tamamlanmamış)</li>
+      <li>Koleksiyonların Profilde Gözükmesi</li>
+      <li>Arkadaş Ekleme Çıkarma Butonu</li>
+      <li>Mesajlaşma Butonu</li>
+      <li>Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)</li>
+      <li>Firebase'e bağlama</li>
+      <li>Ayarlar</li>
+      <li>Dark Mode</li>
+    </ul>
 
-    - **ChatBot**:
-      - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.
+    <p>
+    <b>ChatBot:</b>
+    </p>
+    <ul>
+      <li>Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.</li>
+    </ul>
 
-    - **Anasayfa**:
-      - Popüler Filmlerin Gözüktüğü Bir Alan
-      - Kırmızı Hap Rastgele Dizi Önerisi
-      - Mavi Hap Rastgele Film Önerisi
-      - Mesajlara Erişme Butonu
-      - Film Zevki Uyan Kullanıcıları Gösteren Tablo(tamamlanmamış)
-  
-    - **Film Aratma**:
-      - Filmleri Aratma
-      - Kişileri Aratma
-      - Görsel Düzenlilik
-      - Favorilere Ekleme
-      - Koleksiyona Ekleme
-     
-    - **Giriş Ekranı**:
-      - Firebase
-      - Login Page
-      - Register Page
-      - Google İle Üye Olma
-      - Şifre Politikası(tamamlanmamış)
-      - Kullanıcı Rıza Metni(tamamlanmamış)
-      - UI tasarım
+    <p>
+    <b>Anasayfa:</b>
+    </p>
+    <ul>
+      <li>Popüler Filmlerin Gözüktüğü Bir Alan</li>
+      <li>Kırmızı Hap Rastgele Dizi Önerisi</li>
+      <li>Mavi Hap Rastgele Film Önerisi</li>
+      <li>Mesajlara Erişme Butonu</li>
+      <li>Film Zevki Uyan Kullanıcıları Gösteren Tablo (tamamlanmamış)</li>
+    </ul>
 
-    - **Navbar**
+    <p>
+    <b>Film Aratma:</b>
+    </p>
+    <ul>
+      <li>Filmleri Aratma</li>
+      <li>Kişileri Aratma</li>
+      <li>Görsel Düzenlilik</li>
+      <li>Favorilere Ekleme</li>
+      <li>Koleksiyona Ekleme</li>
+    </ul>
 
-    - **Favoriler**:
-      - Poster Görünümü
-      - Alfabetik Sıralama
-      - Tıklandığında Detayları Gösteren Açılır Ekran
-  
+    <p>
+    <b>Giriş Ekranı:</b>
+    </p>
+    <ul>
+      <li>Firebase</li>
+      <li>Login Page</li>
+      <li>Register Page</li>
+      <li>Google İle Üye Olma</li>
+      <li>Şifre Politikası (tamamlanmamış)</li>
+      <li>Kullanıcı Rıza Metni (tamamlanmamış)</li>
+      <li>UI tasarım</li>
+    </ul>
+
+    <p>
+    <b>Navbar</b>
+    </p>
+
+    <p>
+    <b>Favoriler:</b>
+    </p>
+    <ul>
+      <li>Poster Görünümü</li>
+      <li>Alfabetik Sıralama</li>
+      <li>Tıklandığında Detayları Gösteren Açılır Ekran</li>
+    </ul>
   </details>
 
-  - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
+  <p>
+  <b>Sprint içinde tamamlanması tahmin edilen puan</b>: 160 Puan
+  </p>
 
-  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
+  <p>
+  <b>Puan tamamlama mantığı</b>: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
+  </p>
 
   <details>
     <summary><h3>Sprint 2-Daily Scrum</h3></summary>
@@ -208,29 +240,27 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     ![12](https://github.com/user-attachments/assets/f7980c9d-5c29-4bf1-8b3b-d8d2de85878f)
     ![13](https://github.com/user-attachments/assets/4ca24e61-9cc4-45ac-80b7-8435a3ecc47f)
     ![14](https://github.com/user-attachments/assets/7fb2cc11-a923-47bb-b105-be86b5f80dd4)
-
   </details>
 
   <details>
     <summary><h3>Sprint 2-Board Screenshot</h3></summary>
-    Sprint board screenshotları:
-    
+    <p>Sprint board screenshotları:</p>
     ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
   </details>
 
   <details>
     <summary><h3>Sprint 2-Ürün Durumu Screenshot</h3></summary>
-    - **Ürün Durumu**: Ekran görüntüleri:
+    <p>Ürün Durumu: Ekran görüntüleri:</p>
   </details>
 
   <details>
     <summary><h3>Sprint 2-Review</h3></summary>
-    - **Sprint Review**:
+    <p>Sprint Review:</p>
   </details>
 
   <details>
     <summary><h3>Sprint 2-Retrospective</h3></summary>
-    - **Sprint 2 Retrospective**:
+    <p>Sprint 2 Retrospective:</p>
   </details>
 
 </details>
