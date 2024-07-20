@@ -220,7 +220,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     ![13](https://github.com/user-attachments/assets/4ca24e61-9cc4-45ac-80b7-8435a3ecc47f)
     ![14](https://github.com/user-attachments/assets/7fb2cc11-a923-47bb-b105-be86b5f80dd4)
 
-      </details>
+  </details>
 
   </details>
 
