@@ -125,8 +125,15 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   ---
 
+
+
+<details>
+  <summary><h1>Sprint 2</h1></summary>
+
   <details>
-    <summary><h1>Sprint 2 Not</h1></summary>
+
+    <details>
+    <summary><h3>Sprint 2 Not</h3></summary>
 
 
   <details>
@@ -188,20 +195,12 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   </details>
 
-  ---
-
-
-<details>
-  <summary><h1>Sprint 2</h1></summary>
-
-  <details>
-
   - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
 
   - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
 
   <details>
-    <summary><h1> Sprint 2-Daily Scrum</h1></summary>
+    <summary><h3> Sprint 2-Daily Scrum</h3></summary>
 
 
   <details>
