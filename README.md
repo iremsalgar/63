@@ -45,7 +45,7 @@ Sosyal etkileşim ve paylaşımda bulunmayı sevenler
 Benzer zevklere sahip kişilerle tanışmak isteyenler
 Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
-## Sprint Not
+## Sprint 1 Not
 
 Proje yönetimi için kanban kullanılmasına karar verildi.
 Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
@@ -88,7 +88,7 @@ Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı
 ![7c4d072a-1442-411d-b226-368087c9bae3](https://github.com/iremsalgar/63/assets/74204825/05bb6de2-820d-4939-b122-5a2d18d0d61f)
 ![095142b2-6a80-4654-b777-f8c1ce89a946](https://github.com/iremsalgar/63/assets/74204825/e42b805a-ec3f-4f3d-80ee-651b36a1fa66)
 
--
+
 - **Sprint Review**: 
 Bu sprint için , Navigation Bar ve ChatBot kodlanmıştır.
 
@@ -104,4 +104,30 @@ Toplantılar için daha uygun saatlere karar verilmiştir
 ## Product Backlog URL
 
 
-## Ürün İsmi
+## Sprint 2 Not
+---
+
+# Sprint 1
+
+- **Sprint içinde tamamlanması tahmin edilen puan**: 100 Puan
+
+
+- **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde iikinci sprint'in 160 ile başlaması gerektiğine karar verildi.
+
+
+- **Daily Scrum**:
+
+
+- **Sprint board update**: Sprint board screenshotları:
+
+
+- **Ürün Durumu**: Ekran görüntüleri:
+- 
+
+- **Sprint Review**: 
+
+
+- **Sprint Retrospective:**
+
+---
+
