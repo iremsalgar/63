@@ -233,7 +233,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     
   ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
 
-        </details>
+  </details>
 
   </details>
 
@@ -245,7 +245,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   - **Ürün Durumu**: Ekran görüntüleri:
  
-        </details>
+  </details>
 
   </details>
 
@@ -262,8 +262,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   </details>
 
-
-    <details>
+  </details>
     <summary><h3> Sprint 2-Retrospective</h3></summary>
 
 
