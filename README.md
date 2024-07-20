@@ -57,7 +57,11 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 ---
 
-# Sprint 1
+  <details>
+    <summary><h1>Sprint 1</h1></summary>
+
+
+  <details>
 
 - **Sprint içinde tamamlanması tahmin edilen puan**: 100 Puan
 
