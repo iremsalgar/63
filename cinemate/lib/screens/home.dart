@@ -1,8 +1,11 @@
+import 'package:cinemate/services/favorite_movie.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'messagePage.dart';
+import 'movieDetailPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,12 +16,30 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List _popularMovies = [];
+  List<String> favoriteMovieIds = [];
+  List<String> _collections = [];
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
 
   @override
   void initState() {
     super.initState();
     _loadPopularMovies();
+    _loadCollections();
+    _loadFavorites();
+  }
+
+  Future<void> _loadCollections() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _collections = prefs.getStringList('collections') ?? [];
+    });
+  }
+
+  Future<void> _loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      favoriteMovieIds = prefs.getStringList('favoriteMovies') ?? [];
+    });
   }
 
   void _loadPopularMovies() async {
@@ -36,7 +57,6 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) {
-        String selectedCollection = '';
         final TextEditingController collectionController =
             TextEditingController();
         return AlertDialog(
@@ -82,8 +102,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _recommendRandomMovie() async {
-    final randomPage = Random().nextInt(500) +
-        1; // 500 sayfa aralığında rastgele bir sayfa seç
+    final randomPage = Random().nextInt(500) + 1;
     final url =
         'https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&page=$randomPage';
     final response = await http.get(Uri.parse(url));
@@ -91,13 +110,12 @@ class _HomePageState extends State<HomePage> {
       final data = json.decode(response.body);
       final movies = data['results'];
       final randomMovie = (movies..shuffle()).first;
-      _showMovieDetailsDialog(randomMovie);
+      _showMovieDetailsPage(randomMovie, false);
     }
   }
 
   Future<void> _recommendRandomTVShow() async {
-    final randomPage = Random().nextInt(500) +
-        1; // 500 sayfa aralığında rastgele bir sayfa seç
+    final randomPage = Random().nextInt(500) + 1;
     final url =
         'https://api.themoviedb.org/3/discover/tv?api_key=$apiKey&page=$randomPage';
     final response = await http.get(Uri.parse(url));
@@ -105,35 +123,57 @@ class _HomePageState extends State<HomePage> {
       final data = json.decode(response.body);
       final tvShows = data['results'];
       final randomTVShow = (tvShows..shuffle()).first;
-      _showMovieDetailsDialog(randomTVShow);
+      _showMovieDetailsPage(randomTVShow, true);
     }
   }
 
-  void _showMovieDetailsDialog(dynamic movie) {
+  void _showMovieDetailsPage(Map movie, bool isTVShow) {
     final posterUrl = 'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(movie['title'] ?? movie['name']),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.network(posterUrl),
-              const SizedBox(height: 10),
-              Text(movie['overview'] ?? 'No description available.'),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MovieDetailPage(
+          movie: movie,
+          isTVShow: isTVShow,
+          posterUrl: posterUrl,
+        ),
+      ),
+    );
+  }
+
+  void _addFavorite(int movieId) async {
+    final prefs = await SharedPreferences.getInstance();
+    FavoriteService().addFavoriteMovie(movieId.toString());
+    final favoriteMovies = prefs.getStringList('favoriteMovies') ?? [];
+    if (!favoriteMovies.contains(movieId.toString())) {
+      favoriteMovies.add(movieId.toString());
+      await prefs.setStringList('favoriteMovies', favoriteMovies);
+      setState(() {
+        favoriteMovieIds = favoriteMovies;
+      });
+    }
+  }
+
+  void _removeFavorite(int movieId) async {
+    final prefs = await SharedPreferences.getInstance();
+    FavoriteService().removeFavoriteMovie(movieId.toString());
+
+    final favoriteMovies = prefs.getStringList('favoriteMovies') ?? [];
+    if (favoriteMovies.contains(movieId.toString())) {
+      favoriteMovies.remove(movieId.toString());
+      await prefs.setStringList('favoriteMovies', favoriteMovies);
+      setState(() {
+        favoriteMovieIds = favoriteMovies;
+      });
+    }
+  }
+
+  void _navigateToMessages() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MessagePage(),
+      ),
     );
   }
 
@@ -142,84 +182,106 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-      ),
-      body: Column(
-        children: [
-          _popularMovies.isEmpty
-              ? const Center(child: CircularProgressIndicator())
-              : SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: _popularMovies.map((movie) {
-                      final posterUrl =
-                          'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
-                      return GestureDetector(
-                        onTap: () => _showMovieDetailsDialog(movie),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              movie['poster_path'] != null
-                                  ? Image.network(
-                                      posterUrl,
-                                      width: 100,
-                                      height: 150,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : const SizedBox(
-                                      width: 100,
-                                      height: 150,
-                                      child: Icon(Icons.movie),
-                                    ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  movie['title'],
-                                  style: const TextStyle(fontSize: 12),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.favorite_border),
-                                onPressed: () =>
-                                    _showAddToCollectionDialog(movie['id']),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: _recommendRandomTVShow,
-                child: Container(
-                  width: 100,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 164, 25, 15),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              GestureDetector(
-                onTap: _recommendRandomMovie,
-                child: Container(
-                  width: 100,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 21, 92, 150),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                ),
-              ),
-            ],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.message),
+            onPressed: _navigateToMessages,
           ),
         ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _popularMovies.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: _popularMovies.map((movie) {
+                        final isFavorite =
+                            favoriteMovieIds.contains(movie['id'].toString());
+                        final posterUrl =
+                            'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
+                        return GestureDetector(
+                          onTap: () => _showMovieDetailsPage(movie, false),
+                          child: Card(
+                            child: Column(
+                              children: [
+                                movie['poster_path'] != null
+                                    ? Image.network(
+                                        posterUrl,
+                                        width: 100,
+                                        height: 150,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : const SizedBox(
+                                        width: 100,
+                                        height: 150,
+                                        child: Icon(Icons.movie),
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    movie['title'],
+                                    style: const TextStyle(fontSize: 12),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                IconButton(
+                                    icon: isFavorite
+                                        ? const Icon(Icons.star)
+                                        : const Icon(Icons.star_border),
+                                    onPressed: () {
+                                      if (isFavorite) {
+                                        _removeFavorite(movie['id']);
+                                      } else {
+                                        _addFavorite(movie['id']);
+                                        _showAddToCollectionDialog(movie['id']);
+                                      }
+                                    }),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+            const SizedBox(height: 20),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  'assets/image/RemovePopcorn.png', // Bu görselin asset klasöründe olduğundan emin olun
+                  width: 300,
+                  height: 300,
+                ),
+                Positioned(
+                  left: 16,
+                  bottom: 84,
+                  child: GestureDetector(
+                    onTap: _recommendRandomTVShow,
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.transparent,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 17,
+                  bottom: 84,
+                  child: GestureDetector(
+                      onTap: _recommendRandomMovie,
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        color: Colors.transparent,
+                      )),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

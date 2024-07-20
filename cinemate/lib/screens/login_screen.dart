@@ -1,5 +1,6 @@
-import 'package:cinemate/widgets/forward_button.dart';
+import 'package:cinemate/services/auth.dart';
 import 'package:cinemate/widgets/login_background_image.dart';
+import 'package:cinemate/widgets/signuptextfield.dart';
 import 'package:cinemate/widgets/social_login_button.dart';
 import 'package:cinemate/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,22 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isLoginScreen = true;
 
+  final usernameControllerUp = TextEditingController();
+  final emailControllerUp = TextEditingController();
+  final passControllerUp = TextEditingController();
+  final emailControllerIn = TextEditingController();
+  final passControllerIn = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    usernameControllerUp.dispose();
+    emailControllerUp.dispose();
+    passControllerUp.dispose();
+    emailControllerIn.dispose();
+    passControllerIn.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +38,15 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           const LoginBackgroundImage(),
           loginFrontContainer(context),
-          const ForwardButton(),
+          if (!isLoginScreen)
+            SignUpButton(
+                usernameController: usernameControllerUp,
+                emailController: emailControllerUp,
+                passController: passControllerUp),
+          if (isLoginScreen)
+            LoginButton(
+                emailControllerIn: emailControllerIn,
+                passControllerIn: passControllerIn),
           if (isLoginScreen) const SocialLoginButton()
         ],
       ),
@@ -110,18 +135,53 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 10),
             if (!isLoginScreen)
-              const CustomTextfield(
-                  hintText: "Name-Surname:", prefixIcon: Icon(Icons.person)),
+              CustomTextFieldSignUp(
+                  controller: usernameControllerUp,
+                  hintText: "Name-Surname:",
+                  prefixIcon: const Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  )),
             const SizedBox(height: 10),
-            const CustomTextfield(
-              hintText: "E-Mail:",
-              prefixIcon: Icon(Icons.email),
-            ),
+            if (!isLoginScreen)
+              CustomTextFieldSignUp(
+                controller: emailControllerUp,
+                hintText: "E-Mail:",
+                prefixIcon: const Icon(
+                  Icons.email,
+                  color: Colors.black,
+                ),
+              ),
             const SizedBox(height: 10),
-            const CustomTextfield(
-              hintText: "Password:",
-              prefixIcon: Icon(Icons.password),
-            ),
+            if (!isLoginScreen)
+              CustomTextFieldSignUp(
+                controller: passControllerUp,
+                hintText: "Password:",
+                prefixIcon: const Icon(
+                  Icons.password,
+                  color: Colors.black,
+                ),
+              ),
+            if (isLoginScreen)
+              CustomTextfield(
+                keyboardType: TextInputType.emailAddress,
+                controller: emailControllerIn,
+                hintText: "E-Mail:",
+                prefixIcon: const Icon(
+                  Icons.email,
+                  color: Colors.black,
+                ),
+              ),
+            if (isLoginScreen)
+              CustomTextfield(
+                keyboardType: TextInputType.visiblePassword,
+                controller: passControllerIn,
+                hintText: "Password:",
+                prefixIcon: const Icon(
+                  Icons.password,
+                  color: Colors.black,
+                ),
+              ),
             const SizedBox(height: 10),
             if (isLoginScreen)
               TextButton(
@@ -139,5 +199,105 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+}
+
+class SignUpButton extends StatelessWidget {
+  const SignUpButton({
+    super.key,
+    required this.usernameController,
+    required this.emailController,
+    required this.passController,
+  });
+  final TextEditingController usernameController;
+  final TextEditingController emailController;
+  final TextEditingController passController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        top: 555,
+        right: 0,
+        left: 0,
+        child: Center(
+          child: Container(
+            height: 90,
+            width: 90,
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.8),
+                  )
+                ]),
+            child: GestureDetector(
+              onTap: () {
+                FirebaseAuthService().signUp(
+                  username: usernameController.text,
+                  name: usernameController.text,
+                  email: emailController.text,
+                  password: passController.text,
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.blue[700],
+                    borderRadius: BorderRadius.circular(30)),
+                child: const Icon(Icons.arrow_forward),
+              ),
+            ),
+          ),
+        ));
+  }
+}
+
+class LoginButton extends StatelessWidget {
+  const LoginButton({
+    super.key,
+    required this.emailControllerIn,
+    required this.passControllerIn,
+  });
+
+  final TextEditingController emailControllerIn;
+  final TextEditingController passControllerIn;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        top: 555,
+        right: 0,
+        left: 0,
+        child: Center(
+          child: Container(
+            height: 90,
+            width: 90,
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.8),
+                  )
+                ]),
+            child: GestureDetector(
+              onTap: () {
+                FirebaseAuthService().signIn(
+                  context,
+                  email: emailControllerIn.text,
+                  password: passControllerIn.text,
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.amber[700],
+                    borderRadius: BorderRadius.circular(30)),
+                child: const Icon(Icons.arrow_forward),
+              ),
+            ),
+          ),
+        ));
   }
 }

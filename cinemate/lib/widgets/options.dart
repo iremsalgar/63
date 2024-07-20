@@ -7,5 +7,5 @@ final List option = [
   const HomePage(),
   const SearchPage(),
   const FavoritePage(),
-  const ProfilePage()
+  const ProfilePage(),
 ];
