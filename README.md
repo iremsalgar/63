@@ -126,6 +126,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 -Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
+
 ![toplantı fotik](https://github.com/user-attachments/assets/2a44ab5a-e8f6-46ba-8df3-b6a5ac3f5996)
 
 **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
@@ -183,6 +184,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 - **Daily Scrum**:
+  
 ![1](https://github.com/user-attachments/assets/725b5730-ec0f-4939-b6aa-a6f8d21a8fbd)
 ![2](https://github.com/user-attachments/assets/1a39d59c-488e-4095-9821-3df6adca5ba5)
 ![3](https://github.com/user-attachments/assets/6617fe37-5080-404e-a743-1d37f2faf960)
