@@ -62,10 +62,11 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 -Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme özelliği eklenmesine karar verildi.
 -Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı.
 
-  <details>
-    
+  </details>
 
-  <details>
+  </details>
+
+  ---
 
 
   <details>
