@@ -199,6 +199,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 
+
 - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
 
 
