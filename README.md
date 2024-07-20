@@ -103,7 +103,12 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
  
 
 
----
+
+  </details>
+
+  </details>
+
+  ---
 
 ## Product Backlog URL
 ---
