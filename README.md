@@ -270,7 +270,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   - **Sprint 2 Retrospective**:
 
-        </details>
+  </details>
 
   </details>
 
