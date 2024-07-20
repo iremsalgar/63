@@ -11,7 +11,7 @@ Takım Flutter 63
 - ***Görkem Enes İnci*** - Developer
 - ***Furkan Turan*** - Developer
 
-## Oyun İsmi
+## Ürün İsmi
 
 --Movie App--
 
@@ -105,14 +105,14 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
  
 
 
-
+## Product Backlog URL
   </details>
 
   </details>
 
   ---
 
-## Product Backlog URL
+
 ---
 
 
@@ -207,3 +207,6 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 - **Sprint Retrospective:**
 
 
+  </details>
+
+  </details>
