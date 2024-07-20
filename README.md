@@ -184,11 +184,12 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Alfabetik Sıralama
     - Tıklandığında Detayları Gösteren Açılır Ekran
     - 
-    <details>
+  </details>
 
-  <details>
+  </details>
 
---
+  ---
+
 
   <details>
     <summary><h1>Sprint 2</h1></summary>
