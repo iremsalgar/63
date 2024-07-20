@@ -5,13 +5,13 @@ Takım Flutter 63
 # Ürün İle İlgili Bilgiler
 
 ## Takım Elemanları
-- Kübra Merk: Product Owner 
-- İrem Yalçın: Scrum Master
-- İrem Salğar : Developer
-- Görkem Enes İnci: Developer
-- Furkan Turan: Developer
+- ***Kübra Merk*** - Product Owner 
+- ***İrem Yalçın*** - Scrum Master
+- ***İrem Salğar*** - Developer
+- ***Görkem Enes İnci*** - Developer
+- ***Furkan Turan*** - Developer
 
-## Ürün İsmi
+## Oyun İsmi
 
 --Movie App--
 
@@ -45,7 +45,7 @@ Sosyal etkileşim ve paylaşımda bulunmayı sevenler
 Benzer zevklere sahip kişilerle tanışmak isteyenler
 Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
-## Sprint Not
+## Sprint 1 Not
 
 Proje yönetimi için kanban kullanılmasına karar verildi.
 Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
@@ -104,4 +104,25 @@ Toplantılar için daha uygun saatlere karar verilmiştir
 ## Product Backlog URL
 
 
+## Sprint 2 Not
 ---
+
+# Sprint 2
+
+- **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
+
+
+- **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprintin 160 ile başlaması gerektiğine karar verildi.
+
+
+- **Daily Scrum**:
+
+- **Sprint board update**: Sprint board screenshotları:
+
+- **Ürün Durumu**: Ekran görüntüleri:
+
+- **Sprint Review**:
+
+- **Sprint Retrospective:**
+
+
