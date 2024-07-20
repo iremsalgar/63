@@ -45,6 +45,15 @@ Sosyal etkileşim ve paylaşımda bulunmayı sevenler
 Benzer zevklere sahip kişilerle tanışmak isteyenler
 Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
+
+---
+
+  <details>
+    <summary><h1>Sprint 1</h1></summary>
+
+
+  <details>
+
 ## Sprint 1 Not
 
 -Proje yönetimi için kanban kullanılmasına karar verildi.
@@ -55,13 +64,6 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 -Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme özelliği eklenmesine karar verildi
 -Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı
 
----
-
-  <details>
-    <summary><h1>Sprint 1</h1></summary>
-
-
-  <details>
 
 - **Sprint içinde tamamlanması tahmin edilen puan**: 100 Puan
 
@@ -71,7 +73,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 - **Daily Scrum**:
 
-- ![13a0885e-12d8-43f9-b614-4a503e026d91](https://github.com/iremsalgar/63/assets/74204825/4f755578-5667-4590-9a60-3cfb6e9fc89a)
+![13a0885e-12d8-43f9-b614-4a503e026d91](https://github.com/iremsalgar/63/assets/74204825/4f755578-5667-4590-9a60-3cfb6e9fc89a)
 ![1cb8d475-646c-4dce-b513-d9b75629efa5](https://github.com/iremsalgar/63/assets/74204825/09757a3a-92c1-422e-b40c-4aa1d52a373f)
 ![21d4c292-2650-48ce-aa5c-65531c2a3063](https://github.com/iremsalgar/63/assets/74204825/62e159f2-c4b9-45f2-b908-d07955d40a16)
 ![ca83fa2e-5002-4a9a-a1b1-1253b3110841](https://github.com/iremsalgar/63/assets/74204825/5afd9f7c-5a52-4739-97ee-e659715cfba7)
@@ -124,7 +126,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 -Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
-(Toplantı görseli eklenecek) 
+![toplantı fotik](https://github.com/user-attachments/assets/2a44ab5a-e8f6-46ba-8df3-b6a5ac3f5996)
 
 **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
 
@@ -181,6 +183,20 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 - **Daily Scrum**:
+![1](https://github.com/user-attachments/assets/725b5730-ec0f-4939-b6aa-a6f8d21a8fbd)
+![2](https://github.com/user-attachments/assets/1a39d59c-488e-4095-9821-3df6adca5ba5)
+![3](https://github.com/user-attachments/assets/6617fe37-5080-404e-a743-1d37f2faf960)
+![4](https://github.com/user-attachments/assets/73972f3b-4dac-49a9-89bf-d497208ccd68)
+![5](https://github.com/user-attachments/assets/80718b7d-b1e9-4fa2-95cd-98d407cab9cd)
+![6](https://github.com/user-attachments/assets/ea89cf20-042c-4043-8a1b-d6453e2a07f2)
+![7](https://github.com/user-attachments/assets/eccf4086-ae4f-49e9-81f6-12517d7d7c63)
+![8](https://github.com/user-attachments/assets/9c8f0823-3152-49b7-9d0f-af68c99d8e55)
+![9](https://github.com/user-attachments/assets/b6ee1024-8199-4371-848b-a07213f73700)
+![10](https://github.com/user-attachments/assets/daaa2ca6-6762-4c00-8167-95255d6b055f)
+![11](https://github.com/user-attachments/assets/e9160311-7360-4a43-b5b0-a2d175d55c9c)
+![12](https://github.com/user-attachments/assets/f7980c9d-5c29-4bf1-8b3b-d8d2de85878f)
+![13](https://github.com/user-attachments/assets/4ca24e61-9cc4-45ac-80b7-8435a3ecc47f)
+![14](https://github.com/user-attachments/assets/7fb2cc11-a923-47bb-b105-be86b5f80dd4)
 
 - **Sprint board update**: Sprint board screenshotları:
 
