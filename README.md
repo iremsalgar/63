@@ -94,7 +94,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 ![dbde9618-a993-4495-976e-d97bc2a6556a](https://github.com/iremsalgar/63/assets/74204825/de4370e7-0c92-4a13-afed-3b441a11e2b4)
 
 
-- **Sprint board update**: Sprint board screenshotları: 
+- **Sprint board update**: Sprint 1 board screenshot: 
 - ![33408372-35f5-4a6f-8bea-45c13e7a5408](https://github.com/iremsalgar/63/assets/74204825/d89d1b53-3825-41c5-881f-377196408f5e)
 
 
@@ -249,9 +249,31 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   </details>
 
+
+    <details>
+    <summary><h3> Sprint 2-Review</h3></summary>
+
+
+  <details>
+
   - **Sprint Review**:
 
-  - **Sprint Retrospective:**
+        </details>
+
+  </details>
+
+
+    <details>
+    <summary><h3> Sprint 2-Retrospective</h3></summary>
+
+
+  <details>
+
+  - **Sprint 2 Retrospective**:
+
+        </details>
+
+  </details>
 
   </details>
 
