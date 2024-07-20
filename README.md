@@ -224,10 +224,30 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   </details>
 
-  - **Sprint board update**: Sprint board screenshotları:
+  <details>
+    <summary><h3> Sprint 2-Board Screenshot</h3></summary>
+
+
+  <details>
+  Sprint board screenshotları:
+    
   ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
 
+        </details>
+
+  </details>
+
+    <details>
+    <summary><h3> Sprint 2-Ürün Durumu Screenshot</h3></summary>
+
+
+  <details>
+
   - **Ürün Durumu**: Ekran görüntüleri:
+ 
+        </details>
+
+  </details>
 
   - **Sprint Review**:
 
