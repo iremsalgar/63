@@ -262,7 +262,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   </details>
 
-  </details>
+  <details>
     <summary><h3> Sprint 2-Retrospective</h3></summary>
 
 
