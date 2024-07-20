@@ -126,8 +126,9 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   ---
 
 
-<details>
-  <summary><h1>Sprint 2</h1></summary>
+  <details>
+    <summary><h1>Sprint 2</h1></summary>
+
 
   <details>
 
