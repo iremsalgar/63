@@ -202,7 +202,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
 
 
-- **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprintin 160 ile başlaması gerektiğine karar verildi.
+- **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde iikinci sprint'in en azından 160 olması gerektiğine karar verildi.
 
 
 - **Daily Scrum**:
