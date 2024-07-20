@@ -49,20 +49,32 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 ---
 
   <details>
+    <summary><h1>Sprint 1 Not</h1></summary>
+
+
+  <details>
+
+-Proje yönetimi için kanban kullanılmasına karar verildi.
+-Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
+-Chatbot için Gemini kullanılmasına karar verildi.
+-Uygulama içinde film araştırma imkanı sağlamasına karar verildi.
+-Favori filmlerinizi profilinize ekleyebilme özelliği eklendi.
+-Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme özelliği eklenmesine karar verildi.
+-Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı.
+
+  <details>
+    
+
+  <details>
+
+
+  <details>
     <summary><h1>Sprint 1</h1></summary>
 
 
   <details>
 
-## Sprint 1 Not
 
--Proje yönetimi için kanban kullanılmasına karar verildi.
--Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
--Chatbot için Gemini kullanılmasına karar verildi
--Uygulama içinde film araştırma imkanı sağlamasına karar verildi
--Favori filmlerinizi profilinize ekleyebilme özelliği eklendi
--Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme özelliği eklenmesine karar verildi
--Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı
 
 
 - **Sprint içinde tamamlanması tahmin edilen puan**: 100 Puan
@@ -112,17 +124,11 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   ---
 
-
----
+  <details>
+    <summary><h1>Sprint 2 Not</h1></summary>
 
 
   <details>
-    <summary><h1>Sprint 2</h1></summary>
-
-
-  <details>
-
-## Sprint 2 Not
 
 
 -Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
@@ -176,6 +182,20 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Poster Görünümü
     - Alfabetik Sıralama
     - Tıklandığında Detayları Gösteren Açılır Ekran
+    - 
+    <details>
+
+  <details>
+
+--
+
+  <details>
+    <summary><h1>Sprint 2</h1></summary>
+
+
+  <details>
+
+
 
 - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
 
