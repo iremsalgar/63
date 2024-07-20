@@ -274,6 +274,8 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   </details>
 
-  </details>
 
-</details>
+
+    </details>
+
+  </details>
