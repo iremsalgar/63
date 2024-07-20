@@ -132,64 +132,64 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   <details>
     <summary><h3>Sprint 2 Not</h3></summary>
-    
-    Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
-    
-    ![toplantı fotik](https://github.com/user-attachments/assets/2a44ab5a-e8f6-46ba-8df3-b6a5ac3f5996)
-    
-    **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
-    
-    **Profil:**
-    - Kullanıcı bilgileri
-    - Editleme
-    - Profil Resmi Ekleme
-    - Uygulama İçi Görsel Paketi Kullanılabilmesi  (tamamlanmamış)
-    - Koleksiyonların Profilde Gözükmesi
-    - Arkadaş Ekleme Çıkarma Butonu
-    - Mesajlaşma Butonu
-    - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
-    - Firebase'e bağlama
-    - Ayarlar
-    - Dark Mode
-    
-    **ChatBot:**
-    - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.
-    
-    **Anasayfa:**
-    - Popüler Filmlerin Gözüktüğü Bir Alan
-    - Kırmızı Hap Rastgele Dizi Önerisi
-    - Mavi Hap Rastgele Film Önerisi
-    - Mesajlara Erişme Butonu
-    - Film Zevki Uyan Kullanıcıları Gösteren Tablo(tamamlanmamış)
-    
-    **Film Aratma:**
-    - Filmleri Aratma
-    - Kişileri Aratma
-    - Görsel Düzenlilik
-    - Favorilere Ekleme
-    - Koleksiyona Ekleme
-    
-    **Giriş Ekranı:**
-    - Firebase
-    - Login Page
-    - Register Page
-    - Google İle Üye Olma
-    - Şifre Politikası(tamamlanmamış)
-    - Kullanıcı Rıza Metni(tamamlanmamış)
-    - UI tasarım
-    
-    **Navbar**
-    
-    **Favoriler:**
-    - Poster Görünümü
-    - Alfabetik Sıralama
-    - Tıklandığında Detayları Gösteren Açılır Ekran
 
+    - Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
+
+    ![toplantı fotik](https://github.com/user-attachments/assets/2a44ab5a-e8f6-46ba-8df3-b6a5ac3f5996)
+
+    **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
+
+    - **Profil**:
+      - Kullanıcı bilgileri
+      - Editleme
+      - Profil Resmi Ekleme
+      - Uygulama İçi Görsel Paketi Kullanılabilmesi  (tamamlanmamış) 
+      - Koleksiyonların Profilde Gözükmesi
+      - Arkadaş Ekleme Çıkarma Butonu
+      - Mesajlaşma Butonu
+      - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
+      - Firebase'e bağlama
+      - Ayarlar
+      - Dark Mode
+
+    - **ChatBot**:
+      - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.
+
+    - **Anasayfa**:
+      - Popüler Filmlerin Gözüktüğü Bir Alan
+      - Kırmızı Hap Rastgele Dizi Önerisi
+      - Mavi Hap Rastgele Film Önerisi
+      - Mesajlara Erişme Butonu
+      - Film Zevki Uyan Kullanıcıları Gösteren Tablo(tamamlanmamış)
+  
+    - **Film Aratma**:
+      - Filmleri Aratma
+      - Kişileri Aratma
+      - Görsel Düzenlilik
+      - Favorilere Ekleme
+      - Koleksiyona Ekleme
+     
+    - **Giriş Ekranı**:
+      - Firebase
+      - Login Page
+      - Register Page
+      - Google İle Üye Olma
+      - Şifre Politikası(tamamlanmamış)
+      - Kullanıcı Rıza Metni(tamamlanmamış)
+      - UI tasarım
+
+    - **Navbar**
+
+    - **Favoriler**:
+      - Poster Görünümü
+      - Alfabetik Sıralama
+      - Tıklandığında Detayları Gösteren Açılır Ekran
+  
   </details>
 
-  **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
+  - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
 
-  **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
+  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
 
   <details>
     <summary><h3>Sprint 2-Daily Scrum</h3></summary>
@@ -214,23 +214,23 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   <details>
     <summary><h3>Sprint 2-Board Screenshot</h3></summary>
     Sprint board screenshotları:
+    
     ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
   </details>
 
   <details>
     <summary><h3>Sprint 2-Ürün Durumu Screenshot</h3></summary>
-    Ürün Durumu: Ekran görüntüleri:
+    - **Ürün Durumu**: Ekran görüntüleri:
   </details>
 
   <details>
     <summary><h3>Sprint 2-Review</h3></summary>
-    Sprint Review:
+    - **Sprint Review**:
   </details>
 
   <details>
     <summary><h3>Sprint 2-Retrospective</h3></summary>
-    Sprint 2 Retrospective:
+    - **Sprint 2 Retrospective**:
   </details>
 
 </details>
-
