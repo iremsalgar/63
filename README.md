@@ -199,13 +199,13 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 
-- **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
+ - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
 
 
-- **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde iikinci sprint'in en azından 160 olması gerektiğine karar verildi.
+ - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde iikinci sprint'in en azından 160 olması gerektiğine karar verildi.
 
 
-- **Daily Scrum**:
+ - **Daily Scrum**:
   
 ![1](https://github.com/user-attachments/assets/725b5730-ec0f-4939-b6aa-a6f8d21a8fbd)
 ![2](https://github.com/user-attachments/assets/1a39d59c-488e-4095-9821-3df6adca5ba5)
