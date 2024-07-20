@@ -102,7 +102,10 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 ---
 
 ## Product Backlog URL
+---
 
+
+# Sprint 2
 
 ## Sprint 2 Not
 
@@ -122,12 +125,41 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Mesajlaşma Butonu
     - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
     - Firebase'e bağlama
-- 
-- 
----
+    - Ayarlar
+    - Dark Mode
 
+- **ChatBot**:
+    - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.
 
-# Sprint 2
+- **Anasayfa**:
+    - Popüler filmlerin gözüktüğü bir alan
+    - Kırmızı Hap Random Dizi Önerisi
+    - Mavi Hap Random Dizi Önerisi
+    - Mesajlara Erişme Butonu
+    - Film Zevki Uyan Kullanıcıları Gösteren Tablo(tamamlanmamış)
+  
+- **Film Aratma**:
+    - Filmleri Aratma
+    - Kişileri Aratma
+    - Görsel Düzenlilik
+    - Favorilere Ekleme
+    - Koleksiyona Ekleme
+     
+- **Giriş Ekranı**:
+    - Firebase
+    - Login Page
+    - Register Page
+    - Google İle Üye Olma
+    - Şifre Politikası(tamamlanmamış)
+    - Kullanıcı Rıza Metni(tamamlanmamış)
+    - UI tasarım
+
+- **Navbar**
+
+- **Favoriler**:
+    - Poster Görünümü
+    - Alfabetik Sıralama
+    - Tıklandığında Detayları Gösteren Açılır Ekran
 
 - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
 
