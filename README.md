@@ -133,8 +133,8 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 - **Anasayfa**:
     - Popüler filmlerin gözüktüğü bir alan
-    - Kırmızı Hap Random Dizi Önerisi
-    - Mavi Hap Random Dizi Önerisi
+    - Kırmızı Hap Rastgele Dizi Önerisi
+    - Mavi Hap Rastgele Film Önerisi
     - Mesajlara Erişme Butonu
     - Film Zevki Uyan Kullanıcıları Gösteren Tablo(tamamlanmamış)
   
