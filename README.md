@@ -13,7 +13,7 @@ Takım Flutter 63
 
 ## Ürün İsmi
 
---Movie App--
+--CineMate--
 
 ## Product Backlog URL
 
@@ -104,4 +104,4 @@ Toplantılar için daha uygun saatlere karar verilmiştir
 ## Product Backlog URL
 
 
----
+## Ürün İsmi
