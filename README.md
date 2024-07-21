@@ -132,12 +132,12 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   <details>
 
-<details>
-    <summary><h3>Sprint 2 Not</h3></summary>
+  - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
+
+  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
 
 
-  <details>
-
+# Sprint 2- Not
 
 -Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
 
@@ -195,9 +195,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   </details>
 
-  - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
 
-  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
 
   <details>
     <summary><h3> Sprint 2-Daily Scrum</h3></summary>
