@@ -236,6 +236,16 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   <details>
     <summary><h3> Sprint 2-Daily Scrum Screenshot</h3></summary>
 
+    ![t1](https://github.com/user-attachments/assets/ce6a7be3-cf93-4817-ae5b-583325b240e1)
+    ![t2](https://github.com/user-attachments/assets/4c0d9ffc-06fc-49c7-9444-6677a5d5fb1c)
+    ![t3](https://github.com/user-attachments/assets/63cba883-019b-493e-ba39-aaaa2f1ac738)
+    ![t4](https://github.com/user-attachments/assets/e451c0b7-1ec9-423f-8701-a4d7e4a707c7)
+    ![t5](https://github.com/user-attachments/assets/40ebe833-1faa-496c-ad44-5f6b2de1e011)
+    ![t6](https://github.com/user-attachments/assets/b32bd2b3-cbdf-4a7e-90a2-cce306bb225f)
+    ![t7](https://github.com/user-attachments/assets/0fd2afcb-e580-4761-a7a8-376b64061d00)
+    ![t8](https://github.com/user-attachments/assets/28b5b9a0-d764-48e9-b7eb-bdf09e604751)
+    ![t9](https://github.com/user-attachments/assets/b62e8ac9-85fd-4979-86fb-74ff301f316d)
+    ![t10](https://github.com/user-attachments/assets/d5ff9a5c-4e99-434c-9f48-f2cfd8883bce)
 
   <details>
 
@@ -250,7 +260,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   <details>
   Sprint board screenshotları:
     
-   ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
+   ![kanban1](https://github.com/user-attachments/assets/b18e8552-a3bc-470e-9bbe-f618af882cc9)
 
   </details>
 
