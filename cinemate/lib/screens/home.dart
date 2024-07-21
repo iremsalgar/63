@@ -1,9 +1,12 @@
+import 'package:cinemate/services/collections.dart';
 import 'package:cinemate/services/favorite_movie.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'messagePage.dart';
 import 'movieDetailPage.dart';
 
@@ -16,8 +19,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List _popularMovies = [];
-  List<String> favoriteMovieIds = [];
   List<String> _collections = [];
+  List<String> favoriteMovieIds = [];
+  final FavoriteService favoriteService = FavoriteService();
+  final FirestoreService collectionsServices = FirestoreService();
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
 
   @override
@@ -29,20 +34,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _loadCollections() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _collections = prefs.getStringList('collections') ?? [];
-    });
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      final collections = await collectionsServices.getCollections(uid);
+      setState(() {
+        _collections = collections;
+      });
+    }
   }
 
   Future<void> _loadFavorites() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      favoriteMovieIds = prefs.getStringList('favoriteMovies') ?? [];
-    });
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      final favoritesStream = favoriteService.getFavoriteMovies();
+      favoritesStream.listen((snapshot) {
+        final favoriteIds = snapshot.docs.map((doc) => doc.id).toList();
+        setState(() {
+          favoriteMovieIds = favoriteIds;
+        });
+      });
+    }
   }
 
-  void _loadPopularMovies() async {
+  Future<void> _loadPopularMovies() async {
     final url = 'https://api.themoviedb.org/3/movie/popular?api_key=$apiKey';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -50,6 +64,24 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _popularMovies = data['results'];
       });
+    }
+  }
+
+  Future<void> _addCollection(String collectionName) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null && collectionName.isNotEmpty) {
+      await collectionsServices.addCollection(uid, collectionName);
+      setState(() {
+        _collections.add(collectionName);
+      });
+    }
+  }
+
+  Future<void> _addMovieToCollection(int movieId, String collectionName) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      await collectionsServices.addMovieToCollection(
+          uid, collectionName, movieId.toString());
     }
   }
 
@@ -64,6 +96,22 @@ class _HomePageState extends State<HomePage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              DropdownButton<String>(
+                value: _collections.isNotEmpty ? _collections.first : null,
+                hint: const Text('Select Collection'),
+                items: _collections.map((collection) {
+                  return DropdownMenuItem<String>(
+                    value: collection,
+                    child: Text(collection),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    _addMovieToCollection(movieId, value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
               TextField(
                 controller: collectionController,
                 decoration: const InputDecoration(
@@ -74,22 +122,15 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(context),
               child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
                 final newCollection = collectionController.text.trim();
                 if (newCollection.isNotEmpty) {
-                  final collectionKey = 'collection_$newCollection';
-                  final collection = prefs.getStringList(collectionKey) ?? [];
-                  if (!collection.contains(movieId.toString())) {
-                    collection.add(movieId.toString());
-                    prefs.setStringList(collectionKey, collection);
-                  }
+                  await _addCollection(newCollection);
+                  _addMovieToCollection(movieId, newCollection);
                 }
                 Navigator.pop(context);
               },
@@ -168,26 +209,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _navigateToMessages() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const MessagePage(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.message),
-            onPressed: _navigateToMessages,
-          ),
-        ],
+        actions: const [],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -251,7 +278,7 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.center,
               children: [
                 Image.asset(
-                  'assets/image/RemovePopcorn.png', // Bu görselin asset klasöründe olduğundan emin olun
+                  'assets/image/RemovePopcorn.png',
                   width: 300,
                   height: 300,
                 ),
@@ -269,14 +296,15 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Positioned(
                   right: 17,
-                  bottom: 84,
+                  bottom: 65,
                   child: GestureDetector(
-                      onTap: _recommendRandomMovie,
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.transparent,
-                      )),
+                    onTap: _recommendRandomMovie,
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.transparent,
+                    ),
+                  ),
                 ),
               ],
             ),

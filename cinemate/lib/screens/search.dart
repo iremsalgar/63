@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:cinemate/screens/otherProfilePage.dart';
+import 'package:cinemate/screens/profile.dart';
+import 'package:cinemate/services/auth.dart';
+import 'package:cinemate/services/collections.dart';
 import 'package:cinemate/services/favorite_movie.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'movieDetailPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,63 +22,132 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _controller = TextEditingController();
-  List _searchResults = [];
   List<String> _collections = [];
   List<String> favoriteMovieIds = [];
-  List _userResults = [];
+  List<Map<String, dynamic>> _searchResults = [];
+  List<Map<String, dynamic>> _userResults = [];
+  final FirestoreService collectionsServices = FirestoreService();
+  final FavoriteService favoriteService = FavoriteService();
   String _searchType = 'Movie/TV Show';
+  String _profileName = "";
+  String _username = "";
+  bool isMyProfile = false;
+  File? _profileImageFile;
+  bool onPress = false;
+  int _followingCount = 29;
+  int _followersCount = 5;
+  double _likesCount = 7.5;
 
   @override
   void initState() {
     super.initState();
     _loadCollections();
     _loadFavorites();
+    _loadProfile();
   }
 
   Future<void> _loadCollections() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _collections = prefs.getStringList('collections') ?? [];
-    });
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return;
+
+    try {
+      final collectionRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('collections');
+      final snapshot = await collectionRef.get();
+      setState(() {
+        _collections = snapshot.docs.map((doc) => doc.id).toList();
+      });
+    } catch (e) {
+      print('Koleksiyonları yüklerken hata: $e');
+    }
   }
 
   Future<void> _loadFavorites() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      final favoritesStream = favoriteService.getFavoriteMovies();
+      favoritesStream.listen((snapshot) {
+        final favoriteIds = snapshot.docs.map((doc) => doc.id).toList();
+        setState(() {
+          favoriteMovieIds = favoriteIds;
+        });
+      });
+    }
+  }
+
+  Future<void> _loadProfile() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      favoriteMovieIds = prefs.getStringList('favoriteMovies') ?? [];
-    });
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      try {
+        final retrievedUsername = await FirebaseAuthService().getUsername(uid);
+        setState(() {
+          _profileName = retrievedUsername;
+          _username = prefs.getString('username') ?? '@salgar_irem';
+          final profileImagePath = prefs.getString('profileImagePath');
+          if (profileImagePath != null) {
+            _profileImageFile = File(profileImagePath);
+          }
+          _followingCount = prefs.getInt('followingCount') ?? 29;
+          _followersCount = prefs.getInt('followersCount') ?? 5;
+          _likesCount = prefs.getDouble('likesCount') ?? 7.5;
+        });
+      } catch (e) {
+        print('Profil yüklenirken hata: $e');
+      }
+    }
   }
 
   Future<void> _searchMovies(String query) async {
     const String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
     final url =
         'https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query';
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      setState(() {
-        _searchResults = data['results'];
-      });
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        setState(() {
+          _searchResults = (data['results'] as List)
+              .map((item) => item as Map<String, dynamic>)
+              .toList();
+        });
+      } else {
+        print('Filmleri yüklerken hata: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Filmleri ararken hata: $e');
     }
   }
 
   Future<void> _searchUsers(String query) async {
-    final users = await FirebaseFirestore.instance
-        .collection('users')
-        .where('username', isGreaterThanOrEqualTo: query)
-        .where('username', isLessThanOrEqualTo: '$query\uf8ff')
-        .get();
+    try {
+      final users = await FirebaseFirestore.instance
+          .collection('users')
+          .where('username', isGreaterThanOrEqualTo: query)
+          .where('username', isLessThanOrEqualTo: '$query\uf8ff')
+          .get();
 
-    setState(() {
-      _userResults = users.docs.map((doc) => doc.data()).toList();
-    });
+      setState(() {
+        _userResults = users.docs.map((doc) {
+          final data = doc.data();
+          print('Kullanıcı ID: ${doc.id}'); // Debug print
+          return {
+            'id': doc.id, // Correctly including document ID
+            ...data,
+          };
+        }).toList();
+      });
+    } catch (e) {
+      print('Kullanıcıları ararken hata: $e');
+    }
   }
 
   void _showAddToCollectionDialog(int movieId) {
     showDialog(
       context: context,
       builder: (context) {
-        String? selectedCollection;
         final TextEditingController collectionController =
             TextEditingController();
         return AlertDialog(
@@ -79,22 +155,22 @@ class _SearchPageState extends State<SearchPage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (_collections.isNotEmpty)
-                DropdownButton<String>(
-                  value: selectedCollection,
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedCollection = newValue!;
-                    });
-                  },
-                  items: _collections
-                      .map<DropdownMenuItem<String>>((String collection) {
-                    return DropdownMenuItem<String>(
-                      value: collection,
-                      child: Text(collection),
-                    );
-                  }).toList(),
-                ),
+              DropdownButton<String>(
+                value: _collections.isNotEmpty ? _collections.first : null,
+                hint: const Text('Select Collection'),
+                items: _collections.map((collection) {
+                  return DropdownMenuItem<String>(
+                    value: collection,
+                    child: Text(collection),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    _addMovieToCollection(movieId, value);
+                    Navigator.pop(context);
+                  }
+                },
+              ),
               TextField(
                 controller: collectionController,
                 decoration: const InputDecoration(
@@ -105,24 +181,15 @@ class _SearchPageState extends State<SearchPage> {
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(context),
               child: const Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 final newCollection = collectionController.text.trim();
                 if (newCollection.isNotEmpty) {
-                  if (!_collections.contains(newCollection)) {
-                    setState(() {
-                      _collections.add(newCollection);
-                      _saveCollections();
-                    });
-                  }
+                  await _addCollection(newCollection);
                   _addMovieToCollection(movieId, newCollection);
-                } else if (selectedCollection != null) {
-                  _addMovieToCollection(movieId, selectedCollection!);
                 }
                 Navigator.pop(context);
               },
@@ -134,22 +201,46 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Future<void> _saveCollections() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('collections', _collections);
-  }
-
-  void _addMovieToCollection(int movieId, String collectionName) async {
-    final prefs = await SharedPreferences.getInstance();
-    final collectionKey = 'collection_$collectionName';
-    final collection = prefs.getStringList(collectionKey) ?? [];
-    if (!collection.contains(movieId.toString())) {
-      collection.add(movieId.toString());
-      prefs.setStringList(collectionKey, collection);
+  Future<void> _addCollection(String collectionName) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null && collectionName.isNotEmpty) {
+      await collectionsServices.addCollection(uid, collectionName);
+      setState(() {
+        _collections.add(collectionName);
+      });
     }
   }
 
-  void _navigateToDetails(Map movie) {
+  Future<void> _addMovieToCollection(int movieId, String collectionName) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      await collectionsServices.addMovieToCollection(
+          uid, collectionName, movieId.toString());
+    }
+  }
+
+  Future<void> _saveCollections() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return;
+
+    try {
+      final collectionRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('collections');
+      for (final collection in _collections) {
+        final docRef = collectionRef.doc(collection);
+        final docSnapshot = await docRef.get();
+        if (!docSnapshot.exists) {
+          await docRef.set({'movieIds': []});
+        }
+      }
+    } catch (e) {
+      print('Koleksiyonları kaydederken hata: $e');
+    }
+  }
+
+  void _navigateToDetails(Map<String, dynamic> movie) {
     final posterUrl = 'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
     Navigator.push(
       context,
@@ -163,30 +254,19 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  void _addFavorite(int movieId) async {
-    final prefs = await SharedPreferences.getInstance();
-    FavoriteService().addFavoriteMovie(movieId.toString());
-    final favoriteMovies = prefs.getStringList('favoriteMovies') ?? [];
-    if (!favoriteMovies.contains(movieId.toString())) {
-      favoriteMovies.add(movieId.toString());
-      await prefs.setStringList('favoriteMovies', favoriteMovies);
-      setState(() {
-        favoriteMovieIds = favoriteMovies;
-      });
+  Future<void> _addFavorite(int movieId) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      await favoriteService.addFavoriteMovie(movieId.toString());
+      _loadFavorites(); // Güncellemeleri yeniden yükle
     }
   }
 
-  void _removeFavorite(int movieId) async {
-    final prefs = await SharedPreferences.getInstance();
-    FavoriteService().removeFavoriteMovie(movieId.toString());
-
-    final favoriteMovies = prefs.getStringList('favoriteMovies') ?? [];
-    if (favoriteMovies.contains(movieId.toString())) {
-      favoriteMovies.remove(movieId.toString());
-      await prefs.setStringList('favoriteMovies', favoriteMovies);
-      setState(() {
-        favoriteMovieIds = favoriteMovies;
-      });
+  Future<void> _removeFavorite(int movieId) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      await favoriteService.removeFavoriteMovie(movieId.toString());
+      _loadFavorites(); // Güncellemeleri yeniden yükle
     }
   }
 
@@ -194,124 +274,108 @@ class _SearchPageState extends State<SearchPage> {
     final query = _controller.text;
     if (_searchType == 'Movie/TV Show') {
       _searchMovies(query);
-    } else {
+    } else if (_searchType == 'User') {
       _searchUsers(query);
     }
+  }
+
+  void _onProfileTap(String userId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OtherProfilePage(userId: userId),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search'),
+        title: const Text('Ara'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: _onSearch,
+          ),
+        ],
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          labelText: 'Search',
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.search),
-                            onPressed: _onSearch,
-                          ),
-                        ),
-                        onSubmitted: (query) => _onSearch(),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    DropdownButton<String>(
-                      value: _searchType,
-                      items: <String>['Movie/TV Show', 'User']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _searchType = newValue!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ],
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: _controller,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Ara...',
+              ),
             ),
           ),
+          DropdownButton<String>(
+            value: _searchType,
+            onChanged: (String? newValue) {
+              setState(() {
+                _searchType = newValue!;
+              });
+            },
+            items: <String>['Movie/TV Show', 'User']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
           Expanded(
-            child: ListView.builder(
-              itemCount: _searchResults.length + _userResults.length,
-              itemBuilder: (context, index) {
-                if (_searchType == 'Movie/TV Show' &&
-                    index < _searchResults.length) {
-                  final movie = _searchResults[index];
-                  final isFavorite =
-                      favoriteMovieIds.contains(movie['id'].toString());
-                  return ListTile(
-                    leading: movie['poster_path'] != null
-                        ? Image.network(
-                            'https://image.tmdb.org/t/p/w500${movie['poster_path']}',
-                            width: 50,
-                            height: 75,
-                            fit: BoxFit.cover,
-                          )
-                        : const Icon(Icons.movie),
-                    title: Text(movie['title']),
-                    subtitle: Text(movie['release_date'] ?? ''),
-                    trailing: IconButton(
-                      icon: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        transitionBuilder: (child, animation) {
-                          return RotationTransition(
-                            turns:
-                                Tween(begin: 0.3, end: 1.0).animate(animation),
-                            child: child,
-                          );
-                        },
-                        child: Icon(
-                          isFavorite ? Icons.star : Icons.star_border,
-                          key: ValueKey(isFavorite),
+            child: _searchType == 'Movie/TV Show'
+                ? ListView.builder(
+                    itemCount: _searchResults.length,
+                    itemBuilder: (context, index) {
+                      final movie = _searchResults[index];
+                      final movieId = movie['id'];
+                      final isFavorite =
+                          favoriteMovieIds.contains(movieId.toString());
+                      final posterUrl =
+                          'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
+
+                      return ListTile(
+                        leading: Image.network(posterUrl),
+                        title: Text(movie['title']),
+                        trailing: IconButton(
+                          icon: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              if (isFavorite) {
+                                _removeFavorite(movieId);
+                              } else {
+                                _addFavorite(movieId);
+                                _showAddToCollectionDialog(movieId);
+                              }
+                            });
+                          },
                         ),
-                      ),
-                      onPressed: () {
-                        if (isFavorite) {
-                          _removeFavorite(movie['id']);
-                        } else {
-                          _addFavorite(movie['id']);
-                          _showAddToCollectionDialog(movie['id']);
-                        }
-                      },
-                    ),
-                    onTap: () => _navigateToDetails(movie),
-                  );
-                } else if (_searchType == 'User' &&
-                    index < _userResults.length) {
-                  final user = _userResults[index];
-                  return ListTile(
-                    leading: user['profileImageUrl'] != null
-                        ? Image.network(
-                            user['profileImageUrl'],
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                          )
-                        : const Icon(Icons.person),
-                    title: Text(user['username']),
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ),
+                        onTap: () => _navigateToDetails(movie),
+                        onLongPress: () => _showAddToCollectionDialog(movieId),
+                      );
+                    },
+                  )
+                : ListView.builder(
+                    itemCount: _userResults.length,
+                    itemBuilder: (context, index) {
+                      final user = _userResults[index];
+                      final userId = user['id'];
+                      final username = user['username'];
+
+                      return ListTile(
+                        leading: const Icon(Icons.person),
+                        title: Text(username),
+                        onTap: () => _onProfileTap(userId),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
