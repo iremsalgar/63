@@ -13,7 +13,7 @@ Takım Flutter 63
 
 ## Ürün İsmi
 
---Movie App--
+--CineMate--
 
 ## Product Backlog URL
 [Flutter Kanban Backlog Board](https://kanbanflow.com/board/a7S5wrs)
