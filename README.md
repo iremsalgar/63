@@ -76,7 +76,11 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 - Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı.
 
 
-- **Daily Scrum**:
+  <details>
+    <summary><h3> Sprint 1-Daily Scrum Screenshot</h3></summary>
+
+
+  <details>
 
 ![13a0885e-12d8-43f9-b614-4a503e026d91](https://github.com/iremsalgar/63/assets/74204825/4f755578-5667-4590-9a60-3cfb6e9fc89a)
 ![1cb8d475-646c-4dce-b513-d9b75629efa5](https://github.com/iremsalgar/63/assets/74204825/09757a3a-92c1-422e-b40c-4aa1d52a373f)
@@ -84,6 +88,11 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 ![ca83fa2e-5002-4a9a-a1b1-1253b3110841](https://github.com/iremsalgar/63/assets/74204825/5afd9f7c-5a52-4739-97ee-e659715cfba7)
 ![88e53d39-b924-436f-9417-400c126cfd7b](https://github.com/iremsalgar/63/assets/74204825/8fb90d70-97f0-4605-b38d-6c45ee198fb1)
 ![dbde9618-a993-4495-976e-d97bc2a6556a](https://github.com/iremsalgar/63/assets/74204825/de4370e7-0c92-4a13-afed-3b441a11e2b4)
+
+
+  </details>
+
+  </details>
 
 
 - **Sprint board update**: Sprint 1 board screenshot: 
@@ -110,7 +119,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
  
 
 
-## Product Backlog URL
+
   </details>
 
   </details>
