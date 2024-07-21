@@ -43,7 +43,6 @@ class _SearchPageState extends State<SearchPage> {
     super.initState();
     _loadCollections();
     _loadFavorites();
-    _loadProfile();
   }
 
   Future<void> _loadCollections() async {
@@ -74,29 +73,6 @@ class _SearchPageState extends State<SearchPage> {
           favoriteMovieIds = favoriteIds;
         });
       });
-    }
-  }
-
-  Future<void> _loadProfile() async {
-    final prefs = await SharedPreferences.getInstance();
-    final uid = FirebaseAuth.instance.currentUser?.uid;
-    if (uid != null) {
-      try {
-        final retrievedUsername = await FirebaseAuthService().getUsername(uid);
-        setState(() {
-          _profileName = retrievedUsername;
-          _username = prefs.getString('username') ?? '@salgar_irem';
-          final profileImagePath = prefs.getString('profileImagePath');
-          if (profileImagePath != null) {
-            _profileImageFile = File(profileImagePath);
-          }
-          _followingCount = prefs.getInt('followingCount') ?? 29;
-          _followersCount = prefs.getInt('followersCount') ?? 5;
-          _likesCount = prefs.getDouble('likesCount') ?? 7.5;
-        });
-      } catch (e) {
-        print('Profil yüklenirken hata: $e');
-      }
     }
   }
 

@@ -35,7 +35,6 @@ class FirestoreService {
 
   Future<void> removeCollection(String uid, String collectionName) async {
     try {
-      // Remove the collection document itself
       await _db
           .collection('users')
           .doc(uid)
@@ -43,7 +42,6 @@ class FirestoreService {
           .doc(collectionName)
           .delete();
 
-      // Optionally, remove all movies in the collection
       final moviesSnapshot = await _db
           .collection('users')
           .doc(uid)
@@ -91,6 +89,40 @@ class FirestoreService {
     } catch (e) {
       print('Error fetching collection movies: $e');
       return [];
+    }
+  }
+
+  // Yeni metot: getAllUserProfiles
+  Future<Map<String, dynamic>> getAllUserProfiles() async {
+    try {
+      final snapshot = await _db.collection('users').get();
+      final profiles = <String, dynamic>{};
+      for (var doc in snapshot.docs) {
+        profiles[doc.id] = doc.data();
+      }
+      return profiles;
+    } catch (e) {
+      print('Error fetching user profiles: $e');
+      return {};
+    }
+  }
+
+  // getAllUserFavorites metodunu buraya eklemeyi unutmayın
+  Future<Map<String, List<String>>> getAllUserFavorites() async {
+    try {
+      final snapshot = await _db.collection('users').get();
+      final allUserFavorites = <String, List<String>>{};
+      for (var doc in snapshot.docs) {
+        final favoritesSnapshot =
+            await doc.reference.collection('favorites').get();
+        final favoriteIds =
+            favoritesSnapshot.docs.map((doc) => doc.id).toList();
+        allUserFavorites[doc.id] = favoriteIds;
+      }
+      return allUserFavorites;
+    } catch (e) {
+      print('Error fetching all user favorites: $e');
+      return {};
     }
   }
 }

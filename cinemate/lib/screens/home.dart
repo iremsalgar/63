@@ -1,3 +1,4 @@
+import 'package:cinemate/screens/otherProfilePage.dart';
 import 'package:cinemate/services/collections.dart';
 import 'package:cinemate/services/favorite_movie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   List _popularMovies = [];
   List<String> _collections = [];
   List<String> favoriteMovieIds = [];
+  List<Map<String, dynamic>> userMatches = [];
   final FavoriteService favoriteService = FavoriteService();
   final FirestoreService collectionsServices = FirestoreService();
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
@@ -31,6 +33,7 @@ class _HomePageState extends State<HomePage> {
     _loadPopularMovies();
     _loadCollections();
     _loadFavorites();
+    _loadUserMatches();
   }
 
   Future<void> _loadCollections() async {
@@ -209,6 +212,71 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> _loadUserMatches() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      final allUserFavorites = await collectionsServices.getAllUserFavorites();
+      final currentUserFavorites = favoriteMovieIds.toSet();
+      final userProfiles = await collectionsServices.getAllUserProfiles();
+
+      final matches = allUserFavorites.entries
+          .where((entry) => entry.key != uid)
+          .map((entry) {
+        final commonFavorites =
+            entry.value.toSet().intersection(currentUserFavorites).length;
+        final userName = userProfiles[entry.key]?['username'] ?? 'Unknown';
+        return {
+          'userId': userName,
+          'userName': userName,
+          'commonCount': commonFavorites
+        };
+      }).toList();
+
+      matches.sort((a, b) =>
+          (b['commonCount'] as int).compareTo(a['commonCount'] as int));
+
+      setState(() {
+        userMatches = matches;
+      });
+    }
+  }
+
+  void _onProfileTap(String userId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OtherProfilePage(userId: userId),
+      ),
+    );
+  }
+
+  Widget _buildUserMatchesTable() {
+    return userMatches.isEmpty
+        ? const Center(child: CircularProgressIndicator())
+        : DataTable(
+            columns: const [
+              DataColumn(label: Text('User Name')),
+              DataColumn(label: Text('Common Favorites')),
+            ],
+            rows: userMatches.map((match) {
+              return DataRow(cells: [
+                DataCell(
+                  GestureDetector(
+                    onTap: () => _onProfileTap(match['userId']),
+                    child: Text(
+                      match['userName'],
+                      style: const TextStyle(
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                ),
+                DataCell(Text(match['commonCount'].toString())),
+              ]);
+            }).toList(),
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -308,6 +376,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
+            const SizedBox(height: 20),
+            _buildUserMatchesTable(),
           ],
         ),
       ),
