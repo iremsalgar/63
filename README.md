@@ -192,23 +192,21 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Kullanıcı bilgileri
     - Editleme
     - Profil Resmi Ekleme
-    - Uygulama İçi Görsel Paketi Kullanılabilmesi  
+    - Uygulama İçi Görsel Paketi hazırlanması firebase' e 3. sprintte eklenecek
     - Koleksiyonların Profilde Gözükmesi
     - Arkadaş Ekleme Çıkarma Butonu
     - Mesajlaşma Butonu
-    - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan 
     - Firebase'e bağlama
     - Ayarlar
     - Dark Mode
 
 - **ChatBot**:(25p)
-    - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.
+    - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi. (şu an gemini kullanıyor)
 
 - **Anasayfa**:(25p)
     - Popüler Filmlerin Gözüktüğü Bir Alan
     - Kırmızı Hap Rastgele Dizi Önerisi
     - Mavi Hap Rastgele Film Önerisi
-    - Mesajlara Erişme Butonu
     - Film Zevki Uyan Kullanıcıları Gösteren Tablo
   
 - **Film Aratma**:(25p)
@@ -223,15 +221,12 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Login Page
     - Register Page
     - Google İle Üye Olma
-    - Şifre Politikası
-    - Kullanıcı Rıza Metni
     - UI tasarım
 
 - **Navbar**(25p)
 
 - **Favoriler**:(25p)
     - Poster Görünümü
-    - Alfabetik Sıralama
     - Tıklandığında Detayları Gösteren Açılır Ekran
       
 
@@ -243,21 +238,6 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
   <details>
-  
-    ![1](https://github.com/user-attachments/assets/725b5730-ec0f-4939-b6aa-a6f8d21a8fbd)
-    ![2](https://github.com/user-attachments/assets/1a39d59c-488e-4095-9821-3df6adca5ba5)
-    ![3](https://github.com/user-attachments/assets/6617fe37-5080-404e-a743-1d37f2faf960)
-    ![4](https://github.com/user-attachments/assets/73972f3b-4dac-49a9-89bf-d497208ccd68)
-    ![5](https://github.com/user-attachments/assets/80718b7d-b1e9-4fa2-95cd-98d407cab9cd)
-    ![6](https://github.com/user-attachments/assets/ea89cf20-042c-4043-8a1b-d6453e2a07f2)
-    ![7](https://github.com/user-attachments/assets/eccf4086-ae4f-49e9-81f6-12517d7d7c63)
-    ![8](https://github.com/user-attachments/assets/9c8f0823-3152-49b7-9d0f-af68c99d8e55)
-    ![9](https://github.com/user-attachments/assets/b6ee1024-8199-4371-848b-a07213f73700)
-    ![10](https://github.com/user-attachments/assets/daaa2ca6-6762-4c00-8167-95255d6b055f)
-    ![11](https://github.com/user-attachments/assets/e9160311-7360-4a43-b5b0-a2d175d55c9c)
-    ![12](https://github.com/user-attachments/assets/f7980c9d-5c29-4bf1-8b3b-d8d2de85878f)
-    ![13](https://github.com/user-attachments/assets/4ca24e61-9cc4-45ac-80b7-8435a3ecc47f)
-    ![14](https://github.com/user-attachments/assets/7fb2cc11-a923-47bb-b105-be86b5f80dd4)
 
   </details>
 
@@ -326,7 +306,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   <details>
 
   - **Sprint Retrospective**:
-    - Sprint 2 için alınan puan 150'dir. Chatbot entegresi diğer sprint'e kalmıştır.
+    - Sprint 2 için alınan puan 175'dir..
     - Sprint puanlamasının daha detaylı ele alınmasına karar verilmiştir. 
     - Kişilerin hangi tarihlerde müsait olabileceği hakkında konuşulmuş, yeni sprint için görev ataması yapılacak detaylı bir toplantı daha planlanmıştır.
 
