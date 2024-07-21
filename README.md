@@ -177,7 +177,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   - **Sprint içinde tamamlanması tahmin edilen puan**: 175 Puan
 
-  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 175 olması gerektiğine karar verildi.
+  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 175 olması gerektiğine karar verildi.Her planlanan başlık için 25 puan atandı.
 
 
 ## Sprint 2- Not
