@@ -196,7 +196,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
   <details>
-    <summary><h3> Sprint 2-Daily Scrum</h3></summary>
+    <summary><h3> Sprint 2-Daily Scrum Screenshot</h3></summary>
 
 
   <details>
@@ -265,7 +265,10 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   <details>
 
-  - **Sprint Review**:
+- **Sprint Review**:
+    - Sprint 2'nin sonunda ekip ile toplanılmış ve Sprint gözden geçirilmiştir.Uygulama detayları gözden geçirilmiştir.
+    - ChatBot'un tam olarak entegre edilmesi hariç diğer tüm hedeflere ulaşılmıştır.
+    - Genel anlamda uygulama çalışabilir durumdadır.Sprint notlarında belirtilen özellikler sağlanmıştır.
 
   </details>
 
@@ -278,6 +281,8 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   <details>
 
   - **Sprint 2 Retrospective**:
+  
+  - 
 
   </details>
 
