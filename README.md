@@ -191,9 +191,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Alfabetik Sıralama
     - Tıklandığında Detayları Gösteren Açılır Ekran
     - 
-  </details>
 
-  </details>
 
 
 
