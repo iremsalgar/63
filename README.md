@@ -95,9 +95,24 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   </details>
 
 
-- **Sprint board update**: Sprint 1 board screenshot: 
+  <details>
+    <summary><h3> Sprint 2-Board Screenshot</h3></summary>
+
+
+  <details>
+    
 - ![33408372-35f5-4a6f-8bea-45c13e7a5408](https://github.com/iremsalgar/63/assets/74204825/d89d1b53-3825-41c5-881f-377196408f5e)
 
+  </details>
+
+  </details>
+
+
+    <details>
+    <summary><h3> Sprint 1-Ürün Durumu Screenshot</h3></summary>
+
+
+  <details>
 
 - **Ürün Durumu**: Ekran görüntüleri:
 
@@ -109,15 +124,39 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 ![095142b2-6a80-4654-b777-f8c1ce89a946](https://github.com/iremsalgar/63/assets/74204825/e42b805a-ec3f-4f3d-80ee-651b36a1fa66)
 
 
+  </details>
+
+  </details>
+
+
+    <details>
+    <summary><h3> Sprint 1-Review</h3></summary>
+
+
+  <details>
+
  **Sprint Review**: 
 -Bu sprint için , Navigation Bar ve ChatBot kodlanmıştır ve genel görünüm halledilmeye çalışılmıştır.
+
+  </details>
+
+  </details>
+
+
+    <details>
+    <summary><h3> Sprint 1-Retrospective</h3></summary>
+
+
+  <details>
 
  **Sprint Retrospective:**
 -Müsaitlik durumlarına göre herkese görev atanmışıtr.
 -Olası durumlara göre risk planı yapılmıştır.
 -Toplantılar için daha uygun saatlere karar verilmiştir.
  
+  </details>
 
+  </details>
 
 
   </details>
