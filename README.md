@@ -16,7 +16,7 @@ Takım Flutter 63
 --Movie App--
 
 ## Product Backlog URL
-[U21 Unity Kanban Backlog Board](https://kanbanflow.com/board/a7S5wrs)
+[Flutter Kanban Backlog Board](https://kanbanflow.com/board/a7S5wrs)
 
 
 ## Ürün Açıklaması
