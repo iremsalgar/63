@@ -76,6 +76,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 - Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı.
 
 
+
   <details>
     <summary><h3> Sprint 1-Daily Scrum Screenshot</h3></summary>
 
@@ -96,12 +97,13 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
   <details>
-    <summary><h3> Sprint 2-Board Screenshot</h3></summary>
+    <summary><h3> Sprint 1-Board Screenshot</h3></summary>
 
 
   <details>
     
-- ![33408372-35f5-4a6f-8bea-45c13e7a5408](https://github.com/iremsalgar/63/assets/74204825/d89d1b53-3825-41c5-881f-377196408f5e)
+![33408372-35f5-4a6f-8bea-45c13e7a5408](https://github.com/iremsalgar/63/assets/74204825/d89d1b53-3825-41c5-881f-377196408f5e)
+
 
   </details>
 
@@ -162,6 +164,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
   </details>
+
 
   </details>
 
