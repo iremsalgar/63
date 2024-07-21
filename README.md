@@ -109,7 +109,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
  **Sprint Review**: 
--Bu sprint için , Navigation Bar ve ChatBot kodlanmıştır.
+-Bu sprint için , Navigation Bar ve ChatBot kodlanmıştır ve genel görünüm halledilmeye çalışılmıştır.
 
  **Sprint Retrospective:**
 -Müsaitlik durumlarına göre herkese görev atanmışıtr.
@@ -132,9 +132,9 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   <details>
 
-  - **Sprint içinde tamamlanması tahmin edilen puan**: 160 Puan
+  - **Sprint içinde tamamlanması tahmin edilen puan**: 175 Puan
 
-  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 160 olması gerektiğine karar verildi.
+  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 175 olması gerektiğine karar verildi.
 
 
 # Sprint 2- Not
@@ -145,7 +145,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
 
-- **Profil**:
+- **Profil**:(25p)
     - Kullanıcı bilgileri
     - Editleme
     - Profil Resmi Ekleme
@@ -158,24 +158,24 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Ayarlar
     - Dark Mode
 
-- **ChatBot**:
+- **ChatBot**:(25p)
     - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi.
 
-- **Anasayfa**:
+- **Anasayfa**:(25p)
     - Popüler Filmlerin Gözüktüğü Bir Alan
     - Kırmızı Hap Rastgele Dizi Önerisi
     - Mavi Hap Rastgele Film Önerisi
     - Mesajlara Erişme Butonu
     - Film Zevki Uyan Kullanıcıları Gösteren Tablo(tamamlanmamış)
   
-- **Film Aratma**:
+- **Film Aratma**:(25p)
     - Filmleri Aratma
     - Kişileri Aratma
     - Görsel Düzenlilik
     - Favorilere Ekleme
     - Koleksiyona Ekleme
      
-- **Giriş Ekranı**:
+- **Giriş Ekranı**:(25p)
     - Firebase
     - Login Page
     - Register Page
@@ -184,9 +184,9 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Kullanıcı Rıza Metni(tamamlanmamış)
     - UI tasarım
 
-- **Navbar**
+- **Navbar**(25p)
 
-- **Favoriler**:
+- **Favoriler**:(25p)
     - Poster Görünümü
     - Alfabetik Sıralama
     - Tıklandığında Detayları Gösteren Açılır Ekran
@@ -282,9 +282,10 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   <details>
 
-  - **Sprint 2 Retrospective**:
-  
-  - 
+  - **Sprint Retrospective**:
+    - Sprint 2 için alınan puan 150'dir. Chatbot entegresi diğer sprint'e kalmıştır.
+    - Sprint puanlamasının daha detaylı ele alınmasına karar verilmiştir. 
+    - Kişilerin hangi tarihlerde müsait olabileceği hakkında konuşulmuş, yeni sprint için görev ataması yapılacak detaylı bir toplantı daha planlanmıştır.
 
   </details>
 
