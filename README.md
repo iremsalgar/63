@@ -109,7 +109,8 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
     <details>
-    <summary><h3> Sprint 1-Ürün Durumu Screenshot</h3></summary>
+      
+      <summary><h3> Sprint 1-Ürün Durumu Screenshot</h3></summary>
 
 
   <details>
@@ -135,8 +136,9 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
   <details>
 
- **Sprint Review**: 
--Bu sprint için , Navigation Bar ve ChatBot kodlanmıştır ve genel görünüm halledilmeye çalışılmıştır.
+  **Sprint Review**: 
+    -Bu sprint için , Navigation Bar ve ChatBot kodlanmıştır ve genel görünüm halledilmeye çalışılmıştır.
+
 
   </details>
 
@@ -274,7 +276,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   </details>
 
     <details>
-    <summary><h3> Sprint 2-Ürün Durumu Screenshot</h3></summary>
+      <summary><h3> Sprint 2-Ürün Durumu Screenshot</h3></summary>
 
 
   <details>
