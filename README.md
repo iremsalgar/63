@@ -190,7 +190,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Poster Görünümü
     - Alfabetik Sıralama
     - Tıklandığında Detayları Gösteren Açılır Ekran
-    - 
+      
 
 
 
@@ -227,7 +227,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   <details>
   Sprint board screenshotları:
     
-  ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
+   ![kanban](https://github.com/user-attachments/assets/dab9d0d4-b39d-4264-889b-5b05cc357e31)
 
   </details>
 
@@ -240,6 +240,18 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   <details>
 
   - **Ürün Durumu**: Ekran görüntüleri:
+ 
+ ![urun1](https://github.com/user-attachments/assets/48bb4a97-735c-4788-b3e0-101838f5b49c)
+![urun2](https://github.com/user-attachments/assets/80bef7d3-057a-464b-a6ce-a27a0923688c)
+![urun3](https://github.com/user-attachments/assets/ee2bae88-34c0-4a95-a6aa-b9fadb980b50)
+![urun4](https://github.com/user-attachments/assets/071eac7d-693c-49ab-8997-75d3b33ce92e)
+![urun5](https://github.com/user-attachments/assets/a544fd6c-0897-406a-8eca-adcfca583e5d)
+![urun6](https://github.com/user-attachments/assets/29ea698c-bd0e-4894-b94a-b8b96361acf5)
+![urun7](https://github.com/user-attachments/assets/0dbd16e7-3a9d-4e3e-ad5d-c5847184d1c8)
+![urun8](https://github.com/user-attachments/assets/c109d958-5231-4155-a22c-832895a88053)
+![urun9](https://github.com/user-attachments/assets/4b0f1281-776c-4cef-b934-cd8041660a1b)
+![urun10](https://github.com/user-attachments/assets/f7e6c7d9-68c6-4f02-936f-1cd0b8ff0bf2)
+
  
   </details>
 
