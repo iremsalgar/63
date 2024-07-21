@@ -62,7 +62,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ilk sprint'in en azından 100 olması gerektiğine karar verildi.
 
 
-# Sprint 1- Not
+## Sprint 1- Not
 
 - Proje yönetimi için kanban kullanılmasına karar verildi.
 - Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
@@ -180,7 +180,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
   - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 175 olması gerektiğine karar verildi.
 
 
-# Sprint 2- Not
+## Sprint 2- Not
 
 -Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
 
