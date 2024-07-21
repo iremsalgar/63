@@ -46,25 +46,7 @@ Benzer zevklere sahip kişilerle tanışmak isteyenler
 Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
----
 
-  <details>
-    <summary><h1>Sprint 1 Not</h1></summary>
-
-
-  <details>
-
--Proje yönetimi için kanban kullanılmasına karar verildi.
--Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
--Chatbot için Gemini kullanılmasına karar verildi.
--Uygulama içinde film araştırma imkanı sağlamasına karar verildi.
--Favori filmlerinizi profilinize ekleyebilme özelliği eklendi.
--Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme özelliği eklenmesine karar verildi.
--Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı.
-
-  </details>
-
-  </details>
 
   ---
 
@@ -82,6 +64,15 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ilk sprint'in en azından 100 ile başlaması gerektiğine karar verildi.
+
+# Sprint 1- Not
+-Proje yönetimi için kanban kullanılmasına karar verildi.
+-Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulmasına karar verildi.
+-Chatbot için Gemini kullanılmasına karar verildi.
+-Uygulama içinde film araştırma imkanı sağlamasına karar verildi.
+-Favori filmlerinizi profilinize ekleyebilme özelliği eklendi.
+-Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme özelliği eklenmesine karar verildi.
+-Kullanıcı dostu arayüz ve kolay kullanım imkanı sunulması sağlandı.
 
 
 - **Daily Scrum**:
