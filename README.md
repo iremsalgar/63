@@ -149,11 +149,11 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Kullanıcı bilgileri
     - Editleme
     - Profil Resmi Ekleme
-    - Uygulama İçi Görsel Paketi Kullanılabilmesi  (tamamlanmamış) 
+    - Uygulama İçi Görsel Paketi Kullanılabilmesi  
     - Koleksiyonların Profilde Gözükmesi
     - Arkadaş Ekleme Çıkarma Butonu
     - Mesajlaşma Butonu
-    - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan (tamamlanmamış)
+    - Favorilerin Kaçta Kaç (27/81) Olduğunu Gösteren Alan 
     - Firebase'e bağlama
     - Ayarlar
     - Dark Mode
@@ -166,7 +166,7 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Kırmızı Hap Rastgele Dizi Önerisi
     - Mavi Hap Rastgele Film Önerisi
     - Mesajlara Erişme Butonu
-    - Film Zevki Uyan Kullanıcıları Gösteren Tablo(tamamlanmamış)
+    - Film Zevki Uyan Kullanıcıları Gösteren Tablo
   
 - **Film Aratma**:(25p)
     - Filmleri Aratma
@@ -180,8 +180,8 @@ Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
     - Login Page
     - Register Page
     - Google İle Üye Olma
-    - Şifre Politikası(tamamlanmamış)
-    - Kullanıcı Rıza Metni(tamamlanmamış)
+    - Şifre Politikası
+    - Kullanıcı Rıza Metni
     - UI tasarım
 
 - **Navbar**(25p)
