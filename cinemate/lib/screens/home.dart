@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
             entry.value.toSet().intersection(currentUserFavorites).length;
         final userName = userProfiles[entry.key]?['username'] ?? 'Unknown';
         return {
-          'userId': userName,
+          'userId': entry.key,
           'userName': userName,
           'commonCount': commonFavorites
         };
@@ -265,9 +265,6 @@ class _HomePageState extends State<HomePage> {
                     onTap: () => _onProfileTap(match['userId']),
                     child: Text(
                       match['userName'],
-                      style: const TextStyle(
-                        color: Colors.blue,
-                      ),
                     ),
                   ),
                 ),

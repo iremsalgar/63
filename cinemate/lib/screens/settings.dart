@@ -42,12 +42,6 @@ class _SettingsPageState extends State<SettingsPage> {
             onChanged: _toggleNotifications,
           ),
           ListTile(
-            title: const Text('Change Language'),
-            onTap: () {
-              // Dil değiştirme işlemi
-            },
-          ),
-          ListTile(
             title: const Text('User Information'),
             onTap: () {
               // Kullanıcı bilgileri işlemi

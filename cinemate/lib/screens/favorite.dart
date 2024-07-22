@@ -57,17 +57,6 @@ class _FavoritePageState extends State<FavoritePage> {
     });
   }
 
-  void _toggleSortOrder() {
-    setState(() {
-      _isAlphabetical = !_isAlphabetical;
-      if (_isAlphabetical) {
-        _favoriteMovies.sort((a, b) => a['title'].compareTo(b['title']));
-      } else {
-        _favoriteMovies = List.from(_originalFavoriteMovies);
-      }
-    });
-  }
-
   void _removeFavorite(int movieId) async {
     final prefs = await SharedPreferences.getInstance();
     FavoriteService().removeFavoriteMovie(movieId.toString());
@@ -100,12 +89,6 @@ class _FavoritePageState extends State<FavoritePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorite Movies'),
-        actions: [
-          IconButton(
-            icon: Icon(_isAlphabetical ? Icons.sort_by_alpha : Icons.sort),
-            onPressed: _toggleSortOrder,
-          ),
-        ],
       ),
       body: _isLoading
           ? const Center(

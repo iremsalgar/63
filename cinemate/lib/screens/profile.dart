@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cinemate/screens/editProfile.dart';
 import 'package:http/http.dart' as http;
 import 'package:cinemate/screens/movieDetailPage.dart';
 import 'package:cinemate/screens/settings.dart';
@@ -117,6 +118,17 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text('Profile'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EditProfilePage(),
+                ),
+              ).then((_) => _loadProfile());
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {

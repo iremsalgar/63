@@ -153,30 +153,6 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsPage(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const EditProfilePage(),
-                ),
-              ).then((_) => _loadProfile());
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
