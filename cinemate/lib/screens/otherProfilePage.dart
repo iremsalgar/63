@@ -34,6 +34,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
   int _followersCount = 0;
   double _likesCount = 0.0;
   final List<String> _collections = [];
+  double _commonFavoritesPercentage = 0.0;
 
   @override
   void initState() {
@@ -60,6 +61,9 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
           _followersCount = data['followers_count'] ?? 0;
           _likesCount = data['likes_count']?.toDouble() ?? 0.0;
         });
+
+        // Calculate common favorites percentage
+        await _calculateCommonFavoritesPercentage();
       } else {
         print('User document not found');
       }
@@ -82,6 +86,38 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
       });
     } catch (e) {
       print('Error loading collections: $e');
+    }
+  }
+
+  Future<void> _calculateCommonFavoritesPercentage() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      final currentUserFavoritesSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('favorites')
+          .get();
+      final otherUserFavoritesSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.userId)
+          .collection('favorites')
+          .get();
+
+      final currentUserFavorites =
+          currentUserFavoritesSnapshot.docs.map((doc) => doc.id).toSet();
+      final otherUserFavorites =
+          otherUserFavoritesSnapshot.docs.map((doc) => doc.id).toSet();
+
+      final commonFavorites =
+          currentUserFavorites.intersection(otherUserFavorites).length;
+      final totalFavorites =
+          currentUserFavorites.union(otherUserFavorites).length;
+
+      if (totalFavorites > 0) {
+        setState(() {
+          _commonFavoritesPercentage = (commonFavorites / totalFavorites) * 100;
+        });
+      }
     }
   }
 
@@ -249,6 +285,11 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                   background: Colors.amber,
                 ),
               ],
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Common Favorites: ${_commonFavoritesPercentage.toStringAsFixed(2)}%',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             const Divider(),
