@@ -194,6 +194,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                 },
                 icon: Icon(
                   isFavorite ? Icons.star : Icons.star_border,
+                  color: Colors.amber[700],
                   key: ValueKey(isFavorite),
                 ),
               )

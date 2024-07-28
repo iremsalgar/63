@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:cinemate/screens/editProfile.dart';
-import 'package:http/http.dart' as http;
 import 'package:cinemate/screens/movieDetailPage.dart';
 import 'package:cinemate/screens/settings.dart';
 import 'package:cinemate/services/collections.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 
+// ProfilePage
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -32,6 +33,20 @@ class _ProfilePageState extends State<ProfilePage> {
     _updateFollowerFollowingCounts();
   }
 
+  Future<void> _createFollowersCollectionIfNotExists(String uid) async {
+    final userDoc = FirebaseFirestore.instance.collection('users').doc(uid);
+
+    // Check if followers collection exists
+    final followersSnapshot = await userDoc.collection('followers').get();
+
+    if (followersSnapshot.docs.isEmpty) {
+      // Add a dummy document to create the collection
+      await userDoc.collection('followers').doc('dummy').set({
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+    }
+  }
+
   Future<void> _updateFollowerFollowingCounts() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid != null) {
@@ -39,26 +54,30 @@ class _ProfilePageState extends State<ProfilePage> {
         final userDoc =
             await FirebaseFirestore.instance.collection('users').doc(uid).get();
         if (userDoc.exists) {
-          final data = userDoc.data() as Map<String, dynamic>;
-          setState(() {
-            _followingCount = data['following_count'] ?? 0;
-            _followersCount = data['followers_count'] ?? 0;
-          });
+          await _createFollowersCollectionIfNotExists(uid);
 
-          // Güncellenmiş takipçi sayısını Firebase'e kaydet
-          final followingCount = await FirebaseFirestore.instance
+          final followersSnapshot = await FirebaseFirestore.instance
+              .collection('users')
+              .doc(uid)
+              .collection('followers')
+              .get();
+          final followingSnapshot = await FirebaseFirestore.instance
               .collection('users')
               .doc(uid)
               .collection('following')
-              .get()
-              .then((snapshot) => snapshot.size);
+              .get();
 
-          await FirebaseFirestore.instance.collection('users').doc(uid).update({
-            'following_count': followingCount,
-          });
+          final followersCount = followersSnapshot.size;
+          final followingCount = followingSnapshot.size;
 
           setState(() {
+            _followersCount = followersCount;
             _followingCount = followingCount;
+          });
+
+          await FirebaseFirestore.instance.collection('users').doc(uid).update({
+            'followers_count': followersCount,
+            'following_count': followingCount,
           });
         }
       } catch (e) {
@@ -73,7 +92,6 @@ class _ProfilePageState extends State<ProfilePage> {
       try {
         final userDoc =
             await FirebaseFirestore.instance.collection('users').doc(uid).get();
-
         if (userDoc.exists) {
           final data = userDoc.data() as Map<String, dynamic>;
           setState(() {
@@ -112,11 +130,69 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future<void> _showFollowers() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      try {
+        final followersSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('followers')
+            .get();
+
+        final followers = followersSnapshot.docs.map((doc) => doc.id).toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserListPage(
+              title: 'Followers',
+              userIds: followers,
+            ),
+          ),
+        );
+      } catch (e) {
+        print('Error fetching followers: $e');
+      }
+    }
+  }
+
+  Future<void> _showFollowing() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      try {
+        final followingSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('following')
+            .get();
+
+        final following = followingSnapshot.docs.map((doc) => doc.id).toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserListPage(
+              title: 'Following',
+              userIds: following,
+            ),
+          ),
+        );
+      } catch (e) {
+        print('Error fetching following: $e');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text(
+          'Profile',
+          style:
+              TextStyle(color: Colors.amber[700], fontWeight: FontWeight.bold),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -163,32 +239,42 @@ class _ProfilePageState extends State<ProfilePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    Text(
-                      '$_followingCount',
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const Text(
-                      'Following',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
+                TextButton(
+                  onPressed: _showFollowing,
+                  child: Column(
+                    children: [
+                      Text(
+                        '$_followingCount',
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const Text(
+                        'Following',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 20),
-                Column(
-                  children: [
-                    Text(
-                      '$_followersCount',
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const Text(
-                      'Followers',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
+                TextButton(
+                  onPressed: _showFollowers,
+                  child: Column(
+                    children: [
+                      Text(
+                        '$_followersCount',
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const Text(
+                        'Followers',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 20),
                 Column(
@@ -196,7 +282,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text(
                       '$_likesCount',
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
                     const Text(
                       'Likes',
@@ -251,6 +339,54 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
+// UserListPage
+class UserListPage extends StatelessWidget {
+  final String title;
+  final List<String> userIds;
+
+  const UserListPage({required this.title, required this.userIds, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(8.0),
+        itemCount: userIds.length,
+        itemBuilder: (context, index) {
+          final userId = userIds[index];
+          return FutureBuilder<DocumentSnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('users')
+                .doc(userId)
+                .get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const ListTile(title: Text('Loading...'));
+              } else if (snapshot.hasError) {
+                return const ListTile(title: Text('Error loading user'));
+              } else if (snapshot.hasData) {
+                final userData = snapshot.data?.data() as Map<String, dynamic>?;
+                final userName = userData?['username'] ?? 'Unknown';
+                final email = userData?['email'] ?? 'Unknown';
+                return ListTile(
+                  title: Text(userName),
+                  subtitle: Text(email),
+                );
+              } else {
+                return const ListTile(title: Text('User not found'));
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+// CollectionPage
 class CollectionPage extends StatefulWidget {
   final String collectionName;
 
@@ -263,8 +399,7 @@ class CollectionPage extends StatefulWidget {
 class _CollectionPageState extends State<CollectionPage> {
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
   List _movies = [];
-  final FirestoreService _firestoreService =
-      FirestoreService(); // FirestoreService'i kullanıyoruz
+  final FirestoreService _firestoreService = FirestoreService();
 
   @override
   void initState() {
@@ -275,57 +410,32 @@ class _CollectionPageState extends State<CollectionPage> {
   Future<void> _loadCollectionMovies() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid != null) {
-      final movieIds = await _firestoreService.getCollectionMovies(
-          uid, widget.collectionName);
-      final List movies = [];
-
-      for (final id in movieIds) {
-        final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
-        final response = await http.get(Uri.parse(url));
-        if (response.statusCode == 200) {
-          movies.add(json.decode(response.body));
-        }
-      }
-
-      setState(() {
-        _movies = movies;
-      });
-    }
-  }
-
-  Future<void> _removeMovieFromCollection(String movieId) async {
-    final uid = FirebaseAuth.instance.currentUser?.uid;
-    if (uid != null) {
       try {
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(uid)
-            .collection('collections')
-            .doc(widget.collectionName)
-            .update({
-          'movies': FieldValue.arrayRemove([movieId])
-        });
+        final movieIds = await _firestoreService.getCollectionMovies(
+            uid, widget.collectionName);
+        final movies = await _fetchMoviesDetails(movieIds);
         setState(() {
-          _movies.removeWhere((movie) => movie['id'].toString() == movieId);
+          _movies = movies;
         });
       } catch (e) {
-        print('Error removing movie from collection: $e');
+        print('Error loading collection movies: $e');
       }
     }
   }
 
-  void _showMovieDetailsPage(Map movie) {
-    final posterUrl = 'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MovieDetailPage(
-          movie: movie,
-          isTVShow: false,
-          posterUrl: posterUrl,
-        ),
-      ),
-    );
+  Future<List> _fetchMoviesDetails(List<String> movieIds) async {
+    final List movies = [];
+    for (String movieId in movieIds) {
+      final response = await http.get(Uri.parse(
+          'https://api.themoviedb.org/3/movie/$movieId?api_key=$apiKey'));
+      if (response.statusCode == 200) {
+        final movieData = json.decode(response.body);
+        movies.add(movieData);
+      } else {
+        print('Failed to load movie details');
+      }
+    }
+    return movies;
   }
 
   @override
@@ -334,62 +444,33 @@ class _CollectionPageState extends State<CollectionPage> {
       appBar: AppBar(
         title: Text(widget.collectionName),
       ),
-      body: _movies.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : GridView.builder(
-              padding: const EdgeInsets.all(8.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.7,
-                mainAxisSpacing: 8.0,
-                crossAxisSpacing: 8.0,
-              ),
-              itemCount: _movies.length,
-              itemBuilder: (context, index) {
-                final movie = _movies[index];
-                final posterUrl =
-                    'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
-                return GestureDetector(
-                  onLongPress: () {
-                    _removeMovieFromCollection(
-                        movie['id'].toString()); // ID parametresini ekledim
-                  },
-                  onTap: () => _showMovieDetailsPage(movie),
-                  child: Card(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          movie['poster_path'] != null
-                              ? Image.network(
-                                  posterUrl,
-                                  width: double.infinity,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                )
-                              : const SizedBox(
-                                  height: 200,
-                                  child: Icon(Icons.movie, size: 100),
-                                ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              movie['title'],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
+      body: ListView.builder(
+        itemCount: _movies.length,
+        itemBuilder: (context, index) {
+          final movie = _movies[index];
+          return ListTile(
+            leading: Image.network(
+              'https://image.tmdb.org/t/p/w500${movie['poster_path']}',
+              fit: BoxFit.cover,
+              width: 50,
             ),
+            title: Text(movie['title']),
+            subtitle: Text(movie['release_date']),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MovieDetailPage(
+                    movie: movie,
+                    isTVShow: movie['isTVShow'] ?? false,
+                    posterUrl: movie['poster_path'],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

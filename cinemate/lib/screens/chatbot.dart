@@ -22,7 +22,10 @@ class _ChatBotPageState extends State<ChatBotPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("ChatBot"),
+        title: const Text(
+          "ChatBot",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.amber[700],
       ),
       body: _buildUI(),

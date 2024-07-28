@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 const Color primaryLightColor = Colors.white70;
-const Color secondaryLightColor = Colors.white70;
-const Color surfaceLightColor = Colors.amber;
+const Color secondaryLightColor = Colors.green;
+const Color surfaceLightColor = Colors.white70;
 const Color backgroundLightColor = Colors.white70;
 
-const Color primaryDarkColor = Colors.black54;
-const Color secondaryDarkColor = Colors.amber;
-const Color surfaceDarkColor = Colors.white38;
-const Color backgroundDarkColor = Colors.white70;
+const Color primaryDarkColor = Colors.white10;
+const Color secondaryDarkColor = Colors.lightBlue;
+const Color surfaceDarkColor = Colors.white30;
+const Color backgroundDarkColor = Colors.white30;
 
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,

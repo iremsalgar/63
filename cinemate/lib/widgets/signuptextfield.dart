@@ -4,12 +4,14 @@ class CustomTextFieldSignUp extends StatelessWidget {
   const CustomTextFieldSignUp(
       {super.key,
       required this.prefixIcon,
+      required this.validator,
       required this.hintText,
       required this.controller});
 
   final Icon? prefixIcon;
   final String? hintText;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,7 +30,8 @@ class CustomTextFieldSignUp extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.black45),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
             ),
-          )
+            validator: validator,
+          ),
         ],
       ),
     );

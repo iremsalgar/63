@@ -17,7 +17,7 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   List _favoriteMovies = [];
   List _originalFavoriteMovies = [];
-  bool _isAlphabetical = false;
+  final bool _isAlphabetical = false;
   List favoriteMovies = [];
   bool _isLoading = true;
   List<String> favoriteMovieIds = [];
@@ -88,7 +88,11 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorite Movies'),
+        title: Text(
+          'Favorite Movies',
+          style:
+              TextStyle(color: Colors.amber[700], fontWeight: FontWeight.bold),
+        ),
       ),
       body: _isLoading
           ? const Center(

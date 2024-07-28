@@ -21,21 +21,9 @@ class _NaviBarState extends State<NaviBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: option.elementAt(selindex),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const ChatBotPage()));
-        },
-        backgroundColor: Colors.amber[700],
-        shape: const CircleBorder(),
-        tooltip: " ChatBot",
-        child: const Icon(
-          Icons.add,
-        ),
       ),
       bottomNavigationBar: Container(
         color: Colors.black87,
@@ -72,6 +60,29 @@ class _NaviBarState extends State<NaviBar> {
           ),
         ),
       ),
+      floatingActionButton: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  bottom:
+                      72.0), // FAB'nin alt gezinme çubuğuna olan mesafesini ayarlar
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ChatBotPage()));
+                },
+                backgroundColor: Colors.amber[700],
+                shape: const CircleBorder(),
+                tooltip: "ChatBot",
+                child: const Icon(Icons.add),
+              ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -1,92 +1,86 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
-import 'package:cinemate/screens/favoritemoviepage.dart';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cinemate/screens/messagePage.dart';
 import 'package:cinemate/screens/movieDetailPage.dart';
 import 'package:cinemate/widgets/outlined_button.dart';
-import 'editProfile.dart';
-import 'messagePage.dart';
-import 'settings.dart';
-import 'package:cinemate/screens/favoritemoviepage.dart'; // Import the new page
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class OtherProfilePage extends StatefulWidget {
   final String userId;
 
-  const OtherProfilePage({
-    required this.userId,
-    super.key,
-  });
+  const OtherProfilePage({super.key, required this.userId});
 
   @override
   _OtherProfilePageState createState() => _OtherProfilePageState();
 }
 
 class _OtherProfilePageState extends State<OtherProfilePage> {
-  String _profileName = "";
-  String _username = "";
-  String _email = "";
-  File? _profileImageFile;
   bool _isFollowing = false;
-  int _followingCount = 0;
-  int _followersCount = 0;
-  double _likesCount = 0.0;
-  final List<String> _collections = [];
+  late int _followingCount;
+  late int _followersCount;
+  late double _likesCount;
+  late String _profileName;
+  late String _username;
+  late String _email;
+  File? _profileImageFile;
+  List<String> _collections = [];
+  List _favoriteMovies = [];
+  List favoriteMovies = [];
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
   double _commonFavoritesPercentage = 0.0;
+  late final ImagePicker _picker = ImagePicker();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  AwesomeNotifications awesomeNotifications = AwesomeNotifications();
+  List _originalFavoriteMovies = [];
+  final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadProfile();
-    _loadCollections();
     _checkIfFollowing();
+    _fetchUserProfile();
+    _loadProfile();
+    _fetchCollections();
+    _fetchFavoriteMovies();
+    _loadFavoritesAndCollections();
   }
 
-  Future<void> _loadProfile() async {
-    try {
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.userId)
-          .get();
+  void _loadFavoritesAndCollections() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteMovieIds = prefs.getStringList('favoriteMovies') ?? [];
+    final allCollections = prefs.getStringList('collections') ?? [];
 
-      if (userDoc.exists) {
-        final data = userDoc.data() as Map<String, dynamic>;
-        setState(() {
-          _profileName = data['profileName'] ?? 'No Profile Name';
-          _username = data['username'] ?? 'No Username';
-          _email = data['email'] ?? 'No Email';
-          _followingCount = data['following_count'] ?? 0;
-          _followersCount = data['followers_count'] ?? 0;
-          _likesCount = data['likes_count']?.toDouble() ?? 0.0;
-        });
+    for (final collectionName in allCollections) {
+      final collectionKey = 'collection_$collectionName';
+      final collectionMovieIds = prefs.getStringList(collectionKey) ?? [];
+      favoriteMovieIds.addAll(collectionMovieIds);
+    }
 
-        // Calculate common favorites percentage
-        await _calculateCommonFavoritesPercentage();
+    for (final id in favoriteMovieIds) {
+      final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        favoriteMovies.add(json.decode(response.body));
       } else {
-        print('User document not found');
+        print('Error fetching movie: ${response.statusCode}');
       }
-    } catch (e) {
-      print('Error loading profile: $e');
     }
-  }
 
-  Future<void> _loadCollections() async {
-    try {
-      final collectionDocs = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.userId)
-          .collection('collections')
-          .get();
-
-      setState(() {
-        _collections.clear();
-        _collections.addAll(collectionDocs.docs.map((doc) => doc.id).toList());
-      });
-    } catch (e) {
-      print('Error loading collections: $e');
-    }
+    setState(() {
+      _favoriteMovies = favoriteMovies;
+      _originalFavoriteMovies = List.from(favoriteMovies);
+      _isLoading = false;
+    });
   }
 
   Future<void> _calculateCommonFavoritesPercentage() async {
@@ -121,20 +115,109 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
     }
   }
 
+  Future<void> _loadProfile() async {
+    try {
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.userId)
+          .get();
+
+      if (userDoc.exists) {
+        final data = userDoc.data() as Map<String, dynamic>;
+        setState(() {
+          _profileName = data['profileName'] ?? 'No Profile Name';
+          _username = data['username'] ?? 'No Username';
+          _email = data['email'] ?? 'No Email';
+          _followingCount = data['following_count'] ?? 0;
+          _followersCount = data['followers_count'] ?? 0;
+          _likesCount = data['likes_count']?.toDouble() ?? 0.0;
+        });
+
+        // Calculate common favorites percentage
+        await _calculateCommonFavoritesPercentage();
+      } else {
+        print('User document not found');
+      }
+    } catch (e) {
+      print('Error loading profile: $e');
+    }
+  }
+
   Future<void> _checkIfFollowing() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid != null) {
-      final userDoc = await FirebaseFirestore.instance
+      final doc = await FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
           .collection('following')
           .doc(widget.userId)
           .get();
-
       setState(() {
-        _isFollowing = userDoc.exists;
+        _isFollowing = doc.exists;
       });
     }
+  }
+
+  followNotification() {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 10,
+            channelKey: "basic_channel",
+            title: "Cinemate",
+            body: "$_username adlı kullanıcıyı takip ediyorsun."));
+  }
+
+  unfollowNotification() {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 11,
+            channelKey: "basic_channel",
+            title: "Cinemate",
+            body: "$_username adlı kullanıcıyı artık takip etmiyorsun."));
+  }
+
+  Future<void> _fetchUserProfile() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
+        .get();
+    final data = doc.data()!;
+    setState(() {
+      _profileName = data['profileName'] ?? 'Profil İsmi Yok';
+      _username = data['username'] ?? 'Kullanıcı Adı Yok';
+      _email = data['email'] ?? 'Email Yok';
+      _followingCount = data['following_count'] ?? 0;
+      _followersCount = data['followers_count'] ?? 0;
+      _likesCount = data['likes_count']?.toDouble() ?? 0.0;
+    });
+  }
+
+  Future<void> _fetchCollections() async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
+        .collection('collections')
+        .get();
+    setState(() {
+      _collections = querySnapshot.docs.map((doc) => doc.id).toList();
+    });
+  }
+
+  Future<void> _fetchFavoriteMovies() async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
+        .collection('favorites')
+        .get();
+    setState(() {
+      _favoriteMovies = querySnapshot.docs.map((doc) {
+        final data = doc.data();
+        return {
+          'title': data['title'] ?? 'Başlık Yok',
+          'poster_path': data['poster_path'] ?? '',
+        };
+      }).toList();
+    });
   }
 
   Future<void> _toggleFollow() async {
@@ -142,7 +225,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
     if (uid != null) {
       try {
         if (_isFollowing) {
-          // Takibi bırak
+          // Unfollow
           await FirebaseFirestore.instance
               .collection('users')
               .doc(uid)
@@ -160,7 +243,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
             _isFollowing = false;
           });
         } else {
-          // Takip et
+          // Follow
           await FirebaseFirestore.instance
               .collection('users')
               .doc(uid)
@@ -174,21 +257,43 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
             'followers_count': FieldValue.increment(1),
           });
           setState(() {
+            followNotification();
             _followersCount++;
             _isFollowing = true;
           });
         }
       } catch (e) {
-        print('Error updating follow status: $e');
+        print('Takip işlemi sırasında hata oluştu: $e');
       }
     }
   }
 
+  void _showMovieDetailsPage(Map movie) {
+    const baseUrl = 'https://image.tmdb.org/t/p/w500';
+    final posterUrl = '$baseUrl${movie['poster_path']}';
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MovieDetailPage(
+          movie: movie,
+          isTVShow: false,
+          posterUrl: posterUrl,
+        ),
+      ),
+    );
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text(
+          'Profile',
+          style:
+              TextStyle(color: Colors.amber[700], fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -198,64 +303,94 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
               radius: 50,
               backgroundImage: _profileImageFile != null
                   ? FileImage(_profileImageFile!)
-                  : const NetworkImage('https://via.placeholder.com/150')
+                  : const AssetImage("assets/image/RemovePopcorn.png")
                       as ImageProvider,
             ),
             const SizedBox(height: 10),
-            Text(
-              _username,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              _email,
-              style: const TextStyle(color: Colors.grey, fontSize: 16),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
+            StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(widget.userId)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+
+                if (snapshot.hasError || !snapshot.hasData) {
+                  return const Text('Hata oluştu');
+                }
+
+                final data = snapshot.data!.data() as Map<String, dynamic>;
+
+                _profileName = data['profileName'] ?? 'Profil İsmi Yok';
+                _username = data['username'] ?? 'Kullanıcı Adı Yok';
+                _email = data['email'] ?? 'Email Yok';
+                _followingCount = data['following_count'] ?? 0;
+                _followersCount = data['followers_count'] ?? 0;
+                _likesCount = data['likes_count']?.toDouble() ?? 0.0;
+
+                return Column(
                   children: [
                     Text(
-                      '$_followingCount',
+                      _username,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
-                    const Text(
-                      'Following',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
-                const SizedBox(width: 20),
-                Column(
-                  children: [
                     Text(
-                      '$_followersCount',
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                      _email,
+                      style: const TextStyle(color: Colors.grey, fontSize: 16),
                     ),
-                    const Text(
-                      'Followers',
-                      style: TextStyle(color: Colors.grey),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              '$_followingCount',
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            const Text(
+                              'Following',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 20),
+                        Column(
+                          children: [
+                            Text(
+                              '$_followersCount',
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            const Text(
+                              'Followers',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 20),
+                        Column(
+                          children: [
+                            Text(
+                              '$_likesCount',
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            const Text(
+                              'Likes',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
-                ),
-                const SizedBox(width: 20),
-                Column(
-                  children: [
-                    Text(
-                      '$_likesCount',
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const Text(
-                      'Likes',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ],
+                );
+              },
             ),
             const SizedBox(height: 20),
             Row(
@@ -280,9 +415,9 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                       ),
                     );
                   },
-                  icons: Icons.send,
+                  icons: Icons.message,
                   text: "Message",
-                  background: Colors.amber,
+                  background: Colors.blue,
                 ),
               ],
             ),
@@ -292,172 +427,88 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Collections',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  _collections.isEmpty
-                      ? const Text('No collections yet.')
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: _collections.length,
-                          itemBuilder: (context, index) {
-                            final collectionName = _collections[index];
-                            return ListTile(
-                              title: Text(collectionName),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CollectionPage(
-                                      collectionName: collectionName,
-                                      userId: widget.userId,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                ],
-              ),
+            const Divider(thickness: 2),
+            const SizedBox(height: 20),
+            const Text(
+              'Favorites Movies',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 10),
+            _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : SizedBox(
+                    height: 200,
+                    child: _favoriteMovies.isEmpty
+                        ? const Center(child: Text('Not Favorites Movies Yet.'))
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _favoriteMovies.length,
+                            itemBuilder: (context, index) {
+                              final movie = _favoriteMovies[index];
+                              final posterPath = movie['poster_path'];
+                              final posterUrl = posterPath != null &&
+                                      posterPath.isNotEmpty
+                                  ? 'https://image.tmdb.org/t/p/w500$posterPath'
+                                  : null;
+
+                              return GestureDetector(
+                                onTap: () => _showMovieDetailsPage(movie),
+                                child: Card(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      posterUrl != null
+                                          ? Image.network(
+                                              posterUrl,
+                                              width: 100,
+                                              height: 150,
+                                              fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return const Center(
+                                                  child:
+                                                      Text('Image Not Found'),
+                                                );
+                                              },
+                                            )
+                                          : const Center(
+                                              child: Text('Image Not Found'),
+                                            ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        movie['title'],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                  ),
+            const SizedBox(height: 20),
+            const Text(
+              'Collections',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            _collections.isEmpty
+                ? const Text('Not Collections Yet.')
+                : Column(
+                    children: _collections
+                        .map((collection) => ListTile(
+                              title: Text(collection),
+                              onTap: () {
+                                // Koleksiyon tıklama işlemi
+                              },
+                            ))
+                        .toList(),
+                  ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class CollectionPage extends StatefulWidget {
-  final String collectionName;
-  final String userId; // Kullanıcı ID'sini geçiyoruz
-
-  const CollectionPage(
-      {required this.collectionName, required this.userId, super.key});
-
-  @override
-  _CollectionPageState createState() => _CollectionPageState();
-}
-
-class _CollectionPageState extends State<CollectionPage> {
-  final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
-  List _movies = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadCollectionMovies();
-  }
-
-  Future<void> _loadCollectionMovies() async {
-    final collectionDoc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.userId)
-        .collection('collections')
-        .doc(widget.collectionName)
-        .collection('movies')
-        .get();
-
-    final List movieIds = collectionDoc.docs.map((doc) => doc.id).toList();
-    final List movies = [];
-
-    for (final id in movieIds) {
-      final url = 'https://api.themoviedb.org/3/movie/$id?api_key=$apiKey';
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        movies.add(json.decode(response.body));
-      }
-    }
-
-    setState(() {
-      _movies = movies;
-    });
-  }
-
-  void _showMovieDetailsPage(Map movie) {
-    final posterUrl = 'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MovieDetailPage(
-          movie: movie,
-          isTVShow: false,
-          posterUrl: posterUrl,
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.collectionName),
-      ),
-      body: _movies.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : GridView.builder(
-              padding: const EdgeInsets.all(8.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.7,
-                mainAxisSpacing: 8.0,
-                crossAxisSpacing: 8.0,
-              ),
-              itemCount: _movies.length,
-              itemBuilder: (context, index) {
-                final movie = _movies[index];
-                final posterUrl =
-                    'https://image.tmdb.org/t/p/w500${movie['poster_path']}';
-                return GestureDetector(
-                  onLongPress: () {
-                    // Movie uzun basıldığında favoriden çıkarma işlemi yapabilirsiniz.
-                  },
-                  onTap: () => _showMovieDetailsPage(movie),
-                  child: Card(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          movie['poster_path'] != null
-                              ? Image.network(
-                                  posterUrl,
-                                  width: double.infinity,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                )
-                              : const SizedBox(
-                                  height: 200,
-                                  child: Icon(Icons.movie, size: 100),
-                                ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              movie['title'],
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
     );
   }
 }

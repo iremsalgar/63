@@ -29,14 +29,14 @@ class _SearchPageState extends State<SearchPage> {
   final FirestoreService collectionsServices = FirestoreService();
   final FavoriteService favoriteService = FavoriteService();
   String _searchType = 'Movie/TV Show';
-  String _profileName = "";
-  String _username = "";
+  final String _profileName = "";
+  final String _username = "";
   bool isMyProfile = false;
   File? _profileImageFile;
   bool onPress = false;
-  int _followingCount = 29;
-  int _followersCount = 5;
-  double _likesCount = 7.5;
+  final int _followingCount = 29;
+  final int _followersCount = 5;
+  final double _likesCount = 7.5;
 
   @override
   void initState() {
@@ -98,6 +98,8 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Future<void> _searchUsers(String query) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+
     try {
       final users = await FirebaseFirestore.instance
           .collection('users')
@@ -108,11 +110,13 @@ class _SearchPageState extends State<SearchPage> {
       setState(() {
         _userResults = users.docs.map((doc) {
           final data = doc.data();
-          print('Kullanıcı ID: ${doc.id}'); // Debug print
-          return {
-            'id': doc.id, // Correctly including document ID
-            ...data,
-          };
+          {
+            print('Kullanıcı ID: ${doc.id}'); // Debug print
+            return {
+              'id': doc.id, // Correctly including document ID
+              ...data,
+            };
+          }
         }).toList();
       });
     } catch (e) {
@@ -158,7 +162,10 @@ class _SearchPageState extends State<SearchPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -169,7 +176,10 @@ class _SearchPageState extends State<SearchPage> {
                 }
                 Navigator.pop(context);
               },
-              child: const Text('Add'),
+              child: const Text(
+                'Add',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ],
         );
@@ -256,19 +266,33 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void _onProfileTap(String userId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => OtherProfilePage(userId: userId),
-      ),
-    );
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == uid) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ProfilePage(),
+        ),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OtherProfilePage(userId: userId),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ara'),
+        title: Text(
+          'Search',
+          style:
+              TextStyle(color: Colors.amber[700], fontWeight: FontWeight.bold),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -321,6 +345,7 @@ class _SearchPageState extends State<SearchPage> {
                         trailing: IconButton(
                           icon: Icon(
                             isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: Colors.amber,
                           ),
                           onPressed: () {
                             setState(() {

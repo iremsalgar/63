@@ -1,3 +1,4 @@
+import 'package:cinemate/screens/login_screen.dart';
 import 'package:cinemate/screens/otherProfilePage.dart';
 import 'package:cinemate/services/collections.dart';
 import 'package:cinemate/services/favorite_movie.dart';
@@ -126,7 +127,10 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -137,8 +141,11 @@ class _HomePageState extends State<HomePage> {
                 }
                 Navigator.pop(context);
               },
-              child: const Text('Add'),
-            ),
+              child: const Text(
+                'Add',
+                style: TextStyle(color: Colors.black),
+              ),
+            )
           ],
         );
       },
@@ -251,14 +258,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildUserMatchesTable() {
-    return userMatches.isEmpty
+    List<Map<String, dynamic>> top5Matches =
+        userMatches.length > 5 ? userMatches.sublist(0, 5) : userMatches;
+
+    return top5Matches.isEmpty
         ? const Center(child: CircularProgressIndicator())
         : DataTable(
             columns: const [
               DataColumn(label: Text('User Name')),
               DataColumn(label: Text('Common Favorites')),
             ],
-            rows: userMatches.map((match) {
+            rows: top5Matches.map((match) {
               return DataRow(cells: [
                 DataCell(
                   GestureDetector(
@@ -278,8 +288,53 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
-        actions: const [],
+        leading: BackButton(
+          style: const ButtonStyle(alignment: Alignment.center),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text("Do You Want To Exit Account?"),
+                  content: Text(
+                    "Are You Sure?",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  actions: [
+                    TextButton(
+                      child: Text(
+                        "No",
+                        style: TextStyle(color: Colors.amber[700]),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        "Yes",
+                        style: TextStyle(color: Colors.amber[700]),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const LoginScreen()));
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+        title: Text(
+          'Home',
+          style:
+              TextStyle(color: Colors.amber[700], fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -315,14 +370,20 @@ class _HomePageState extends State<HomePage> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     movie['title'],
-                                    style: const TextStyle(fontSize: 12),
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.amber[700],
+                                        fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
                                 IconButton(
                                     icon: isFavorite
-                                        ? const Icon(Icons.star)
-                                        : const Icon(Icons.star_border),
+                                        ? Icon(Icons.star,
+                                            color: Colors.amber[700])
+                                        : const Icon(
+                                            Icons.star_border,
+                                          ),
                                     onPressed: () {
                                       if (isFavorite) {
                                         _removeFavorite(movie['id']);
@@ -338,7 +399,7 @@ class _HomePageState extends State<HomePage> {
                       }).toList(),
                     ),
                   ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Stack(
               alignment: Alignment.center,
               children: [
@@ -373,7 +434,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             _buildUserMatchesTable(),
           ],
         ),

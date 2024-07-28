@@ -52,7 +52,12 @@ dependencies:
   fluttertoast: ^8.2.6
   firebase_app_check: ^0.3.0+3
   uuid: ^4.4.2
+  firebase_messaging: ^15.0.3
   google_generative_ai: ^0.0.1-dev
+  cloud_functions: ^5.0.3
+  awesome_notifications: ^0.9.3+1
+  google_sign_in: ^6.2.1
+  flutter_facebook_auth: ^6.0.4
 
 dev_dependencies:
   flutter_test:

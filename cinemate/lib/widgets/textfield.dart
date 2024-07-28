@@ -5,6 +5,7 @@ class CustomTextfield extends StatefulWidget {
       {super.key,
       required this.keyboardType,
       required this.prefixIcon,
+      required this.validator,
       required this.hintText,
       required this.controller});
 
@@ -12,6 +13,7 @@ class CustomTextfield extends StatefulWidget {
   final String? hintText;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
 
   @override
   State<CustomTextfield> createState() => _CustomTextfieldState();
@@ -58,7 +60,8 @@ class _CustomTextfieldState extends State<CustomTextfield> {
                   borderSide: BorderSide(color: Colors.black45),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
             ),
-          )
+            validator: widget.validator,
+          ),
         ],
       ),
     );
