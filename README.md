@@ -15,6 +15,11 @@ Takım Flutter 63
 
 --CineMate--
 
+## Ürün Logo
+
+![4e4ce361-fc14-422b-b828-9384a9c20cbe](https://github.com/user-attachments/assets/940b14a5-97d0-45bf-9d37-d37bd7cf3860)
+
+
 ## Product Backlog URL
 [Flutter Kanban Backlog Board](https://kanbanflow.com/board/a7S5wrs)
 
