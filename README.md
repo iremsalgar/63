@@ -468,7 +468,7 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
   </details>
 
   <details>
-    <summary><h3> Sprint 2-Retrospective</h3></summary>
+    <summary><h3> Sprint 3-Retrospective</h3></summary>
 
 
   <details>
