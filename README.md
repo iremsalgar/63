@@ -31,19 +31,19 @@ Uygulamanın ikincil fonksiyonu: Eklediğiniz favori ve izlediğiniz filmlerle b
 Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmayı hedefler.
 
 ## Ürün Özellikleri
-Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulması.
-Uygulama içinde film araştırma imkanı.
-Favori filmlerinizi profilinize ekleyebilme.
-Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme.
-Kullanıcı dostu arayüz ve kolay kullanım.
+- Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulması.
+- Uygulama içinde film araştırma imkanı.
+- Favori filmlerinizi profilinize ekleyebilme.
+- Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme.
+- Kullanıcı dostu arayüz ve kolay kullanım.
 
-##Hedef Kitle
-Film severler
-Sinema tutkunları
-Yeni film keşfetmek isteyenler
-Sosyal etkileşim ve paylaşımda bulunmayı sevenler
-Benzer zevklere sahip kişilerle tanışmak isteyenler
-Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
+## Hedef Kitle
+- Film severler
+- Sinema tutkunları
+- Yeni film keşfetmek isteyenler
+- Sosyal etkileşim ve paylaşımda bulunmayı sevenler
+- Benzer zevklere sahip kişilerle tanışmak isteyenler
+- Teknoloji ve yapay zeka ile ilgilenen kullanıcılar
 
 
 
