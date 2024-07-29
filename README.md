@@ -17,7 +17,7 @@ Takım Flutter 63
 
 ## Ürün Logo
 
-![4e4ce361-fc14-422b-b828-9384a9c20cbe](https://github.com/user-attachments/assets/940b14a5-97d0-45bf-9d37-d37bd7cf3860)
+![4e4ce361-fc14-422b-b828-9384a9c20cbe (1)](https://github.com/user-attachments/assets/9e7ffcda-3e5a-49f0-b32f-914c2c005080)
 
 
 ## Product Backlog URL
