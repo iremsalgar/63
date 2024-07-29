@@ -330,3 +330,168 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
 
 
   </details>
+
+
+  ---
+
+
+  <details>
+    <summary><h1>Sprint 3</h1></summary>
+
+
+  <details>
+
+  - **Sprint içinde tamamlanması tahmin edilen puan**: 65 Puan
+
+  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde üçüncü sprintin 65 olması gerektiğine karar verildi.Her planlanan başlık için 25 puan atandı.
+
+
+## Sprint 3- Not
+
+-Retrospective toplantısından sonra bir toplantı daha yapılmıştır ve bu toplantı sonucunda tam olarak yapılması gerekenlere detaylıca karar verilmiştir.
+
+
+**BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
+
+- **Profil**:(25p)
+    - Kullanıcı bilgileri
+    - Editleme
+    - Profil Resmi Ekleme
+    - Uygulama İçi Görsel Paketi hazırlanması firebase' e 3. sprintte eklenecek
+    - Koleksiyonların Profilde Gözükmesi
+    - Arkadaş Ekleme Çıkarma Butonu
+    - Mesajlaşma Butonu
+    - Firebase'e bağlama
+    - Ayarlar
+    - Dark Mode
+
+- **ChatBot**:(25p)
+    - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi. (şu an gemini kullanıyor)
+
+- **Anasayfa**:(25p)
+    - Popüler Filmlerin Gözüktüğü Bir Alan
+    - Kırmızı Hap Rastgele Dizi Önerisi
+    - Mavi Hap Rastgele Film Önerisi
+    - Film Zevki Uyan Kullanıcıları Gösteren Tablo
+  
+- **Film Aratma**:(25p)
+    - Filmleri Aratma
+    - Kişileri Aratma
+    - Görsel Düzenlilik
+    - Favorilere Ekleme
+    - Koleksiyona Ekleme
+     
+- **Giriş Ekranı**:(25p)
+    - Firebase
+    - Login Page
+    - Register Page
+    - Google İle Üye Olma
+    - UI tasarım
+
+- **Navbar**(25p)
+
+- **Favoriler**:(25p)
+    - Poster Görünümü
+    - Tıklandığında Detayları Gösteren Açılır Ekran
+      
+
+
+
+
+  <details>
+    <summary><h3> Sprint 2-Daily Scrum Screenshot</h3></summary>
+
+    ![t1](https://github.com/user-attachments/assets/ce6a7be3-cf93-4817-ae5b-583325b240e1)
+    ![t2](https://github.com/user-attachments/assets/4c0d9ffc-06fc-49c7-9444-6677a5d5fb1c)
+    ![t3](https://github.com/user-attachments/assets/63cba883-019b-493e-ba39-aaaa2f1ac738)
+    ![t4](https://github.com/user-attachments/assets/e451c0b7-1ec9-423f-8701-a4d7e4a707c7)
+    ![t5](https://github.com/user-attachments/assets/40ebe833-1faa-496c-ad44-5f6b2de1e011)
+    ![t6](https://github.com/user-attachments/assets/b32bd2b3-cbdf-4a7e-90a2-cce306bb225f)
+    ![t7](https://github.com/user-attachments/assets/0fd2afcb-e580-4761-a7a8-376b64061d00)
+    ![t8](https://github.com/user-attachments/assets/28b5b9a0-d764-48e9-b7eb-bdf09e604751)
+    ![t9](https://github.com/user-attachments/assets/b62e8ac9-85fd-4979-86fb-74ff301f316d)
+    ![t10](https://github.com/user-attachments/assets/d5ff9a5c-4e99-434c-9f48-f2cfd8883bce)
+
+  <details>
+
+  </details>
+
+  </details>
+
+  <details>
+    <summary><h3> Sprint 3-Board Screenshot</h3></summary>
+
+
+  <details>
+  Sprint board screenshotları:
+    
+   ![kanban1](https://github.com/user-attachments/assets/b18e8552-a3bc-470e-9bbe-f618af882cc9)
+
+  </details>
+
+  </details>
+
+    <details>
+      <summary><h3> Sprint 3-Ürün Durumu Screenshot</h3></summary>
+
+
+  <details>
+
+  - **Ürün Durumu**: Ekran görüntüleri:
+ 
+  ![urun1](https://github.com/user-attachments/assets/48bb4a97-735c-4788-b3e0-101838f5b49c)
+  ![urun2](https://github.com/user-attachments/assets/80bef7d3-057a-464b-a6ce-a27a0923688c)
+  ![urun3](https://github.com/user-attachments/assets/ee2bae88-34c0-4a95-a6aa-b9fadb980b50)
+  ![urun4](https://github.com/user-attachments/assets/071eac7d-693c-49ab-8997-75d3b33ce92e)
+  ![urun5](https://github.com/user-attachments/assets/a544fd6c-0897-406a-8eca-adcfca583e5d)
+  ![urun6](https://github.com/user-attachments/assets/29ea698c-bd0e-4894-b94a-b8b96361acf5)
+  ![urun7](https://github.com/user-attachments/assets/0dbd16e7-3a9d-4e3e-ad5d-c5847184d1c8)
+  ![urun8](https://github.com/user-attachments/assets/c109d958-5231-4155-a22c-832895a88053)
+  ![urun9](https://github.com/user-attachments/assets/4b0f1281-776c-4cef-b934-cd8041660a1b)
+  ![urun10](https://github.com/user-attachments/assets/f7e6c7d9-68c6-4f02-936f-1cd0b8ff0bf2)
+
+ 
+ 
+  </details>
+
+  </details>
+
+
+    <details>
+    <summary><h3> Sprint 3-Review</h3></summary>
+
+
+  <details>
+
+  - **Sprint Review**:
+    - Sprint 2'nin sonunda ekip ile toplanılmış ve Sprint gözden geçirilmiştir.Uygulama detayları gözden geçirilmiştir.
+    - ChatBot'un tam olarak entegre edilmesi hariç diğer tüm hedeflere ulaşılmıştır.
+    - Genel anlamda uygulama çalışabilir durumdadır.Sprint notlarında belirtilen özellikler sağlanmıştır.
+ 
+
+
+  </details>
+
+  </details>
+
+  <details>
+    <summary><h3> Sprint 2-Retrospective</h3></summary>
+
+
+  <details>
+
+  - **Sprint Retrospective**:
+    - Sprint 2 için alınan puan 175'dir..
+    - Sprint puanlamasının daha detaylı ele alınmasına karar verilmiştir. 
+    - Kişilerin hangi tarihlerde müsait olabileceği hakkında konuşulmuş, yeni sprint için görev ataması yapılacak detaylı bir toplantı daha planlanmıştır.
+
+  </details>
+
+  </details>
+
+
+
+  </details>
+
+
+  </details>
