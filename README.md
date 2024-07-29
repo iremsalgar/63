@@ -358,46 +358,34 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
 
 **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
 
-- **Profil**:(25p)
-    - Kullanıcı bilgileri
-    - Editleme
-    - Profil Resmi Ekleme
-    - Uygulama İçi Görsel Paketi hazırlanması firebase' e 3. sprintte eklenecek
-    - Koleksiyonların Profilde Gözükmesi
-    - Arkadaş Ekleme Çıkarma Butonu
-    - Mesajlaşma Butonu
-    - Firebase'e bağlama
-    - Ayarlar
-    - Dark Mode
+- **Profil**:(p)
+    - Mesajlaşma Düzenleneme
+    - Profil-edit Düzenleneme
+    - Profilde Other Favori Kısmı Değişimi
+    - Likes Kısmının Kaldırılması
+    - Favorilerle Eşleşen Kişilerin Profilinde Eşleşen Sayıyı Gösterebilme
 
-- **ChatBot**:(25p)
-    - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi. (şu an gemini kullanıyor)
+- **ChatBot**:(p)
+    - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine üzerine tekrar konuşuldu ve gerekli atama yapıldı.
 
-- **Anasayfa**:(25p)
-    - Popüler Filmlerin Gözüktüğü Bir Alan
-    - Kırmızı Hap Rastgele Dizi Önerisi
-    - Mavi Hap Rastgele Film Önerisi
-    - Film Zevki Uyan Kullanıcıları Gösteren Tablo
+- **Anasayfa**:(p)
+    - En Çok Filmlerinin Eşleştiği Top 5 Kişi Listesi
+    - Welcome X ( Database'e Gelecek Kayıtlı Olan Username)
+    - Tabloda Anlık Güncelleme
+    - Filmlerin Resim Büyüklüklerinin Ayarlanması
   
-- **Film Aratma**:(25p)
-    - Filmleri Aratma
-    - Kişileri Aratma
-    - Görsel Düzenlilik
-    - Favorilere Ekleme
-    - Koleksiyona Ekleme
+- **Kullanıcı Ayarları**:(p)
+    - Dark Mode Düzenlenmesi
+    - User Information Kısmının Kaldırılması
      
-- **Giriş Ekranı**:(25p)
-    - Firebase
-    - Login Page
-    - Register Page
-    - Google İle Üye Olma
-    - UI tasarım
+- **Giriş Ekranı**:(p)
+    - Login Kontrolleri Eklemek
+    - Register Kontrolleri Eklemek
+    - Facebook ve Google ile Girişi Gerçekleştirmek
+    - Kullanıcı Açık Rıza Metni(KVKK)
 
-- **Navbar**(25p)
-
-- **Favoriler**:(25p)
-    - Poster Görünümü
-    - Tıklandığında Detayları Gösteren Açılır Ekran
+- **Firebase**:(p)
+    - Seçilen Resimlerin Firebase içine Aktarılması (Uygulama İçi Görsel Paketi)
       
 
 
