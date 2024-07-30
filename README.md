@@ -474,9 +474,7 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
   <details>
 
   - **Sprint Retrospective**:
-    - Sprint 2 için alınan puan 175'dir..
-    - Sprint puanlamasının daha detaylı ele alınmasına karar verilmiştir. 
-    - Kişilerin hangi tarihlerde müsait olabileceği hakkında konuşulmuş, yeni sprint için görev ataması yapılacak detaylı bir toplantı daha planlanmıştır.
+    - Projenin daha da ilerlemesi adına tekrardan iletişimde olmaya karar verildi.
 
   </details>
 
