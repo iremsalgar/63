@@ -100,7 +100,6 @@ class _ProfilePageState extends State<ProfilePage> {
             _email = data['email'] ?? 'No Email';
             _followingCount = data['following_count'] ?? 0;
             _followersCount = data['followers_count'] ?? 0;
-            _likesCount = data['likes_count']?.toDouble() ?? 0.0;
           });
         }
       } catch (e) {
@@ -236,63 +235,49 @@ class _ProfilePageState extends State<ProfilePage> {
               style: const TextStyle(color: Colors.grey, fontSize: 16),
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: _showFollowing,
-                  child: Column(
-                    children: [
-                      Text(
-                        '$_followingCount',
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Text(
-                        'Following',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 20),
-                TextButton(
-                  onPressed: _showFollowers,
-                  child: Column(
-                    children: [
-                      Text(
-                        '$_followersCount',
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Text(
-                        'Followers',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Column(
-                  children: [
-                    Text(
-                      '$_likesCount',
-                      style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: _showFollowing,
+                    child: Column(
+                      children: [
+                        Text(
+                          '$_followingCount',
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Text(
+                          'Following',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
                     ),
-                    const Text(
-                      'Likes',
-                      style: TextStyle(color: Colors.grey),
+                  ),
+                  const SizedBox(width: 20),
+                  TextButton(
+                    onPressed: _showFollowers,
+                    child: Column(
+                      children: [
+                        Text(
+                          '$_followersCount',
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Text(
+                          'Followers',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             const Divider(),
