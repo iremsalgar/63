@@ -13,11 +13,11 @@ Takım Flutter 63
 
 ## Ürün İsmi
 
---CineMate--
+--CinePals--
 
 ## Ürün Logo
 
-![4e4ce361-fc14-422b-b828-9384a9c20cbe (1)](https://github.com/user-attachments/assets/9e7ffcda-3e5a-49f0-b32f-914c2c005080)
+![48247422-06a5-4428-9a91-5832a415a499-_1_](https://github.com/user-attachments/assets/2f23dd35-1704-48ad-81bb-30406a7c4384)
 
 
 ## Product Backlog URL
