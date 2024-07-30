@@ -30,8 +30,8 @@ Uygulamamız, yapay zeka destekli bir chatbot kullanarak favori filmlerinizi ö�
 
 Uygulamamız, kullanıcıların film zevklerini öğrenerek yeni öneriler sunar ve filmleri araştırma imkanı tanır. Kullanıcılar, favori filmlerini profillerine ekleyebilir ve benzer zevklere sahip kişilerin profillerini görüntüleyebilir.
 
-Uygulamanın birincil fonksiyonu: Yapay zeka destekli chatbot, favori filmlerinizi öğrenir ve size kişiselleştirilmiş film önerilerinde bulunur.
-Uygulamanın ikincil fonksiyonu: Eklediğiniz favori ve izlediğiniz filmlerle benzer zevklere sahip kullanıcıların profillerini görerek, film önerilerinizi genişletebilirsiniz.
+**Uygulamanın Birincil Fonksiyonu:** Yapay zeka destekli chatbot, favori filmlerinizi öğrenir ve size kişiselleştirilmiş film önerilerinde bulunur.
+**Uygulamanın İkincil Fonksiyonu:** Eklediğiniz favori ve izlediğiniz filmlerle benzer zevklere sahip kullanıcıların profillerini görerek, film önerilerinizi genişletebilirsiniz.
 
 Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmayı hedefler.
 
