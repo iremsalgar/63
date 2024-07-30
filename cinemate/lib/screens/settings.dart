@@ -44,12 +44,6 @@ class _SettingsPageState extends State<SettingsPage> {
             value: _notificationsEnabled,
             onChanged: _toggleNotifications,
           ),
-          ListTile(
-            title: const Text('User Information'),
-            onTap: () {
-              // Kullanıcı bilgileri işlemi
-            },
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

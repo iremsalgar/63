@@ -102,8 +102,10 @@ class _MessagePageState extends State<MessagePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Messages'),
+        backgroundColor: Colors.black87,
         actions: [
-          BackButton(
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const NaviBar()));
@@ -112,48 +114,71 @@ class _MessagePageState extends State<MessagePage> {
         ],
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Message Recipients',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+        child: Container(
+          color: Colors.black87,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                ),
+                child: Text(
+                  'Message Recipients',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            for (var recipientId in _messageRecipients)
-              ListTile(
-                title: FutureBuilder<DocumentSnapshot>(
+              for (var recipientId in _messageRecipients)
+                FutureBuilder<DocumentSnapshot>(
                   future: _firestore.collection('users').doc(recipientId).get(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Text('Loading...');
+                      return const ListTile(
+                        title: Text('Loading...'),
+                        tileColor: Colors.black26,
+                      );
                     } else if (snapshot.hasError) {
-                      return const Text('Error');
+                      return const ListTile(
+                        title: Text('Error'),
+                        tileColor: Colors.black26,
+                      );
                     } else if (!snapshot.hasData || !snapshot.data!.exists) {
-                      return const Text('Unknown User');
+                      return const ListTile(
+                        title: Text('Unknown User'),
+                        tileColor: Colors.black26,
+                      );
                     } else {
                       final userData =
                           snapshot.data!.data() as Map<String, dynamic>;
                       final username = userData['username'] ?? 'Unknown User';
-                      return Text(username);
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.amber,
+                          child: Text(
+                            username[0],
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        title: Text(username,
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255))),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                MessagePage(recipientId: recipientId),
+                          ));
+                        },
+                      );
                     }
                   },
                 ),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MessagePage(recipientId: recipientId),
-                  ));
-                },
-              ),
-          ],
+            ],
+          ),
         ),
       ),
       body: Column(
@@ -171,17 +196,32 @@ class _MessagePageState extends State<MessagePage> {
                       .compareTo(b['timestamp'] as Timestamp);
                 });
                 return ListView.builder(
-                  reverse: true,
+                  reverse: false,
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     final message = messages[index];
+                    final isCurrentUser =
+                        message['senderId'] == currentUser.uid;
                     return ListTile(
-                      title: Text(message['text']),
-                      subtitle: Text(
-                        message['senderId'] == currentUser.uid
-                            ? 'You'
-                            : 'Recipient',
+                      title: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        margin: const EdgeInsets.symmetric(vertical: 4.0),
+                        decoration: BoxDecoration(
+                          color: isCurrentUser
+                              ? Colors.blueGrey[800]
+                              : Colors.grey[800],
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Text(
+                          message['text'],
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
+                      subtitle: Text(
+                        isCurrentUser ? 'You' : 'Recipient',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                     );
                   },
                 );
@@ -195,8 +235,13 @@ class _MessagePageState extends State<MessagePage> {
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.black12,
                       labelText: 'Enter message',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
                     ),
                   ),
                 ),

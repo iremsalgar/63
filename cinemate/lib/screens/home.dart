@@ -264,22 +264,91 @@ class _HomePageState extends State<HomePage> {
     return top5Matches.isEmpty
         ? const Center(child: CircularProgressIndicator())
         : DataTable(
+            columnSpacing: 24,
+            headingRowHeight: 60,
+            headingRowColor:
+                MaterialStateColor.resolveWith((states) => Colors.black87),
+            dataRowHeight: 80,
             columns: const [
-              DataColumn(label: Text('User Name')),
-              DataColumn(label: Text('Common Favorites')),
-            ],
-            rows: top5Matches.map((match) {
-              return DataRow(cells: [
-                DataCell(
-                  GestureDetector(
-                    onTap: () => _onProfileTap(match['userId']),
-                    child: Text(
-                      match['userName'],
-                    ),
+              DataColumn(
+                label: Text(
+                  'User Name',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.amber,
                   ),
                 ),
-                DataCell(Text(match['commonCount'].toString())),
-              ]);
+              ),
+              DataColumn(
+                label: Text(
+                  'Common Favorites',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.amber,
+                  ),
+                ),
+              ),
+            ],
+            rows: top5Matches.map((match) {
+              return DataRow(
+                cells: [
+                  DataCell(
+                    GestureDetector(
+                      onTap: () => _onProfileTap(match['userId']),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.amber, width: 2),
+                            ),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  'https://example.com/${match['userId']}.jpg'), // Kullanıcı profil resmini temsil eder
+                              radius: 20,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              match['userName'],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  DataCell(
+                    Row(
+                      children: [
+                        Icon(Icons.star, color: Colors.yellow, size: 24),
+                        SizedBox(width: 6),
+                        Text(
+                          match['commonCount'].toString(),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                color: MaterialStateColor.resolveWith((states) {
+                  return match['commonCount'] % 2 == 0
+                      ? Colors.grey[800]!
+                      : Colors.black54;
+                }),
+              );
             }).toList(),
           );
   }
