@@ -19,6 +19,7 @@ class _MessagePageState extends State<MessagePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   List<String> _messageRecipients = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -27,28 +28,40 @@ class _MessagePageState extends State<MessagePage> {
   }
 
   Future<void> _loadMessageRecipients() async {
-    final currentUser = _auth.currentUser;
-    if (currentUser != null) {
-      final sentMessagesSnapshot = await _firestore
-          .collection('messages')
-          .where('senderId', isEqualTo: currentUser.uid)
-          .get();
+    setState(() {
+      _isLoading = true;
+    });
 
-      final receivedMessagesSnapshot = await _firestore
-          .collection('messages')
-          .where('recipientId', isEqualTo: currentUser.uid)
-          .get();
+    try {
+      final currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        final sentMessagesSnapshot = await _firestore
+            .collection('messages')
+            .where('senderId', isEqualTo: currentUser.uid)
+            .get();
 
-      final recipients = sentMessagesSnapshot.docs
-          .map((doc) => doc['recipientId'] as String)
-          .toSet()
-          .union(receivedMessagesSnapshot.docs
-              .map((doc) => doc['senderId'] as String)
-              .toSet())
-          .toList();
+        final receivedMessagesSnapshot = await _firestore
+            .collection('messages')
+            .where('recipientId', isEqualTo: currentUser.uid)
+            .get();
 
+        final recipients = sentMessagesSnapshot.docs
+            .map((doc) => doc['recipientId'] as String)
+            .toSet()
+            .union(receivedMessagesSnapshot.docs
+                .map((doc) => doc['senderId'] as String)
+                .toSet())
+            .toList();
+
+        setState(() {
+          _messageRecipients = recipients;
+        });
+      }
+    } catch (e) {
+      print('Error loading message recipients: $e');
+    } finally {
       setState(() {
-        _messageRecipients = recipients;
+        _isLoading = false;
       });
     }
   }
@@ -56,16 +69,28 @@ class _MessagePageState extends State<MessagePage> {
   void _sendMessage() async {
     final message = _messageController.text.trim();
     if (message.isNotEmpty) {
-      final currentUser = _auth.currentUser;
-      if (currentUser != null) {
-        final messageData = {
-          'text': message,
-          'senderId': currentUser.uid,
-          'recipientId': widget.recipientId,
-          'timestamp': FieldValue.serverTimestamp(),
-        };
-        await _firestore.collection('messages').add(messageData);
-        _messageController.clear();
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        final currentUser = _auth.currentUser;
+        if (currentUser != null) {
+          final messageData = {
+            'text': message,
+            'senderId': currentUser.uid,
+            'recipientId': widget.recipientId,
+            'timestamp': FieldValue.serverTimestamp(),
+          };
+          await _firestore.collection('messages').add(messageData);
+          _messageController.clear();
+        }
+      } catch (e) {
+        print('Error sending message: $e');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -132,51 +157,55 @@ class _MessagePageState extends State<MessagePage> {
                   ),
                 ),
               ),
-              for (var recipientId in _messageRecipients)
-                FutureBuilder<DocumentSnapshot>(
-                  future: _firestore.collection('users').doc(recipientId).get(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const ListTile(
-                        title: Text('Loading...'),
-                        tileColor: Colors.black26,
-                      );
-                    } else if (snapshot.hasError) {
-                      return const ListTile(
-                        title: Text('Error'),
-                        tileColor: Colors.black26,
-                      );
-                    } else if (!snapshot.hasData || !snapshot.data!.exists) {
-                      return const ListTile(
-                        title: Text('Unknown User'),
-                        tileColor: Colors.black26,
-                      );
-                    } else {
-                      final userData =
-                          snapshot.data!.data() as Map<String, dynamic>;
-                      final username = userData['username'] ?? 'Unknown User';
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.amber,
-                          child: Text(
-                            username[0],
-                            style: TextStyle(color: Colors.black),
+              if (_isLoading)
+                const Center(child: CircularProgressIndicator())
+              else
+                for (var recipientId in _messageRecipients)
+                  FutureBuilder<DocumentSnapshot>(
+                    future:
+                        _firestore.collection('users').doc(recipientId).get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const ListTile(
+                          title: Text('Loading...'),
+                          tileColor: Colors.black26,
+                        );
+                      } else if (snapshot.hasError) {
+                        return const ListTile(
+                          title: Text('Error'),
+                          tileColor: Colors.black26,
+                        );
+                      } else if (!snapshot.hasData || !snapshot.data!.exists) {
+                        return const ListTile(
+                          title: Text('Unknown User'),
+                          tileColor: Colors.black26,
+                        );
+                      } else {
+                        final userData =
+                            snapshot.data!.data() as Map<String, dynamic>;
+                        final username = userData['username'] ?? 'Unknown User';
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.amber,
+                            child: Text(
+                              username[0],
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
-                        ),
-                        title: Text(username,
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255))),
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                MessagePage(recipientId: recipientId),
-                          ));
-                        },
-                      );
-                    }
-                  },
-                ),
+                          title: Text(username,
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255))),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  MessagePage(recipientId: recipientId),
+                            ));
+                          },
+                        );
+                      }
+                    },
+                  ),
             ],
           ),
         ),
@@ -185,15 +214,23 @@ class _MessagePageState extends State<MessagePage> {
         children: [
           Expanded(
             child: StreamBuilder<List<QueryDocumentSnapshot>>(
-              stream: _getMessagesStream(currentUser!.uid, widget.recipientId),
+              stream: _getMessagesStream(
+                  currentUser?.uid ?? '', widget.recipientId),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 final messages = snapshot.data!;
                 messages.sort((a, b) {
-                  return (a['timestamp'] as Timestamp)
-                      .compareTo(b['timestamp'] as Timestamp);
+                  final timestampA = a['timestamp'] as Timestamp?;
+                  final timestampB = b['timestamp'] as Timestamp?;
+
+                  // Null check before comparison
+                  if (timestampA == null || timestampB == null) {
+                    return 0;
+                  }
+
+                  return timestampA.compareTo(timestampB);
                 });
                 return ListView.builder(
                   reverse: false,
@@ -201,7 +238,7 @@ class _MessagePageState extends State<MessagePage> {
                   itemBuilder: (context, index) {
                     final message = messages[index];
                     final isCurrentUser =
-                        message['senderId'] == currentUser.uid;
+                        message['senderId'] == currentUser?.uid;
                     return ListTile(
                       title: Container(
                         padding: const EdgeInsets.all(12.0),
@@ -214,14 +251,15 @@ class _MessagePageState extends State<MessagePage> {
                         ),
                         child: Text(
                           message['text'],
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
                       subtitle: Text(
                         isCurrentUser ? 'You' : 'Recipient',
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 16.0),
                     );
                   },
                 );
@@ -247,7 +285,7 @@ class _MessagePageState extends State<MessagePage> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.send),
-                  onPressed: _sendMessage,
+                  onPressed: _isLoading ? null : _sendMessage,
                 ),
               ],
             ),

@@ -21,12 +21,27 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List _popularMovies = [];
+  String _username = "";
   List<String> _collections = [];
   List<String> favoriteMovieIds = [];
   List<Map<String, dynamic>> userMatches = [];
   final FavoriteService favoriteService = FavoriteService();
   final FirestoreService collectionsServices = FirestoreService();
   final String apiKey = 'f09947e5d5bbc3a4ba0a6e149efb63f9';
+
+  Future<void> _loadName() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      final userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      if (userDoc.exists) {
+        final data = userDoc.data() as Map<String, dynamic>;
+        setState(() {
+          _username = data['username'] ?? 'No Username';
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -35,6 +50,7 @@ class _HomePageState extends State<HomePage> {
     _loadCollections();
     _loadFavorites();
     _loadUserMatches();
+    _loadName();
   }
 
   Future<void> _loadCollections() async {
@@ -257,7 +273,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildUserMatchesTable() {
+  _buildUserMatchesTable() {
     List<Map<String, dynamic>> top5Matches =
         userMatches.length > 5 ? userMatches.sublist(0, 5) : userMatches;
 
@@ -408,6 +424,14 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Text(
+              "Welcome $_username",
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.amber[700],
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
             _popularMovies.isEmpty
                 ? const Center(child: CircularProgressIndicator())
                 : SingleChildScrollView(

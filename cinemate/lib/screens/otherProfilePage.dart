@@ -289,6 +289,54 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
     }
   }
 
+  Future<void> _toggleFollow() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      try {
+        if (_isFollowing) {
+          // Unfollow
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(uid)
+              .collection('following')
+              .doc(widget.userId)
+              .delete();
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(widget.userId)
+              .update({
+            'followers_count': FieldValue.increment(-1),
+          });
+          setState(() {
+            _followersCount--;
+            _isFollowing = false;
+          });
+        } else {
+          // Follow
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(uid)
+              .collection('following')
+              .doc(widget.userId)
+              .set({});
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(widget.userId)
+              .update({
+            'followers_count': FieldValue.increment(1),
+          });
+          setState(() {
+            followNotification();
+            _followersCount++;
+            _isFollowing = true;
+          });
+        }
+      } catch (e) {
+        print('Takip işlemi sırasında hata oluştu: $e');
+      }
+    }
+  }
+
   void showMovieDetailsPage(Map movie) {
     const baseUrl = 'https://image.tmdb.org/t/p/w500';
     final posterUrl = '$baseUrl${movie['poster_path']}';
@@ -322,6 +370,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
           children: [
             const SizedBox(height: 20),
             // Profil fotoğrafı, ad ve diğer bilgileri buraya ekleyin
+
             CircleAvatar(
               radius: 50,
               backgroundImage: _profileImageFile != null
@@ -408,6 +457,40 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                   ],
                 );
               },
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomOutlinedButton(
+                  onPressed: _toggleFollow,
+                  icons: _isFollowing
+                      ? Icons.check_box
+                      : Icons.app_registration_rounded,
+                  text: _isFollowing ? "Following" : "Follow",
+                  background: _isFollowing ? Colors.green : Colors.amber,
+                ),
+                const SizedBox(width: 50),
+                CustomOutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MessagePage(
+                          recipientId: widget.userId,
+                        ),
+                      ),
+                    );
+                  },
+                  icons: Icons.message,
+                  text: "Message",
+                  background: Colors.blue,
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Common Favorites: ${_commonFavoritesPercentage.toStringAsFixed(2)}%',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             // Favori filmleri göster
