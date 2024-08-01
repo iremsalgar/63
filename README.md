@@ -235,8 +235,11 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
     - Tıklandığında Detayları Gösteren Açılır Ekran
       
 
+    <details>
+    <summary><h3> Sprint 3-Daily Scrum Screenshot</h3></summary>
+
+
   <details>
-    <summary><h3> Sprint 2-Daily Scrum Screenshot</h3></summary>
 
     ![t1](https://github.com/user-attachments/assets/ce6a7be3-cf93-4817-ae5b-583325b240e1)
     ![t2](https://github.com/user-attachments/assets/4c0d9ffc-06fc-49c7-9444-6677a5d5fb1c)
@@ -248,8 +251,6 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
     ![t8](https://github.com/user-attachments/assets/28b5b9a0-d764-48e9-b7eb-bdf09e604751)
     ![t9](https://github.com/user-attachments/assets/b62e8ac9-85fd-4979-86fb-74ff301f316d)
     ![t10](https://github.com/user-attachments/assets/d5ff9a5c-4e99-434c-9f48-f2cfd8883bce)
-
-  <details>
 
   </details>
 
