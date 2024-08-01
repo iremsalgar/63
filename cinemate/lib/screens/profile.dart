@@ -22,7 +22,8 @@ class _ProfilePageState extends State<ProfilePage> {
   String _email = "";
   int _followingCount = 0;
   int _followersCount = 0;
-  double _likesCount = 0.0;
+  String _profileImageUrl = ''; // Added to store the profile image URL
+  final double _likesCount = 0.0;
   final List<String> _collections = [];
 
   @override
@@ -100,6 +101,8 @@ class _ProfilePageState extends State<ProfilePage> {
             _email = data['email'] ?? 'No Email';
             _followingCount = data['following_count'] ?? 0;
             _followersCount = data['followers_count'] ?? 0;
+            _profileImageUrl =
+                data['profileImage'] ?? ''; // Update profile image URL
           });
         }
       } catch (e) {
@@ -183,6 +186,20 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future<void> _uploadProfileImage(String imageUrl) async {
+    // Implement logic to handle URL updates or other actions
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      try {
+        await FirebaseFirestore.instance.collection('users').doc(uid).update({
+          'profileImage': imageUrl,
+        });
+      } catch (e) {
+        print('Error updating profile image URL: $e');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,7 +218,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 MaterialPageRoute(
                   builder: (context) => const EditProfilePage(),
                 ),
-              ).then((_) => _loadProfile());
+              ).then((imageUrl) {
+                if (imageUrl != null) {
+                  _uploadProfileImage(imageUrl);
+                }
+                _loadProfile();
+              });
             },
           ),
           IconButton(
@@ -221,9 +243,11 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 50,
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+              backgroundImage: _profileImageUrl.isNotEmpty
+                  ? NetworkImage(_profileImageUrl)
+                  : const NetworkImage('https://via.placeholder.com/150'),
             ),
             const SizedBox(height: 10),
             Text(
@@ -338,31 +362,32 @@ class UserListPage extends StatelessWidget {
         title: Text(title),
       ),
       body: ListView.builder(
-        padding: const EdgeInsets.all(8.0),
         itemCount: userIds.length,
         itemBuilder: (context, index) {
-          final userId = userIds[index];
           return FutureBuilder<DocumentSnapshot>(
             future: FirebaseFirestore.instance
                 .collection('users')
-                .doc(userId)
+                .doc(userIds[index])
                 .get(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const ListTile(title: Text('Loading...'));
-              } else if (snapshot.hasError) {
-                return const ListTile(title: Text('Error loading user'));
-              } else if (snapshot.hasData) {
-                final userData = snapshot.data?.data() as Map<String, dynamic>?;
-                final userName = userData?['username'] ?? 'Unknown';
-                final email = userData?['email'] ?? 'Unknown';
-                return ListTile(
-                  title: Text(userName),
-                  subtitle: Text(email),
-                );
-              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (!snapshot.hasData || !snapshot.data!.exists) {
                 return const ListTile(title: Text('User not found'));
               }
+
+              final userData = snapshot.data!.data() as Map<String, dynamic>;
+              return ListTile(
+                title: Text(userData['username'] ?? 'No Username'),
+                subtitle: Text(userData['email'] ?? 'No Email'),
+                leading: CircleAvatar(
+                  backgroundImage: userData['profileImage'] != null
+                      ? NetworkImage(userData['profileImage'])
+                      : const NetworkImage('https://via.placeholder.com/150'),
+                ),
+              );
             },
           );
         },

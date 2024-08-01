@@ -267,7 +267,7 @@ class _HomePageState extends State<HomePage> {
             columnSpacing: 24,
             headingRowHeight: 60,
             headingRowColor:
-                MaterialStateColor.resolveWith((states) => Colors.black87),
+                WidgetStateColor.resolveWith((states) => Colors.black87),
             dataRowHeight: 80,
             columns: const [
               DataColumn(
@@ -310,11 +310,11 @@ class _HomePageState extends State<HomePage> {
                               radius: 20,
                             ),
                           ),
-                          SizedBox(width: 12),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Text(
                               match['userName'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -329,11 +329,11 @@ class _HomePageState extends State<HomePage> {
                   DataCell(
                     Row(
                       children: [
-                        Icon(Icons.star, color: Colors.yellow, size: 24),
-                        SizedBox(width: 6),
+                        const Icon(Icons.star, color: Colors.yellow, size: 24),
+                        const SizedBox(width: 6),
                         Text(
                           match['commonCount'].toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             color: Colors.white,
@@ -343,7 +343,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ],
-                color: MaterialStateColor.resolveWith((states) {
+                color: WidgetStateColor.resolveWith((states) {
                   return match['commonCount'] % 2 == 0
                       ? Colors.grey[800]!
                       : Colors.black54;

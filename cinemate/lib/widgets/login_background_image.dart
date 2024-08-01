@@ -31,7 +31,7 @@ class LoginBackgroundImage extends StatelessWidget {
                   style: TextStyle(fontSize: 25, color: Colors.amber[700]),
                   children: const [
                     TextSpan(
-                      text: "CineMate",
+                      text: "CinePal",
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,

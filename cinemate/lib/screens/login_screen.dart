@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return AlertDialog(
           title: const Text(
               'Kişisel Verilerin Korunması ve İşlenmesi Hakkında Açık Rıza Metni'),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: Text(
               '''Kişisel Verilerin Korunması ve İşlenmesi Hakkında Açık Rıza Metni
 CinePals olarak, kişisel verilerinizin güvenliği ve gizliliğine büyük önem veriyoruz. Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") uyarınca, kişisel verilerinizin toplanması, işlenmesi ve saklanması süreçleri hakkında sizi bilgilendirmek ve açık rızanızı almak amacıyla hazırlanmıştır.
@@ -411,7 +411,7 @@ class SignUpButton extends StatelessWidget {
                   activeColor:
                       Colors.amber[700], // Checkbox işaretli olduğunda renk
                   checkColor: Colors.white, // Checkbox'ın işaretli kısmı beyaz
-                  side: BorderSide(
+                  side: const BorderSide(
                     color: Colors.amber,
                     width: 2,
                   ), // Checkbox kenarının rengi ve kalınlığı
@@ -422,11 +422,11 @@ class SignUpButton extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: onShowPrivacyPolicy,
-                    child: Text(
+                    child: const Text(
                       'Kişisel Verilerin Korunması ve İşlenmesi Hakkında Açık Rıza Metnini okudum ve kabul ediyorum.',
                       style: TextStyle(
                         decoration: TextDecoration.underline,
-                        color: const Color.fromARGB(255, 0, 0, 0),
+                        color: Color.fromARGB(255, 0, 0, 0),
                       ),
                       selectionColor: Colors.amber,
                       softWrap: true, // Metni alt satıra geçirebilir

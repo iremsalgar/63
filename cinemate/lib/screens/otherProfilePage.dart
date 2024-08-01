@@ -204,23 +204,44 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
   }
 
   Future<void> _fetchFavoriteMovies() async {
-    final querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.userId)
-        .collection('favorites')
-        .get();
-    setState(() {
-      _favoriteMovies = querySnapshot.docs.map((doc) {
-        final data = doc.data();
-        return {
-          'title': data['title'] ?? 'Başlık Yok',
-          'poster_path': data['poster_path'] ?? '',
-        };
-      }).toList();
-    });
+    try {
+      // Fetch the favorite movies for the user whose profile is being viewed
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.userId)
+          .collection('favorites')
+          .get();
+
+      // Get the list of movie IDs from the Firestore query
+      final movieIds = querySnapshot.docs.map((doc) => doc.id).toList();
+
+      // Fetch the details of each favorite movie using the movie IDs
+      final favoriteMovies = await Future.wait(
+        movieIds.map((movieId) async {
+          final url =
+              'https://api.themoviedb.org/3/movie/$movieId?api_key=$apiKey';
+          final response = await http.get(Uri.parse(url));
+          if (response.statusCode == 200) {
+            return json.decode(response.body);
+          } else {
+            print('Error fetching movie: ${response.statusCode}');
+            return null; // Return null if there's an error
+          }
+        }),
+      );
+
+      // Filter out any null results (in case of errors fetching movies)
+      setState(() {
+        _favoriteMovies = favoriteMovies.whereType<Map>().toList();
+        _originalFavoriteMovies = List.from(_favoriteMovies);
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching favorite movies: $e');
+    }
   }
 
-  Future<void> _toggleFollow() async {
+  Future<void> toggleFollow() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid != null) {
       try {
@@ -268,7 +289,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
     }
   }
 
-  void _showMovieDetailsPage(Map movie) {
+  void showMovieDetailsPage(Map movie) {
     const baseUrl = 'https://image.tmdb.org/t/p/w500';
     final posterUrl = '$baseUrl${movie['poster_path']}';
 
@@ -286,6 +307,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
 
   @override
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -299,6 +321,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
         child: Column(
           children: [
             const SizedBox(height: 20),
+            // Profil fotoğrafı, ad ve diğer bilgileri buraya ekleyin
             CircleAvatar(
               radius: 50,
               backgroundImage: _profileImageFile != null
@@ -307,6 +330,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                       as ImageProvider,
             ),
             const SizedBox(height: 10),
+            // Kullanıcı bilgilerini gösterin
             StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('users')
@@ -322,7 +346,6 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                 }
 
                 final data = snapshot.data!.data() as Map<String, dynamic>;
-
                 _profileName = data['profileName'] ?? 'Profil İsmi Yok';
                 _username = data['username'] ?? 'Kullanıcı Adı Yok';
                 _email = data['email'] ?? 'Email Yok';
@@ -352,10 +375,8 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            const Text(
-                              'Following',
-                              style: TextStyle(color: Colors.grey),
-                            ),
+                            const Text('Following',
+                                style: TextStyle(color: Colors.grey)),
                           ],
                         ),
                         const SizedBox(width: 20),
@@ -366,10 +387,8 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            const Text(
-                              'Followers',
-                              style: TextStyle(color: Colors.grey),
-                            ),
+                            const Text('Followers',
+                                style: TextStyle(color: Colors.grey)),
                           ],
                         ),
                         const SizedBox(width: 20),
@@ -380,10 +399,8 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            const Text(
-                              'Likes',
-                              style: TextStyle(color: Colors.grey),
-                            ),
+                            const Text('Likes',
+                                style: TextStyle(color: Colors.grey)),
                           ],
                         ),
                       ],
@@ -393,44 +410,9 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
               },
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CustomOutlinedButton(
-                  onPressed: _toggleFollow,
-                  icons: _isFollowing
-                      ? Icons.check_box
-                      : Icons.app_registration_rounded,
-                  text: _isFollowing ? "Following" : "Follow",
-                  background: _isFollowing ? Colors.green : Colors.amber,
-                ),
-                const SizedBox(width: 50),
-                CustomOutlinedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MessagePage(
-                          recipientId: widget.userId,
-                        ),
-                      ),
-                    );
-                  },
-                  icons: Icons.message,
-                  text: "Message",
-                  background: Colors.blue,
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Common Favorites: ${_commonFavoritesPercentage.toStringAsFixed(2)}%',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            const Divider(thickness: 2),
-            const SizedBox(height: 20),
+            // Favori filmleri göster
             const Text(
-              'Favorites Movies',
+              'Favorite Movies',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
@@ -439,7 +421,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                 : SizedBox(
                     height: 200,
                     child: _favoriteMovies.isEmpty
-                        ? const Center(child: Text('Not Favorites Movies Yet.'))
+                        ? const Center(child: Text('No favorite movies yet.'))
                         : ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: _favoriteMovies.length,
@@ -452,7 +434,7 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                                   : null;
 
                               return GestureDetector(
-                                onTap: () => _showMovieDetailsPage(movie),
+                                onTap: () => showMovieDetailsPage(movie),
                                 child: Card(
                                   child: Column(
                                     crossAxisAlignment:
@@ -467,14 +449,12 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                                               errorBuilder:
                                                   (context, error, stackTrace) {
                                                 return const Center(
-                                                  child:
-                                                      Text('Image Not Found'),
-                                                );
+                                                    child: Text(
+                                                        'Image Not Found'));
                                               },
                                             )
                                           : const Center(
-                                              child: Text('Image Not Found'),
-                                            ),
+                                              child: Text('Image Not Found')),
                                       const SizedBox(height: 5),
                                       Text(
                                         movie['title'],
@@ -489,13 +469,14 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
                           ),
                   ),
             const SizedBox(height: 20),
+            // Koleksiyonları göster
             const Text(
               'Collections',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             _collections.isEmpty
-                ? const Text('Not Collections Yet.')
+                ? const Text('No collections yet.')
                 : Column(
                     children: _collections
                         .map((collection) => ListTile(
