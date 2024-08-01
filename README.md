@@ -235,9 +235,6 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
     - Tıklandığında Detayları Gösteren Açılır Ekran
       
 
-
-
-
   <details>
     <summary><h3> Sprint 2-Daily Scrum Screenshot</h3></summary>
 
