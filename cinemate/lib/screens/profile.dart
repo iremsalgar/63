@@ -209,6 +209,7 @@ class _ProfilePageState extends State<ProfilePage> {
           style:
               TextStyle(color: Colors.amber[700], fontWeight: FontWeight.bold),
         ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),

@@ -93,6 +93,7 @@ class _FavoritePageState extends State<FavoritePage> {
           style:
               TextStyle(color: Colors.amber[700], fontWeight: FontWeight.bold),
         ),
+        automaticallyImplyLeading: false,
       ),
       body: _isLoading
           ? const Center(

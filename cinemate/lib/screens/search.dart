@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cinemate/screens/home.dart';
 import 'package:cinemate/screens/otherProfilePage.dart';
 import 'package:cinemate/screens/profile.dart';
 import 'package:cinemate/services/auth.dart';
@@ -293,12 +294,7 @@ class _SearchPageState extends State<SearchPage> {
           style:
               TextStyle(color: Colors.amber[700], fontWeight: FontWeight.bold),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: _onSearch,
-          ),
-        ],
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
@@ -310,6 +306,9 @@ class _SearchPageState extends State<SearchPage> {
                 border: OutlineInputBorder(),
                 hintText: 'Ara...',
               ),
+              onSubmitted: (value) {
+                _onSearch();
+              },
             ),
           ),
           DropdownButton<String>(
