@@ -431,16 +431,20 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
 
   - **Ürün Durumu**: Ekran görüntüleri:
  
-  ![urun1](https://github.com/user-attachments/assets/48bb4a97-735c-4788-b3e0-101838f5b49c)
-  ![urun2](https://github.com/user-attachments/assets/80bef7d3-057a-464b-a6ce-a27a0923688c)
-  ![urun3](https://github.com/user-attachments/assets/ee2bae88-34c0-4a95-a6aa-b9fadb980b50)
-  ![urun4](https://github.com/user-attachments/assets/071eac7d-693c-49ab-8997-75d3b33ce92e)
-  ![urun5](https://github.com/user-attachments/assets/a544fd6c-0897-406a-8eca-adcfca583e5d)
-  ![urun6](https://github.com/user-attachments/assets/29ea698c-bd0e-4894-b94a-b8b96361acf5)
-  ![urun7](https://github.com/user-attachments/assets/0dbd16e7-3a9d-4e3e-ad5d-c5847184d1c8)
-  ![urun8](https://github.com/user-attachments/assets/c109d958-5231-4155-a22c-832895a88053)
-  ![urun9](https://github.com/user-attachments/assets/4b0f1281-776c-4cef-b934-cd8041660a1b)
-  ![urun10](https://github.com/user-attachments/assets/f7e6c7d9-68c6-4f02-936f-1cd0b8ff0bf2)
+  ![urun0](https://github.com/user-attachments/assets/e87d3cbd-e8f3-4cae-ae19-3b10780c60f9)
+  ![urun01](https://github.com/user-attachments/assets/ff35e946-0ab7-4ccb-a6a7-ae38db5e32d5)
+  ![urun02](https://github.com/user-attachments/assets/8798d975-6185-4d57-afb0-3bc42463693e)
+  ![urun03](https://github.com/user-attachments/assets/d8cc4b60-334e-416a-b686-37753d1f263a)
+  ![urun04](https://github.com/user-attachments/assets/65a5c04f-96dc-4220-888d-8c9adf84a5af)
+  ![urun05](https://github.com/user-attachments/assets/8d647928-25a9-4583-b696-b0d703789527)
+  ![urun06](https://github.com/user-attachments/assets/56fd4690-7a99-49ec-8c63-cc65064c52a6)
+  ![urun07](https://github.com/user-attachments/assets/836abf2d-c936-4b67-9f42-0ee994e91721)
+  ![urun08](https://github.com/user-attachments/assets/0ee5d9e6-ab47-486e-881b-9f8654d96298)
+  ![urun09](https://github.com/user-attachments/assets/2ace2a63-b767-4244-acdf-869d31455cb6)
+  ![urun10](https://github.com/user-attachments/assets/e2df708e-2acd-469c-8d4b-439b26ab1440)
+  ![urun11](https://github.com/user-attachments/assets/144534dd-9d01-4320-b6aa-9a32eec083a8)
+  ![urun12](https://github.com/user-attachments/assets/bf206849-e165-4cf5-a7e4-b849832af663)
+
 
  
  
