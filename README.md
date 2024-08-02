@@ -26,17 +26,18 @@ Takım Flutter 63
 
 ## Ürün Açıklaması
 
-Uygulamamız, yapay zeka destekli bir chatbot kullanarak favori filmlerinizi öğrenir ve size yeni film önerilerinde bulunur. Bu filmleri uygulama içinde araştırabilir ve favori filmlerinizi profilinize ekleyebilirsiniz. Eklediğiniz favori ve izlediğiniz filmlerle benzer film zevkine sahip kullanıcıların profillerini görebilir, böylece film önerilerinizi genişletebilirsiniz.
+Uygulamamız, yapay zeka destekli Gemini API kullanan bir Chatbot ile birlikte kullanıcıların belirttiği filmlerle ortak özelliklere benzer filmler önerecek şekilde geliştirildi. Bu filmleri uygulama içinde araştırabilir ve favori filmlerinizi profilinize ekleyebilirsiniz. Eklediğiniz favori ve izlediğiniz filmlerle benzer film zevkine sahip kullanıcıların profillerini görebilir, böylece film önerilerinizi genişletebilirsiniz.
 
-Uygulamamız, kullanıcıların film zevklerini öğrenerek yeni öneriler sunar ve filmleri araştırma imkanı tanır. Kullanıcılar, favori filmlerini profillerine ekleyebilir ve benzer zevklere sahip kişilerin profillerini görüntüleyebilir.
+Uygulamamız, kullanıcıların film zevklerini öğrenerek yeni insanlarla tanışma fırsatı sunar ve filmleri araştırma imkanı tanır. Kullanıcılar, favori filmlerini profillerine ekleyebilir ve benzer zevklere sahip kişilerin profillerini görüntüleyebilir.
 
-**Uygulamanın Birincil Fonksiyonu:** Yapay zeka destekli chatbot, favori filmlerinizi öğrenir ve size kişiselleştirilmiş film önerilerinde bulunur.
+**Uygulamanın Birincil Fonksiyonu:** Yapay zeka destekli chatbot, belirttiğiniz filmlerle ortak özellikler sahip film önerilerinde bulunur.
+
 **Uygulamanın İkincil Fonksiyonu:** Eklediğiniz favori ve izlediğiniz filmlerle benzer zevklere sahip kullanıcıların profillerini görerek, film önerilerinizi genişletebilirsiniz.
 
 Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmayı hedefler.
 
 ## Ürün Özellikleri
-- Yapay zeka destekli chatbot ile favori filmlerinizin öğrenilmesi ve kişiselleştirilmiş film önerileri sunulması.
+- Yapay zeka destekli chatbot ile belirttiğiniz filmlerle ortak özellikler sahip film önerileri sunulması.
 - Uygulama içinde film araştırma imkanı.
 - Favori filmlerinizi profilinize ekleyebilme.
 - Benzer film zevkine sahip kullanıcıların profillerini görebilme ve etkileşim kurabilme.
@@ -180,9 +181,9 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
 
   <details>
 
-  - **Sprint içinde tamamlanması tahmin edilen puan**: 175 Puan
+  - **Sprint içinde tamamlanması tahmin edilen puan**: 140 Puan
 
-  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 175 olması gerektiğine karar verildi.Her planlanan başlık için 25 puan atandı.
+  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde ikinci sprint'in en azından 175 olması gerektiğine karar verildi.Her planlanan başlık için 20 puan atandı.
 
 
 ## Sprint 2- Not
@@ -193,7 +194,7 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
 
 **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
 
-- **Profil**:(25p)
+- **Profil**:(20p)
     - Kullanıcı bilgileri
     - Editleme
     - Profil Resmi Ekleme
@@ -205,7 +206,7 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
     - Ayarlar
     - Dark Mode
 
-- **ChatBot**:(25p)
+- **ChatBot**:(20p)
     - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine karar verildi. (şu an gemini kullanıyor)
 
 - **Anasayfa**:(25p)
@@ -214,32 +215,32 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
     - Mavi Hap Rastgele Film Önerisi
     - Film Zevki Uyan Kullanıcıları Gösteren Tablo
   
-- **Film Aratma**:(25p)
+- **Film Aratma**:(20p)
     - Filmleri Aratma
     - Kişileri Aratma
     - Görsel Düzenlilik
     - Favorilere Ekleme
     - Koleksiyona Ekleme
      
-- **Giriş Ekranı**:(25p)
+- **Giriş Ekranı**:(20p)
     - Firebase
     - Login Page
     - Register Page
     - Google İle Üye Olma
     - UI tasarım
 
-- **Navbar**(25p)
+- **Navbar**(20p)
 
-- **Favoriler**:(25p)
+- **Favoriler**:(20p)
     - Poster Görünümü
     - Tıklandığında Detayları Gösteren Açılır Ekran
       
 
-    <details>
-    <summary><h3> Sprint 3-Daily Scrum Screenshot</h3></summary>
+
 
 
   <details>
+    <summary><h3> Sprint 2-Daily Scrum Screenshot</h3></summary>
 
     ![t1](https://github.com/user-attachments/assets/ce6a7be3-cf93-4817-ae5b-583325b240e1)
     ![t2](https://github.com/user-attachments/assets/4c0d9ffc-06fc-49c7-9444-6677a5d5fb1c)
@@ -251,6 +252,8 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
     ![t8](https://github.com/user-attachments/assets/28b5b9a0-d764-48e9-b7eb-bdf09e604751)
     ![t9](https://github.com/user-attachments/assets/b62e8ac9-85fd-4979-86fb-74ff301f316d)
     ![t10](https://github.com/user-attachments/assets/d5ff9a5c-4e99-434c-9f48-f2cfd8883bce)
+
+  <details>
 
   </details>
 
@@ -319,7 +322,7 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
   <details>
 
   - **Sprint Retrospective**:
-    - Sprint 2 için alınan puan 175'dir..
+    - Sprint 2 için alınan puan 140'tıır..
     - Sprint puanlamasının daha detaylı ele alınmasına karar verilmiştir. 
     - Kişilerin hangi tarihlerde müsait olabileceği hakkında konuşulmuş, yeni sprint için görev ataması yapılacak detaylı bir toplantı daha planlanmıştır.
 
@@ -344,9 +347,9 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
 
   <details>
 
-  - **Sprint içinde tamamlanması tahmin edilen puan**: 65 Puan
+  - **Sprint içinde tamamlanması tahmin edilen puan**: 100 Puan
 
-  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde üçüncü sprintin 65 olması gerektiğine karar verildi.Her planlanan başlık için 25 puan atandı.
+  - **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 340 puanlık backlog bulunmaktadır. 3 sprint'e bölündüğünde üçüncü sprintin 100 olması gerektiğine karar verildi. Her planlanan başlık için yapılacaklara göre aşağıdaki puanlama mantığıyla puanlar atandı.
 
 
 ## Sprint 3- Not
@@ -356,53 +359,51 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
 
 **BAŞLIKLARA GÖRE PLANLANAN UYGULAMA ÖZELLİKLERİ**
 
-- **Profil**:(p)
+- **Profil**:(30p)
     - Mesajlaşma Düzenleneme
     - Profil-edit Düzenleneme
     - Profilde Other Favori Kısmı Değişimi
     - Likes Kısmının Kaldırılması
     - Favorilerle Eşleşen Kişilerin Profilinde Eşleşen Sayıyı Gösterebilme
+    - Takip Ettiklerimin listesini görebilme
+    - Başkasının profilinde favorileri görebilme
+    - Seçilen Resimlerin Firebase içine Aktarılması (Uygulama İçi Görsel Paketi)
 
-- **ChatBot**:(p)
+- **ChatBot**:(10p)
     - Yapılmış olan ChatBot'un daha nitelikli olması için eğitilmesine üzerine tekrar konuşuldu ve gerekli atama yapıldı.
 
-- **Anasayfa**:(p)
+- **Anasayfa**:(20p)
     - En Çok Filmlerinin Eşleştiği Top 5 Kişi Listesi
     - Welcome X ( Database'e Gelecek Kayıtlı Olan Username)
-    - Tabloda Anlık Güncelleme
+    - Tabloda Güncelleme
     - Filmlerin Resim Büyüklüklerinin Ayarlanması
   
-- **Kullanıcı Ayarları**:(p)
+- **Kullanıcı Ayarları**:(20p)
     - Dark Mode Düzenlenmesi
     - User Information Kısmının Kaldırılması
+    - Exit butonu ile çıkış yapabilme
      
-- **Giriş Ekranı**:(p)
+- **Giriş Ekranı**:(20p)
     - Login Kontrolleri Eklemek
     - Register Kontrolleri Eklemek
-    - Facebook ve Google ile Girişi Gerçekleştirmek
-    - Kullanıcı Açık Rıza Metni(KVKK)
-
-- **Firebase**:(p)
-    - Seçilen Resimlerin Firebase içine Aktarılması (Uygulama İçi Görsel Paketi)
+    - Google ile Girişi Gerçekleştirmek
+    - Kullanıcı Açık Rıza Metni Eklenmesi(KVKK)
       
 
 
 
 
   <details>
-    <summary><h3> Sprint 2-Daily Scrum Screenshot</h3></summary>
+    <summary><h3> Sprint 3-Daily Scrum Screenshot</h3></summary>
 
-    ![t1](https://github.com/user-attachments/assets/ce6a7be3-cf93-4817-ae5b-583325b240e1)
-    ![t2](https://github.com/user-attachments/assets/4c0d9ffc-06fc-49c7-9444-6677a5d5fb1c)
-    ![t3](https://github.com/user-attachments/assets/63cba883-019b-493e-ba39-aaaa2f1ac738)
-    ![t4](https://github.com/user-attachments/assets/e451c0b7-1ec9-423f-8701-a4d7e4a707c7)
-    ![t5](https://github.com/user-attachments/assets/40ebe833-1faa-496c-ad44-5f6b2de1e011)
-    ![t6](https://github.com/user-attachments/assets/b32bd2b3-cbdf-4a7e-90a2-cce306bb225f)
-    ![t7](https://github.com/user-attachments/assets/0fd2afcb-e580-4761-a7a8-376b64061d00)
-    ![t8](https://github.com/user-attachments/assets/28b5b9a0-d764-48e9-b7eb-bdf09e604751)
-    ![t9](https://github.com/user-attachments/assets/b62e8ac9-85fd-4979-86fb-74ff301f316d)
-    ![t10](https://github.com/user-attachments/assets/d5ff9a5c-4e99-434c-9f48-f2cfd8883bce)
-
+    ![1](https://github.com/user-attachments/assets/7f133188-4910-43fe-9f90-bd39bfff35c9)
+    ![2](https://github.com/user-attachments/assets/0b0156ca-781a-49e2-b2ea-d04d3ab2b504)
+    ![3](https://github.com/user-attachments/assets/cfcd76c7-fb37-4cec-a423-7493e86839d7)
+    ![4](https://github.com/user-attachments/assets/0e3bc8a8-2b35-4691-a8b3-5a8db2f0d6e9)
+    ![5](https://github.com/user-attachments/assets/550c9f56-c4ea-481c-92d0-5841b2618a8f)
+    ![6](https://github.com/user-attachments/assets/7f1f388a-a98e-4c85-98a7-6436d0a84ede)
+    ![7](https://github.com/user-attachments/assets/1ddc2978-0d72-4e02-b2ee-f4278a0cb9ba)
+    ![8](https://github.com/user-attachments/assets/164211cc-448e-4467-b2ec-776e94b47e21)
   <details>
 
   </details>
@@ -416,7 +417,7 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
   <details>
   Sprint board screenshotları:
     
-   ![kanban1](https://github.com/user-attachments/assets/b18e8552-a3bc-470e-9bbe-f618af882cc9)
+   ![kanban](https://github.com/user-attachments/assets/d389d97d-441c-4d2e-89b6-1935ad715945)
 
   </details>
 
@@ -455,9 +456,9 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
   <details>
 
   - **Sprint Review**:
-    - Sprint 2'nin sonunda ekip ile toplanılmış ve Sprint gözden geçirilmiştir.Uygulama detayları gözden geçirilmiştir.
-    - ChatBot'un tam olarak entegre edilmesi hariç diğer tüm hedeflere ulaşılmıştır.
-    - Genel anlamda uygulama çalışabilir durumdadır.Sprint notlarında belirtilen özellikler sağlanmıştır.
+    - Sprint 3'ün sonunda ekip ile toplanılmış ve Sprint gözden geçirilmiştir. Uygulama detayları gözden geçirilmiştir, gerekli testler yapılıp ürünün son hali ortaya konulmuştur.
+    - Tüm hedeflere ulaşılmıştır ve gerçekleşmesi beklenen backlog puanı gerçekleşip bu sprint 100 puanla tamamlanmıştır.
+    - Ürün çalışabilir ve pazara sunulabilecek haldedir bunun sonucunda ekip birbirini tebrik etmiştir.
  
 
 
@@ -475,6 +476,13 @@ Uygulamamız, film zevkinize uygun öneriler sunarak sinema keyfinizi artırmay�
     - Projenin daha da ilerlemesi adına tekrardan iletişimde olmaya karar verildi.
 
   </details>
+
+  </details>
+
+
+
+  </details>
+
 
   </details>
 
